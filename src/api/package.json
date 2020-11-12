@@ -1,0 +1,37 @@
+{
+  "name": "softup-cv-generator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Kevin Haxhi",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint \"./src/**/*.js\"",
+    "test": "cross-env NODE_ENV=test nyc mocha --require @babel/register --timeout 30000 --exit \"./src/**/*.test.js*\"",
+    "test:only": "cross-env NODE_ENV=test mocha --timeout 30000 --exit --require @babel/register $1",
+    "test:ci": "npm run lint && npm run test",
+    "start": "nodemon --exec babel-node ./src/index.js",
+    "build": "babel src --out-dir dist --copy-files"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.13"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.6",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/register": "^7.12.1",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.13.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-mocha": "^8.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.6",
+    "nyc": "^15.1.0"
+  }
+}
