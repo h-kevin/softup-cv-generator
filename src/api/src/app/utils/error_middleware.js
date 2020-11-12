@@ -1,6 +1,5 @@
 import Util from 'util';
 
-import { getLogger } from '../config/logger';
 import { GeneralError, InternalError } from '../utils/error';
 
 /**
@@ -20,7 +19,6 @@ export default (err, req, res, next) => {
   }
 
   error.setPath(fullPath);
-  getLogger().error(error.printForLogging());
 
   if (res?.headersSent) {
     next(err); // pass error to default express handler
