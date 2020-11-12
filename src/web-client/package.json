@@ -14,7 +14,7 @@
     "axios": "^0.21.0",
     "formik": "^2.2.5",
     "i18next": "^19.8.3",
-    "node-sass": "^5.0.0",
+    "node-sass": "4.14.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -54,7 +54,10 @@
     ]
   },
   "devDependencies": {
+    "@types/jest": "^26.0.15",
     "dotenv": "^8.2.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1"

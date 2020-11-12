@@ -1,0 +1,24 @@
+{
+  "translation": {
+    "global": {
+      "error": "Gabim",
+      "success": "Sukses"
+    },
+    "notFound": {
+      "pageNotFound": "Nuk U Gjet",
+      "goBack": "Kliko ketu per tu kthyer ne faqen kryesore"
+    },
+    "users": {
+      "title": "Perdoruesit",
+      "button": "DETAJE",
+      "loadMore": "AFISHO ME SHUME"
+    },
+    "userDetails": {
+      "title": "Detaje",
+      "id": "ID Llogarie",
+      "login": "Emer",
+      "url": "URL",
+      "button": "VIZITO PROFILIN"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "translation": {
+    "global": {
+      "error": "Error",
+      "success": "Success"
+    },
+    "notFound": {
+      "pageNotFound": "Page Not Found",
+      "goBack": "Click here to go back to users page"
+    },
+    "users": {
+      "title": "Users",
+      "button": "DETAILS",
+      "loadMore": "LOAD MORE"
+    },
+    "userDetails": {
+      "title": "Details",
+      "id": "Account ID",
+      "login": "Login",
+      "url": "URL",
+      "button": "VISIT PROFILE"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+/* Colors */
+
+$default: #000000;
+
+/* Typography */
+
+$primary-black: 'OpenSans-ExtraBold';
+$primary-black-italic: 'OpenSans-ExtraBoldItalic';
+$primary-bold: 'OpenSans-Bold';
+$primary-bold-italic: 'OpenSans-BoldItalic';
+$primary-italic: 'OpenSans-Italic';
+$primary-light: 'OpenSans-Light';
+$primary-light-italic: 'OpenSans-LightItalic';
+$primary-medium: 'OpenSans-SemiBold';
+$primary-medium-italic: 'OpenSans-SemiBoldItalic';
+$primary-regular: 'OpenSans-Regular';
+
+/* Dimensions */
+
+$header-height: 65px;
+$page-with-header-height: calc(100vh - 65px);
+$app-padding: 10px;
+
+/* Durations */
+
+$default-transition-duration: 0.3s;
+
+/* Base font size */
+
+$base-font-size: 16px;
+$tablet-font-size: 14px;
+$mobile-font-size: 12px;

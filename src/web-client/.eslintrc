@@ -1,0 +1,24 @@
+{
+  "extends": [
+    "react-app",
+    "airbnb",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "plugins": [
+    "jsx-a11y",
+    "import"
+  ],
+  "rules": {
+    "semi": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "no-underscore-dangle": "off",
+    "import/prefer-default-export": "off",
+    "dot-notation": "off",
+    "spaced-comment": "off",
+    "no-trailing-spaces": "off",
+    "react/jsx-props-no-spreading": "off",
+    "no-param-reassign": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/no-named-as-default": "off"
+  }
+}
