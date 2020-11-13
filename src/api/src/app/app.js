@@ -19,7 +19,7 @@ app.use(errorHandler);
 const root = Path.join(__dirname, '../../../web-client/build');
 
 app.use(Express.static(root));
-app.get('/', (_req, res) => {
+app.get('/*', (_req, res) => {
 	res.sendFile('index.html', { root });
 });
 

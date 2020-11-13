@@ -12,7 +12,7 @@ const NotFound = () => (
     <FontAwesomeIcon icon={faFrown} className={classes.Icon} />
     <h1>404</h1>
     <h3>{i18n.t('notFound.pageNotFound')}</h3>
-    <Link to={routes.APP.USERS}>{i18n.t('notFound.goBack')}</Link>
+    <Link to={routes.APP.INDEX}>{i18n.t('notFound.goBack')}</Link>
   </section>
 );
 
