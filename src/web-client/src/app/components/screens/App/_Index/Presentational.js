@@ -5,14 +5,18 @@ import {
 } from 'react-router-dom';
 
 import NotFound from '../../404/Presentational';
-// import routes from '../../../../constants/routes';
+import routes from '../../../../constants/routes';
 
 const Presentational = () => (
   <Switch>
-    <Route
-      path="*" 
-      component={NotFound}
-    />
+    <Switch>
+      <Route 
+        exact 
+        path={routes.APP.INDEX}
+        component={NotFound}
+      />
+      <Route path="*" component={NotFound} />
+    </Switch>
   </Switch>
 );
 
