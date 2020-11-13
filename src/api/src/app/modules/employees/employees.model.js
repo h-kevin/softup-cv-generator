@@ -36,7 +36,92 @@ const schema = new Mongoose.Schema({
       type: Mongoose.Schema.Types.String,
       required: true,
     }],
+    operationsAndInfrastructure: [{
+      type: Mongoose.Schema.Types.String,
+      required: true,
+    }],
+    integrationAndDeployment: [{
+      type: Mongoose.Schema.Types.String,
+      required: true,
+    }],
+    testing: [{
+      type: Mongoose.Schema.Types.String,
+      required: true,
+    }],
+    thirdParty: [{
+      type: Mongoose.Schema.Types.String,
+      required: true,
+    }],
+    agile: [{
+      type: Mongoose.Schema.Types.String,
+      required: true,
+    }],
+    other: [{
+      type: Mongoose.Schema.Types.String,
+      required: true,
+    }],
   },
+  spokenLanguages: [{
+    language: {
+      type: Mongoose.Schema.Types.String,
+      required: true,
+    },
+    level: {
+      type: Mongoose.Schema.Types.String,
+      required: true,
+    },
+  }],
+  projects: [{
+    period: {
+      startDate: {
+        type: Mongoose.Schema.Types.Date,
+        required: true,
+      },
+      endDate: {
+        type: Mongoose.Schema.Types.Date,
+        required: true,
+      },
+    },
+    client: {
+      type: Mongoose.Schema.Types.String,
+      required: true,
+    },
+    position: {
+      type: Mongoose.Schema.Types.String,
+      required: true,
+    },
+    technologies: [{
+      type: Mongoose.Schema.Types.String,
+      required: true,
+    }],
+    responsibilities: {
+      type: Mongoose.Schema.Types.String,
+      required: true,
+    },
+  }],
+  education: [{
+    institution: {
+      type: Mongoose.Schema.Types.String,
+      required: true,
+    },
+    qualifications: [{
+      type: Mongoose.Schema.Types.String,
+      required: true,
+    }],
+    period: {
+      startDate: {
+        type: Mongoose.Schema.Types.Date,
+        required: true,
+      },
+      endDate: {
+        type: Mongoose.Schema.Types.Date,
+        required: true,
+      },
+    },
+  }],
+  profileImage: {
+    type: Mongoose.Schema.Types.Buffer,
+  }
 });
 
 export default Mongoose.model(dbTables.EMPLOYEES, schema);
