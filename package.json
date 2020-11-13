@@ -1,0 +1,17 @@
+{
+  "name": "softup-cv-generator",
+  "version": "1.0.0",
+  "repository": "git@github.com:h-kevin/softup-cv-generator.git",
+  "scripts": {
+    "install-web-client": "cd src/web-client && yarn install",
+    "install-api": "cd src/api && yarn install",
+    "build-web-client": "cd src/web-client && yarn run build",
+    "build-api": "cd src/api && yarn run build",
+    "db-migrate": "cd src/api && yarn run migrate:up",
+    "start": "cd src/api && yarn run start:prod",
+    "heroku-prebuild": "yarn run install-web-client && yarn run install-api",
+    "heroku-postbuild": "yarn run build-web-client && yarn run build-api && yarn run db-migrate"
+  },
+  "author": "Kevin Haxhi <kevin.haxhi@softup.co>",
+  "license": "MIT"
+}

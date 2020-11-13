@@ -30,7 +30,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "npm run lint && react-scripts test --coverage --watchAll=false --passWithNoTests",
+    "test": "yarn run lint && react-scripts test --coverage --watchAll=false --passWithNoTests",
     "test:watch": "react-scripts test --watchAll",
     "lint": "eslint \"./src/**/*.js\"",
     "eject": "react-scripts eject"
