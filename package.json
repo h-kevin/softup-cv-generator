@@ -12,5 +12,9 @@
     "heroku-postbuild": "yarn run build-web-client && yarn run build-api"
   },
   "author": "Kevin Haxhi <kevin.haxhi@softup.co>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "multer": "^1.4.2",
+    "sharp": "^0.26.2"
+  }
 }
