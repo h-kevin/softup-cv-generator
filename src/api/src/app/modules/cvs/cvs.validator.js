@@ -69,12 +69,11 @@ export const createCvValidator = (req, _res, next) => {
         institution: Joi.string().required(),
         qualifications: Joi.array().items(
           Joi.string().required(),
-        ),
+        ).required(),
         period: Joi.object().keys({
           startDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
           endDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
-        }),
-
+        }).required(),
       }),
     ).required(),
   }).required();
@@ -128,15 +127,15 @@ export const updateCvValidator = (req, _res, next) => {
     }),
     spokenLanguages: Joi.array().items(
       Joi.object().keys({
-        language: Joi.string(),
-        level: Joi.string(),
+        language: Joi.string().required(),
+        level: Joi.string().required(),
       }),
     ),
     projects: Joi.array().items(
       Joi.object().keys({
         period: Joi.object().keys({
-          startDate: Joi.date().format(datetimeFormats.STANDARD_DATE),
-          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE),
+          startDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
+          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
         }),
         client: Joi.string(),
         position: Joi.string(),
@@ -148,14 +147,14 @@ export const updateCvValidator = (req, _res, next) => {
     ),
     education: Joi.array().items(
       Joi.object().keys({
-        institution: Joi.string(),
+        institution: Joi.string().required(),
         qualifications: Joi.array().items(
-          Joi.string(),
-        ),
+          Joi.string().required(),
+        ).required(),
         period: Joi.object().keys({
-          startDate: Joi.date().format(datetimeFormats.STANDARD_DATE),
-          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE),
-        }),
+          startDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
+          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
+        }).required(),
       }),
     ),
   }).required();

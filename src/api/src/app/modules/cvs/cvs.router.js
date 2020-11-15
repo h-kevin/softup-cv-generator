@@ -38,3 +38,5 @@ router.route(`${BASE_ROUTE}/:id/profile-image`).put(
   Multer(multerConfig).single('profileImage'),
   controller.uploadProfileImage,
 );
+
+export default router;
