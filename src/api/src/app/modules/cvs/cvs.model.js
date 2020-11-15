@@ -124,4 +124,4 @@ const schema = new Mongoose.Schema({
   }
 });
 
-export default Mongoose.model(dbTables.EMPLOYEES, schema);
+export default Mongoose.model(dbTables.CVS, schema);

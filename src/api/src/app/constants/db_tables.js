@@ -1,3 +1,3 @@
 export default {
-  EMPLOYEES: 'employees',
+  CVS: 'cvs',
 };
