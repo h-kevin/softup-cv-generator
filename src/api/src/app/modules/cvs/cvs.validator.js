@@ -54,7 +54,7 @@ export const createCvValidator = (req, _res, next) => {
       Joi.object().keys({
         period: Joi.object().keys({
           startDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
-          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
+          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE),
         }),
         client: Joi.string().required(),
         position: Joi.string().required(),
@@ -69,10 +69,10 @@ export const createCvValidator = (req, _res, next) => {
         institution: Joi.string().required(),
         qualifications: Joi.array().items(
           Joi.string().required(),
-        ).required(),
+        ),
         period: Joi.object().keys({
           startDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
-          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
+          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE),
         }).required(),
       }),
     ).required(),
@@ -135,7 +135,7 @@ export const updateCvValidator = (req, _res, next) => {
       Joi.object().keys({
         period: Joi.object().keys({
           startDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
-          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
+          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE),
         }),
         client: Joi.string(),
         position: Joi.string(),
@@ -150,10 +150,10 @@ export const updateCvValidator = (req, _res, next) => {
         institution: Joi.string().required(),
         qualifications: Joi.array().items(
           Joi.string().required(),
-        ).required(),
+        ),
         period: Joi.object().keys({
           startDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
-          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
+          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE),
         }).required(),
       }),
     ),
