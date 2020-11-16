@@ -1,7 +1,10 @@
 import Sharp from 'sharp';
+import { Packer } from 'docx';
+import stream from 'stream';
 
 import CV from './cvs.model';
 import { InternalError, NotFound } from '../../utils/error';
+import generateDocxFunction from '../../helpers/generateDocx';
 
 /**
  * Create CV
@@ -129,8 +132,19 @@ export const generateDocx = async (req, res, next) => {
       return;
     }
 
-    res.sendStatus(204);
+    const doc = generateDocxFunction(user.toJSON(), user.profileImage);
+    const packedDocx = await Packer.toBuffer(doc);
+    const fileContents = Buffer.from(packedDocx, 'binary');
+  
+    const readStream = new stream.PassThrough();
+    readStream.end(fileContents);
+
+    res.set('Content-disposition', 'attachment; filename=CV.docx');
+    res.set('Content-Type', 'text/plain');
+    
+    readStream.pipe(res);
   } catch (error) {
+    console.log(error);
     next(new InternalError(error));
   }
 };

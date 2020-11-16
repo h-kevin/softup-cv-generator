@@ -22,7 +22,7 @@ router.route(`${BASE_ROUTE}/:id`).get(
 );
 
 router.route(`${BASE_ROUTE}/:id/generate-docx`).get(
-  // controller.generateDocx,
+  controller.generateDocx,
 );
 
 router.route(`${BASE_ROUTE}/:id`).patch(
