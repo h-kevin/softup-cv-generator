@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
 
-const appReducer = combineReducers({});
+import cvsReducer from '../modules/cvs/reducer';
+
+const appReducer = combineReducers({
+  cvsReducer,
+});
 
 const rootReducer = (state, action) => {
   if (action.type === 'CLEAR_GIVEN_STATE') {

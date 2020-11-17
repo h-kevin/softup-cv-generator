@@ -2,19 +2,27 @@ import React from 'react';
 import { 
   Switch, 
   Route, 
+  Redirect,
 } from 'react-router-dom';
 
 import NotFound from '../../404/Presentational';
+import Management from '../Management/Container';
 import routes from '../../../../constants/routes';
 
 const Presentational = () => (
   <Switch>
     <Switch>
       <Route 
+        exact
+        path={routes.APP.MANAGEMENT}
+        component={Management}
+      />
+      <Route 
         exact 
         path={routes.APP.INDEX}
-        component={NotFound}
-      />
+      >
+        <Redirect to={routes.APP.MANAGEMENT} />
+      </Route>
       <Route path="*" component={NotFound} />
     </Switch>
   </Switch>
