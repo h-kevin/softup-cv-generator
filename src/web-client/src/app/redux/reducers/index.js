@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import cvsReducer from '../modules/cvs/reducer';
 
 const appReducer = combineReducers({
-  cvsReducer,
+  cvs: cvsReducer,
 });
 
 const rootReducer = (state, action) => {

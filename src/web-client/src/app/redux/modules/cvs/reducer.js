@@ -59,7 +59,7 @@ const reducer = (state = initState, action) => {
         null,
         () => ({
           ...state._data,
-          accounts: updateObjectInArray(
+          cvs: updateObjectInArray(
             state._data?.cvs,
             action.payload.updatedCv,
           ),
@@ -74,7 +74,7 @@ const reducer = (state = initState, action) => {
         null,
         () => ({
           ...state._data,
-          accounts: deleteObjectFromArray(
+          cvs: deleteObjectFromArray(
             state._data?.cvs,
             action.payload.deletedId,
           ),
@@ -98,7 +98,7 @@ const reducer = (state = initState, action) => {
         null,
         () => ({
           ...state._data,
-          accounts: updateObjectInArray(
+          cvs: updateObjectInArray(
             state._data?.cvs,
             action.payload.updatedCv,
           ),

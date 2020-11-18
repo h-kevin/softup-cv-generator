@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import actionTypes from '../action_types';
 import config from '../../../../config';
 import getError from '../../../../utils/error_message';
@@ -11,13 +9,17 @@ import { start, success, fail } from '../../../../utils/actions';
  * @param {integer} (path) params.id: CV id
  */
 
-export const updateAccount = (params) => async (dispatch) => {
+export const generateDocx = (params) => async (dispatch) => {
   start(dispatch, actionTypes.GENERATE_DOCX);
 
   const URL = `${config.SERVER_URL}/cvs/${params.id}/generate-docx`;
 
   try {
-    await axios.get(URL);
+    const link = document.createElement('a');
+    link.href = URL;
+    link.setAttribute('target', '_blank');
+    document.body.appendChild(link);
+    link.click();
 
     success(dispatch, actionTypes.GENERATE_DOCX, null);
 

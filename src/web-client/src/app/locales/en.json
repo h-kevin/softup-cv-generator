@@ -5,11 +5,23 @@
       "success": "Success",
       "typeSth": "Type something...",
       "search": "Search",
-      "reset": "Reset"
+      "reset": "Reset",
+      "delete": "Delete",
+      "update": "Update"
     },
     "notFound": {
       "pageNotFound": "Page Not Found",
-      "goBack": "Click here to go back to users page"
+      "goBack": "Click here to go back to management page"
+    },
+    "management": {
+      "generateDocx": "Generate Doc",
+      "employee": "Employee",
+      "cvActions": "CV Actions",
+      "header": "Management",
+      "newCv": "Create CV",
+      "confirmDelete": "Are you sure?",
+      "okText": "Yes",
+      "cancelText": "No"
     }
   }
 }

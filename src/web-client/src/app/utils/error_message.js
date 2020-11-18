@@ -14,9 +14,11 @@ export default (errorObject) => {
       const missingParams = errorObject?.response?.data?.details?.map((item) => item.path[0]);
 
       err = `Bad Request - Following fields are missing or invalid: ${missingParams}`;
+    } else if (errorObject?.response === undefined) {
+      err = 'Network Error';
     } else {
       err = errorObject?.response?.data;
-    }
+    } 
 
     return err !== '' ? err : 'Internal Error';
   } catch (e) {

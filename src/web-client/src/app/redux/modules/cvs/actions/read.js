@@ -10,7 +10,7 @@ import { start, success, fail } from '../../../../utils/actions';
  */
 
 export const getCvs = () => async (dispatch) => {
-  start(dispatch, actionTypes.GET_CV);
+  start(dispatch, actionTypes.GET_CVS);
 
   const URL = `${config.SERVER_URL}/cvs`;
 
@@ -18,12 +18,12 @@ export const getCvs = () => async (dispatch) => {
     const response = await axios.get(URL);
     const { data } = response;
 
-    success(dispatch, actionTypes.GET_ACCOUNTS, { cvs: [...data] });
+    success(dispatch, actionTypes.GET_CVS, { cvs: [...data] });
 
     return true;
   } catch (error) {
-    fail(dispatch, actionTypes.GET_ACCOUNTS, { error: getError(error) });
-
+    fail(dispatch, actionTypes.GET_CVS, { error: getError(error) });
+    
     return false;
   }
 };
@@ -35,7 +35,7 @@ export const getCvs = () => async (dispatch) => {
  */
 
 export const getCv = (params) => async (dispatch) => {
-  start(dispatch, actionTypes.GET_ACCOUNT);
+  start(dispatch, actionTypes.GET_CV);
 
   const URL = `${config.SERVER_URL}/cvs/${params.id}`;
 
@@ -43,11 +43,11 @@ export const getCv = (params) => async (dispatch) => {
     const response = await axios.get(URL);
     const { data } = response;
 
-    success(dispatch, actionTypes.GET_ACCOUNT, { cv: { ...data } });
+    success(dispatch, actionTypes.GET_CV, { cv: { ...data } });
 
     return true;
   } catch (error) {
-    fail(dispatch, actionTypes.GET_ACCOUNT, { error: getError(error) });
+    fail(dispatch, actionTypes.GET_CV, { error: getError(error) });
 
     return false;
   }
