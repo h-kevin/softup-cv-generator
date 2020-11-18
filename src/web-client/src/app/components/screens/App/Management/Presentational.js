@@ -7,7 +7,7 @@ import {
   Row,
   Col,
   Tooltip,
-  Popconfirm,
+  // Popconfirm,
   notification,
 } from 'antd';
 import {
@@ -18,6 +18,7 @@ import {
 } from '@ant-design/icons'
 
 import { SearchModal, SearchIcon } from '../../../common/TableSearch/Presentational';
+import PopConfirm from '../../../common/PopConfirm/Presentational';
 import routes from '../../../../constants/routes';
 import classes from './Styles.module.scss';
 
@@ -26,6 +27,7 @@ const generateColumns = (
   deleteCv, 
   isDeletingCv,
   generateDocx,
+  lastDeleted,
   history,
 ) => [
   {
@@ -49,7 +51,7 @@ const generateColumns = (
               className={classes.Button}
               type="primary"
               icon={<EditOutlined />}
-              onClick={() => history.push(`${routes.APP.FORM_PAGE}/${record.key}`)}
+              onClick={() => history.push(`${routes.APP.FORM_PAGE}?id=${record.key}`)}
             />
           </Tooltip>
         </Col>
@@ -63,7 +65,7 @@ const generateColumns = (
           </Tooltip>
         </Col>
         <Col>
-          <Popconfirm
+          <PopConfirm
             title={i18n.t('management.confirmDelete')}
             okText={i18n.t('management.okText')}
             cancelText={i18n.t('management.cancelText')}
@@ -74,15 +76,16 @@ const generateColumns = (
                 className={classes.Button}
                 type="primary"
                 icon={<DeleteOutlined />}
-                loading={isDeletingCv}
+                loading={isDeletingCv && lastDeleted === record.key}
                 danger
               />
             </Tooltip>
-          </Popconfirm>
+          </PopConfirm>
         </Col>
       </Row>
     ),
     align: 'center',
+    width: 200,
   },
 ];
 const generateData = (cvs) => {
@@ -107,6 +110,7 @@ const Presentational = ({
   generateDocx,
   deleteCv,
   clearState,
+  lastDeleted,
   history,
 }) => {
   useEffect(() => getCvs(), [getCvs]);
@@ -128,6 +132,7 @@ const Presentational = ({
         deleteCv,
         isDeletingCv,
         generateDocx,
+        lastDeleted,
         history,
       )}
       dataSource={generateData(cvs)}
@@ -150,7 +155,6 @@ const Presentational = ({
         </Row>
       )}
       pagination={{
-        total: cvs?.length || 0,
         showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
         defaultPageSize: 7,
         defaultCurrent: 1,
@@ -174,6 +178,7 @@ Presentational.propTypes = {
   generateDocx: PropTypes.func.isRequired,
   deleteCv: PropTypes.func.isRequired,
   clearState: PropTypes.func.isRequired,
+  lastDeleted: PropTypes.string,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
@@ -183,6 +188,7 @@ Presentational.defaultProps = {
   cvs: undefined,
   isReadingCvs: false,
   isDeletingCv: false,
+  lastDeleted: undefined,
   error: undefined,
 };
 

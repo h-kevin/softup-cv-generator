@@ -1,0 +1,43 @@
+@import '../../../styles/abstracts/variables.scss';
+
+.PopConfirm {
+  div {
+    div {
+      &:nth-child(2) {
+        div {
+          div {
+            &:nth-child(1) {
+              div {
+                font-family: $primary-regular;
+                font-size: .85rem;
+                color: $washed-black;
+              }
+            }
+
+            &:nth-child(2) {
+              button {
+                font-family: $primary-medium;
+                padding: 3px 10px;
+                font-size: .75rem;
+                height: auto;
+                border: 0;
+                box-shadow: 0 4px 6px rgba(50, 50, 93, .11),
+                    0 1px 3px rgba(0, 0, 0, .08);
+                border-radius: 7px;
+                margin-left: 5px;
+
+                &:nth-child(1) {
+                  color: $washed-black;
+                }
+
+                &:nth-child(2) {
+                  color: $white;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

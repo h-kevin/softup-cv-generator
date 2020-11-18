@@ -12,7 +12,9 @@ import { start, success, fail } from '../../../../utils/actions';
  */
 
 export const deleteCv = (params) => async (dispatch) => {
-  start(dispatch, actionTypes.DELETE_CV);
+  start(dispatch, actionTypes.DELETE_CV, {
+    deletedId: params.id, 
+  });
 
   const URL = `${config.SERVER_URL}/cvs/${params.id}`;
 

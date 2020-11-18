@@ -17,7 +17,7 @@ export const generateDocx = (params) => async (dispatch) => {
   try {
     const link = document.createElement('a');
     link.href = URL;
-    link.setAttribute('target', '_blank');
+    link.setAttribute('target', '_self');
     document.body.appendChild(link);
     link.click();
 

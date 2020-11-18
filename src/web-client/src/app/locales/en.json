@@ -15,7 +15,7 @@
     },
     "management": {
       "generateDocx": "Generate Doc",
-      "employee": "Employee",
+      "employee": "Employees",
       "cvActions": "CV Actions",
       "header": "Management",
       "newCv": "Create CV",

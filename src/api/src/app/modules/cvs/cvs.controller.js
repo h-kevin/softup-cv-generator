@@ -139,7 +139,7 @@ export const generateDocx = async (req, res, next) => {
     const readStream = new stream.PassThrough();
     readStream.end(fileContents);
 
-    res.set('Content-disposition', 'attachment; filename=CV.docx');
+    res.set('Content-disposition', `attachment; filename=${user.firstName} ${user.lastName}.docx`);
     res.set('Content-Type', 'text/plain');
     
     readStream.pipe(res);

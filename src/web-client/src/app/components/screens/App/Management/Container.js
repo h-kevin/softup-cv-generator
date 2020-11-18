@@ -10,9 +10,10 @@ import { clearState } from '../../../../utils/actions';
 const mapStateToProps = (state) => ({
   cvs: state.cvs._data 
     ? state.cvs._data.cvs 
-    : null,
+    : undefined,
   isReadingCvs: state.cvs.isReading,
   isDeletingCv: state.cvs.isDeleting,
+  lastDeleted: state.cvs._data?.lastDeleted,
   error: state.cvs.error,
 });
 

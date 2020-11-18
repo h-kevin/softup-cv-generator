@@ -71,15 +71,22 @@ const reducer = (state = initState, action) => {
         state,
         action,
         actions.DELETE,
-        null,
+        () => ({
+          ...state._data,
+          lastDeleted: action.payload.deletedId,
+        }),
         () => ({
           ...state._data,
           cvs: deleteObjectFromArray(
             state._data?.cvs,
             action.payload.deletedId,
           ),
+          lastDeleted: undefined,
         }),
-        null,
+        () => ({
+          ...state._data,
+          lastDeleted: undefined,
+        }),
       );
     case types.GENERATE_DOCX:
       return baseReducer(
