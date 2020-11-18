@@ -7,6 +7,7 @@ import {
 
 import NotFound from '../../404/Presentational';
 import Management from '../Management/Container';
+import FormPage from '../FormPage/Container';
 import routes from '../../../../constants/routes';
 
 const Presentational = () => (
@@ -16,6 +17,11 @@ const Presentational = () => (
         exact
         path={routes.APP.MANAGEMENT}
         component={Management}
+      />
+      <Route
+        exact
+        path={routes.APP.FORM_PAGE}
+        component={FormPage}
       />
       <Route 
         exact 
