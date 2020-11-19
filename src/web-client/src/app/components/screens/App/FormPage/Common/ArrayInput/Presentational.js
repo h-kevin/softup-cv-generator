@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Tag } from 'antd';
-import { Input } from 'formik-antd';
+import { Tag, Input, Form } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import i18n from 'i18next';
 import PropTypes from 'prop-types';
@@ -46,12 +45,15 @@ const Presentational = ({
   array, 
   setArray,
   name,
+  label,
 }) => {
   const [tagsInputValue, setTagsInputValue] = useState('');
   const [showArrayInput, setShowArrayInput] = useState(false);
 
   return (
-    <>
+    <Form.Item
+      label={label}
+    >
       <TweenOneGroup array={generateTags(array, setArray)} />
       {showArrayInput && (
         <Input
@@ -87,7 +89,7 @@ const Presentational = ({
           {i18n.t('formPage.newItem')}
         </Tag>
       )}
-    </>
+    </Form.Item>
   );
 };
 
@@ -97,6 +99,7 @@ Presentational.propTypes = {
   ).isRequired, 
   setArray: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 export default Presentational;

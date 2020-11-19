@@ -23,7 +23,7 @@ body {
     @extend .no-shadow;
   }
 
-  input.ant-input:focus {
+  .ant-input:focus {
     @extend .no-shadow;
   }
 }

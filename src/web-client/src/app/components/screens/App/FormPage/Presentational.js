@@ -1,10 +1,19 @@
+/* eslint-disable */
+
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
-import { Formik } from 'formik';
-import { FormItem, Form, Input } from 'formik-antd';
+import { Formik, FieldArray, Field, ErrorMessage } from 'formik';
+import { 
+  Button, 
+  Space, 
+  Form,
+} from 'antd';
+import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import * as Yup from 'yup';
 import i18n from 'i18next';
 
+import Input from './Common/Input/Presentational';
+import TextArea from './Common/TextArea/Presentational';
 import ArrayInput from './Common/ArrayInput/Presentational';
 import classes from './Styles.module.scss';
 
@@ -255,145 +264,207 @@ const Presentational = () => {
       initialValues={initialValues}
       validationSchema={validation}
     >
-      {() => (
+      {({ 
+        values, 
+        errors,
+        touched, 
+        setFieldTouched, 
+      }) => (
         <Form layout="vertical" noValidate>
-          <FormItem
+          <Field
+            as={Input}
             name="firstName" 
             label={i18n.t('formPage.firstName')}
             required
-            showValidateSuccess
-          >
-            <Input name="firstName" placeholder={i18n.t('formPage.firstNameEx')} />
-          </FormItem>
-          <FormItem
+            hasFeedback
+            touched={touched.firstName}
+            setFieldTouched={setFieldTouched}
+            error={errors.firstName}
+            placeholder={i18n.t('formPage.firstNameEx')} 
+          />
+          <Field
+            as={Input}
             name="lastName" 
             label={i18n.t('formPage.lastName')}
             required
-            showValidateSuccess
-          >
-            <Input name="lastName" placeholder={i18n.t('formPage.lastNameEx')} />
-          </FormItem>
-          <FormItem
+            hasFeedback
+            touched={touched.lastName}
+            setFieldTouched={setFieldTouched}
+            error={errors.lastName}
+            placeholder={i18n.t('formPage.lastNameEx')} 
+          />
+          <Field
+            as={Input}
             name="role" 
             label={i18n.t('formPage.role')}
             required
-            showValidateSuccess
-          >
-            <Input name="role" placeholder={i18n.t('formPage.roleEx')} />
-          </FormItem>
-          <FormItem
+            hasFeedback
+            touched={touched.role}
+            setFieldTouched={setFieldTouched}
+            error={errors.role}
+            placeholder={i18n.t('formPage.roleEx')} 
+          />
+          <Field
+            as={TextArea}
             name="summary" 
             label={i18n.t('formPage.summary')}
             required
-            showValidateSuccess
-          >
-            <Input.TextArea
-              className={classes.TextArea}
-              name="summary" 
-              placeholder={i18n.t('formPage.summaryEx')} 
-              autoSize
-            />
-          </FormItem>
-          <FormItem
-            name="languages" 
+            autoSize
+            touched={touched.summary}
+            setFieldTouched={setFieldTouched}
+            error={errors.summary}
+            placeholder={i18n.t('formPage.summaryEx')} 
+          />
+          <ArrayInput
+            array={languages} 
+            setArray={setLanguages}
+            name={i18n.t('formPage.languages')}
             label={i18n.t('formPage.languages')}
-          >
-            <ArrayInput
-              array={languages} 
-              setArray={setLanguages}
-              name={i18n.t('formPage.languages')}
-            />
-          </FormItem>
-          <FormItem
-            name="databases" 
+          />
+          <ArrayInput
+            array={databases} 
+            setArray={setDatabases}
+            name={i18n.t('formPage.databases')}
             label={i18n.t('formPage.databases')}
-          >
-            <ArrayInput
-              array={databases} 
-              setArray={setDatabases}
-              name={i18n.t('formPage.databases')}
-            />
-          </FormItem>
-          <FormItem
-            name="backendFrameworks" 
+          />
+          <ArrayInput
+            array={backendFrameworks} 
+            setArray={setBackendFrameworks}
+            name={i18n.t('formPage.backendFrameworks')}
             label={i18n.t('formPage.backendFrameworks')}
-          >
-            <ArrayInput
-              array={backendFrameworks} 
-              setArray={setBackendFrameworks}
-              name={i18n.t('formPage.backendFrameworks')}
-            />
-          </FormItem>
-          <FormItem
-            name="frontendFrameworks" 
+          />
+          <ArrayInput
+            array={frontendFrameworks} 
+            setArray={setFrontendFrameworks}
+            name={i18n.t('formPage.frontendFrameworks')}
             label={i18n.t('formPage.frontendFrameworks')}
-          >
-            <ArrayInput
-              array={frontendFrameworks} 
-              setArray={setFrontendFrameworks}
-              name={i18n.t('formPage.frontendFrameworks')}
-            />
-          </FormItem>
-          <FormItem
-            name="operationsAndInfrastructure" 
+          />
+          <ArrayInput
+            array={operationsAndInfrastructure} 
+            setArray={setOperationsAndInfrastructure}
+            name={i18n.t('formPage.operationsAndInfrastructure')}
             label={i18n.t('formPage.operationsAndInfrastructure')}
-          >
-            <ArrayInput
-              array={operationsAndInfrastructure} 
-              setArray={setOperationsAndInfrastructure}
-              name={i18n.t('formPage.operationsAndInfrastructure')}
-            />
-          </FormItem>
-          <FormItem
-            name="integrationAndDeployment" 
+          />
+          <ArrayInput
+            array={integrationAndDeployment} 
+            setArray={setIntegrationAndDeployment}
+            name={i18n.t('formPage.integrationAndDeployment')}
             label={i18n.t('formPage.integrationAndDeployment')}
-          >
-            <ArrayInput
-              array={integrationAndDeployment} 
-              setArray={setIntegrationAndDeployment}
-              name={i18n.t('formPage.integrationAndDeployment')}
-            />
-          </FormItem>
-          <FormItem
-            name="testing" 
+          />
+          <ArrayInput
+            array={testing} 
+            setArray={setTesting}
+            name={i18n.t('formPage.testing')}
             label={i18n.t('formPage.testing')}
-          >
-            <ArrayInput
-              array={testing} 
-              setArray={setTesting}
-              name={i18n.t('formPage.testing')}
-            />
-          </FormItem>
-          <FormItem
-            name="thirdParty" 
+          />
+          <ArrayInput
+            array={thirdParty} 
+            setArray={setThirdParty}
+            name={i18n.t('formPage.thirdParty')}
             label={i18n.t('formPage.thirdParty')}
-          >
-            <ArrayInput
-              array={thirdParty} 
-              setArray={setThirdParty}
-              name={i18n.t('formPage.thirdParty')}
-            />
-          </FormItem>
-          <FormItem
-            name="agile" 
+          />
+          <ArrayInput
+            array={agile} 
+            setArray={setAgile}
+            name={i18n.t('formPage.agile')}
             label={i18n.t('formPage.agile')}
-          >
-            <ArrayInput
-              array={agile} 
-              setArray={setAgile}
-              name={i18n.t('formPage.agile')}
-            />
-          </FormItem>
-          <FormItem
-            name="other" 
+          />
+          <ArrayInput
+            array={other} 
+            setArray={setOther}
+            name={i18n.t('formPage.other')}
             label={i18n.t('formPage.other')}
+          />
+          {/* <Form.Item 
+            name="spokenLanguages" 
+            label={i18n.t('formPage.spokenLanguages')}
           >
-            <ArrayInput
-              array={other} 
-              setArray={setOther}
-              name={i18n.t('formPage.other')}
-            />
-          </FormItem>
+            <Form.List name="spokenLanguages">
+              {(fields, { add, remove }) => (
+                <div>
+                  {fields.map((field) => (
+                    <Space 
+                      key={field.key} 
+                      style={{
+                        display: 'flex', 
+                        marginBottom: 8,
+                      }} 
+                      align="baseline"
+                    >
+                      <Form.Item
+                        {...field}
+                        name={[field.name, 'language']}
+                        fieldKey={[field.fieldKey, 'language']}
+                        rules={[{ required: true, message: 'Missing first name' }]}
+                      >
+                        <Input 
+                          size="small" 
+                          placeholder="Language" 
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        {...field}
+                        name={[field.name, 'level']}
+                        fieldKey={[field.fieldKey, 'level']}
+                        rules={[{ required: true, message: 'Missing last name' }]}
+                      >
+                        <Input 
+                          size="small" 
+                          placeholder="Level" 
+                        />
+                      </Form.Item>
+                      <MinusCircleOutlined onClick={() => remove(field.name)} />
+                    </Space>
+                  ))}
+                  <Form.Item name="button">
+                    <Button
+                      name="button"
+                      type="dashed"
+                      onClick={() => {
+                        add();
+                      }}
+                      style={{ width: '100%' }}
+                    >
+                      <PlusOutlined /> 
+                      Add new language
+                    </Button>
+                  </Form.Item>
+                </div>
+              )}
+            </Form.List>
+          </Form.Item> */}
+          <Form.Item>
+            <Button 
+              onClick={() => console.log(values)} 
+              type="primary" 
+              htmlType="submit"
+            >
+              Submit
+            </Button>
+          </Form.Item>
+          <FieldArray
+            name="spokenLanguages"
+            render={arrayHelpers => (
+              <div>
+                {values.spokenLanguages.map((friend, index) => (
+                  <div key={index}>
+                    <Field as={Input} name={`spokenLanguages[${index}].language`} />
+                    <Field as={Input} name={`spokenLanguages.${index}.level`} />
+        
+                    <button type="button" onClick={() => arrayHelpers.remove(index)}>
+                      -
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => arrayHelpers.push({ language: '', level: '' })}
+                >
+                  +
+                </button>
+              </div>
+            )}
+          />
         </Form>
       )}
     </Formik>
