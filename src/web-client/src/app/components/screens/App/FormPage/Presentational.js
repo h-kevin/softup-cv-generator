@@ -2,20 +2,32 @@
 
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
-import { Formik, FieldArray, Field, ErrorMessage } from 'formik';
+import { 
+  Formik, 
+  FieldArray, 
+  Field,
+} from 'formik';
 import { 
   Button, 
   Space, 
   Form,
+  DatePicker,
+  Upload,
 } from 'antd';
-import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import AntInput from 'antd/lib/input/Input';
+import AntTextArea from 'antd/lib/input/TextArea';
+import { 
+  PlusOutlined, 
+  MinusCircleOutlined, 
+  UploadOutlined,
+} from '@ant-design/icons';
 import * as Yup from 'yup';
 import i18n from 'i18next';
 
 import Input from './Common/Input/Presentational';
 import TextArea from './Common/TextArea/Presentational';
 import ArrayInput from './Common/ArrayInput/Presentational';
-import classes from './Styles.module.scss';
+import { antRules } from '../../../../helpers/validation';
 
 const initialValues = {
   firstName: '',
@@ -268,7 +280,8 @@ const Presentational = () => {
         values, 
         errors,
         touched, 
-        setFieldTouched, 
+        setFieldTouched,
+        setFieldValue,
       }) => (
         <Form layout="vertical" noValidate>
           <Field
@@ -375,64 +388,342 @@ const Presentational = () => {
             name={i18n.t('formPage.other')}
             label={i18n.t('formPage.other')}
           />
-          {/* <Form.Item 
-            name="spokenLanguages" 
-            label={i18n.t('formPage.spokenLanguages')}
-          >
-            <Form.List name="spokenLanguages">
-              {(fields, { add, remove }) => (
-                <div>
-                  {fields.map((field) => (
-                    <Space 
-                      key={field.key} 
-                      style={{
-                        display: 'flex', 
-                        marginBottom: 8,
-                      }} 
-                      align="baseline"
+          <FieldArray
+            name="spokenLanguages"
+            render={(arrayHelpers) => (
+              <div>
+                {values.spokenLanguages.map((_language, index) => (
+                  <Space 
+                    key={index}
+                    style={{
+                      display: 'flex', 
+                      marginBottom: 10,
+                    }} 
+                    align="baseline"
+                  >
+                    <Form.Item
+                      hasFeedback
+                      name={`spokenLanguages[${index}].language`}
+                      rules={antRules()}
                     >
-                      <Form.Item
-                        {...field}
-                        name={[field.name, 'language']}
-                        fieldKey={[field.fieldKey, 'language']}
-                        rules={[{ required: true, message: 'Missing first name' }]}
-                      >
-                        <Input 
-                          size="small" 
-                          placeholder="Language" 
-                        />
-                      </Form.Item>
-                      <Form.Item
-                        {...field}
-                        name={[field.name, 'level']}
-                        fieldKey={[field.fieldKey, 'level']}
-                        rules={[{ required: true, message: 'Missing last name' }]}
-                      >
-                        <Input 
-                          size="small" 
-                          placeholder="Level" 
-                        />
-                      </Form.Item>
-                      <MinusCircleOutlined onClick={() => remove(field.name)} />
-                    </Space>
-                  ))}
-                  <Form.Item name="button">
+                      <AntInput
+                        name={`spokenLanguages[${index}].language`}
+                        placeholder={i18n.t('formPage.language')} 
+                        onBlur={(e) => setFieldValue(
+                          `spokenLanguages[${index}].language`,
+                          e.target.value,
+                        )}
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      hasFeedback
+                      name={`spokenLanguages[${index}].level`}
+                      rules={antRules()}
+                    >
+                      <AntInput 
+                        name={`spokenLanguages.${index}.level`} 
+                        placeholder={i18n.t('formPage.level')} 
+                        onBlur={(e) => setFieldValue(
+                          `spokenLanguages[${index}].level`,
+                          e.target.value,
+                        )}
+                      />
+                    </Form.Item>
+                    <MinusCircleOutlined onClick={() => arrayHelpers.remove(index)} />
+                  </Space>
+                ))}
+                <Form.Item name="button">
                     <Button
+                      id="addLanguages"
                       name="button"
                       type="dashed"
-                      onClick={() => {
-                        add();
-                      }}
+                      onClick={() => arrayHelpers.push({ 
+                        language: '', 
+                        level: '',
+                      })}
                       style={{ width: '100%' }}
                     >
                       <PlusOutlined /> 
                       Add new language
                     </Button>
                   </Form.Item>
-                </div>
-              )}
-            </Form.List>
-          </Form.Item> */}
+              </div>
+            )}
+          />
+          <FieldArray
+            name="projects"
+            render={(arrayHelpers) => (
+              <div>
+                {values.projects.map((_project, index) => (
+                  <div key={index}>
+                    <Space 
+                      style={{
+                        display: 'flex', 
+                        marginBottom: 4,
+                      }} 
+                      align="baseline"
+                    >
+                      <Form.Item
+                        hasFeedback
+                        name={`projects[${index}].period.startDate`}
+                        rules={antRules()}
+                      >
+                        <DatePicker
+                          name={`projects[${index}].period.startDate`}
+                          placeholder={i18n.t('formPage.startDate')}
+                          onChange={(e) => setFieldValue(
+                            `projects[${index}].period.startDate`,
+                            e?._d,
+                          )}
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        hasFeedback
+                        name={`projects[${index}].period.endDate`}
+                      >
+                        <DatePicker 
+                          name={`projects[${index}].period.endDate`} 
+                          placeholder={i18n.t('formPage.endDate')} 
+                          onChange={(e) => setFieldValue(
+                            `projects[${index}].period.endDate`,
+                            e?._d,
+                          )}
+                        />
+                      </Form.Item>
+                    </Space>
+                    <Space 
+                      style={{
+                        display: 'flex', 
+                        marginBottom: 4,
+                      }} 
+                      align="baseline"
+                    >
+                      <Form.Item
+                        hasFeedback
+                        name={`projects[${index}].client`}
+                        rules={antRules()}
+                      >
+                        <AntInput 
+                          name={`projects.${index}.client`} 
+                          placeholder={i18n.t('formPage.client')} 
+                          onBlur={(e) => setFieldValue(
+                            `projects[${index}].client`,
+                            e.target.value,
+                          )}
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        hasFeedback
+                        name={`projects[${index}].position`}
+                        rules={antRules()}
+                      >
+                        <AntInput 
+                          name={`projects.${index}.position`} 
+                          placeholder={i18n.t('formPage.position')} 
+                          onBlur={(e) => setFieldValue(
+                            `projects[${index}].position`,
+                            e.target.value,
+                          )}
+                        />
+                      </Form.Item>
+                    </Space>
+                    <Space 
+                      style={{
+                        display: 'flex', 
+                        marginBottom: 4,
+                      }} 
+                      align="baseline"
+                      size="small"
+                    >
+                      <Form.Item
+                      style={{
+                        width: '376px'
+                      }} 
+                        hasFeedback
+                        name={`projects[${index}].technologies`}
+                        rules={antRules()}
+                      >
+                        <AntInput 
+                          name={`projects.${index}.technologies`} 
+                          placeholder={i18n.t('formPage.technologies')} 
+                          onBlur={(e) => setFieldValue(
+                            `projects[${index}].technologies`,
+                            e.target.value
+                              .replace(/ +/g, ' ')
+                              .split(/\s*,\s*/)
+                              .filter((item) => item),
+                          )}
+                        />
+                      </Form.Item>
+                    </Space>
+                    <Space 
+                      style={{
+                        display: 'flex', 
+                        marginBottom: 10,
+                      }} 
+                      align="baseline"
+                      size="small"
+                    >
+                      <Form.Item
+                      style={{
+                        width: '376px'
+                      }} 
+                        name={`projects[${index}].responsibilities`}
+                        rules={antRules()}
+                      >
+                        <AntTextArea 
+                          style={{ resize: 'none' }}
+                          autoSize={true}
+                          name={`projects.${index}.responsibilities`} 
+                          placeholder={i18n.t('formPage.responsibilities')} 
+                          onBlur={(e) => setFieldValue(
+                            `projects[${index}].responsibilities`,
+                            e.target.value,
+                          )}
+                        />
+                      </Form.Item>
+                      <MinusCircleOutlined onClick={() => arrayHelpers.remove(index)} />
+                    </Space>
+                  </div>
+                ))}
+                <Form.Item name="button">
+                    <Button
+                      id="addProjects"
+                      name="button"
+                      type="dashed"
+                      onClick={() => arrayHelpers.push({})}
+                      style={{ width: '100%' }}
+                    >
+                      <PlusOutlined /> 
+                      Add new Project
+                    </Button>
+                  </Form.Item>
+              </div>
+            )}
+          />
+          <FieldArray
+            name="education"
+            render={(arrayHelpers) => (
+              <div>
+                {values.education.map((_item, index) => (
+                  <div key={index}>
+                    <Space 
+                      style={{
+                        display: 'flex', 
+                        marginBottom: 4,
+                      }} 
+                      align="baseline"
+                    >
+                      <Form.Item
+                        hasFeedback
+                        name={`education[${index}].institution`}
+                        rules={antRules()}
+                      >
+                        <AntInput 
+                          name={`education.${index}.institution`} 
+                          placeholder={i18n.t('formPage.institution')} 
+                          onBlur={(e) => setFieldValue(
+                            `education[${index}].institution`,
+                            e.target.value,
+                          )}
+                        />
+                      </Form.Item>
+                    </Space>
+                    <Space 
+                      style={{
+                        display: 'flex', 
+                        marginBottom: 4,
+                      }} 
+                      align="baseline"
+                      size="small"
+                    >
+                      <Form.Item
+                      style={{
+                        width: '500px'
+                      }} 
+                        hasFeedback
+                        name={`education[${index}].qualifications`}
+                        rules={antRules()}
+                      >
+                        <AntInput 
+                          name={`education.${index}.qualifications`} 
+                          placeholder={i18n.t('formPage.qualifications')} 
+                          onBlur={(e) => setFieldValue(
+                            `education[${index}].qualifications`,
+                            e.target.value
+                              .replace(/ +/g, ' ')
+                              .split(/\s*,\s*/)
+                              .filter((item) => item),
+                          )}
+                        />
+                      </Form.Item>
+                    </Space>
+                    <Space 
+                      style={{
+                        display: 'flex', 
+                        marginBottom: 10,
+                      }} 
+                      align="baseline"
+                    >
+                      <Form.Item
+                        hasFeedback
+                        name={`education[${index}].period.startDate`}
+                        rules={antRules()}
+                      >
+                        <DatePicker
+                          name={`education[${index}].period.startDate`}
+                          placeholder={i18n.t('formPage.startDate')}
+                          onChange={(e) => setFieldValue(
+                            `education[${index}].period.startDate`,
+                            e?._d,
+                          )}
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        hasFeedback
+                        name={`education[${index}].period.endDate`}
+                      >
+                        <DatePicker 
+                          name={`education[${index}].period.endDate`} 
+                          placeholder={i18n.t('formPage.endDate')} 
+                          onChange={(e) => setFieldValue(
+                            `education[${index}].period.endDate`,
+                            e?._d,
+                          )}
+                        />
+                      </Form.Item>
+                      <MinusCircleOutlined onClick={() => arrayHelpers.remove(index)} />
+                    </Space>
+                  </div>
+                ))}
+                <Form.Item name="button">
+                    <Button
+                      id="addInstitutions"
+                      name="button"
+                      type="dashed"
+                      onClick={() => arrayHelpers.push()}
+                      style={{ width: '100%' }}
+                    >
+                      <PlusOutlined /> 
+                      Add new institution
+                    </Button>
+                  </Form.Item>
+              </div>
+            )}
+          />
+          <Form.Item>
+            <Upload 
+              name="file"
+              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              headers={{ authorization: 'authorization-text' }}
+            >
+              <Button 
+                icon={<UploadOutlined />}
+              >
+                Click to Upload
+              </Button>
+            </Upload>
+          </Form.Item>
           <Form.Item>
             <Button 
               onClick={() => console.log(values)} 
@@ -442,29 +733,6 @@ const Presentational = () => {
               Submit
             </Button>
           </Form.Item>
-          <FieldArray
-            name="spokenLanguages"
-            render={arrayHelpers => (
-              <div>
-                {values.spokenLanguages.map((friend, index) => (
-                  <div key={index}>
-                    <Field as={Input} name={`spokenLanguages[${index}].language`} />
-                    <Field as={Input} name={`spokenLanguages.${index}.level`} />
-        
-                    <button type="button" onClick={() => arrayHelpers.remove(index)}>
-                      -
-                    </button>
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={() => arrayHelpers.push({ language: '', level: '' })}
-                >
-                  +
-                </button>
-              </div>
-            )}
-          />
         </Form>
       )}
     </Formik>

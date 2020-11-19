@@ -54,12 +54,11 @@
       "clientEx": "Real Estate Industry",
       "position": "Position",
       "positionEx": "Junior Software Developer",
-      "technologies": "Technologies",
-      "responsibilities": "Responsibilities",
-      "responsibilitiesEx": "Implemented initial _system_ \n*architecture* and...",
+      "technologies": "Technologies e.g. Node.JS, Python, Flask...",
+      "responsibilities": "Responsibilities \n\ne.g. Implemented initial _system_ \n*architecture* and...",
       "education": "Education",
       "institution": "Institution",
-      "qualifications": "Qualifications",
+      "qualifications": "Qualifications e.g. Bachelor of Science (BSc), Software Engineering...",
       "fieldIsRequired": "Field is required",
       "newItem": "New item"
     }
