@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import { Formik } from 'formik';
-import { Tag } from 'antd';
 import { FormItem, Form, Input } from 'formik-antd';
-import { PlusOutlined } from '@ant-design/icons';
 import * as Yup from 'yup';
 import i18n from 'i18next';
 
-import TweenOneGroup from './Common/TweenOneGroup/Presentational';
+import ArrayInput from './Common/ArrayInput/Presentational';
 import classes from './Styles.module.scss';
 
 const initialValues = {
@@ -207,45 +205,8 @@ const validation = () => Yup.object().shape({
 // const onSubmit = async () => {
   
 // };
-const onTagRemove = (oldTags, removedTag) => oldTags.filter((tag) => tag !== removedTag);
-const onTagsInputConfirm = (
-  tagsInputValue, 
-  tagsSet, 
-  setTagsInputValue, 
-  setTagsSet,
-  setShowTagsInput,
-) => {
-  if (tagsInputValue && !tagsSet.includes(tagsInputValue)) {
-    tagsSet = [...tagsSet, tagsInputValue];
-  }
-  setTagsInputValue('');
-  setTagsSet(tagsSet);
-  setShowTagsInput(false);
-};
-const generateTags = (set, updateSet) => set.map((tag) => {
-  const tagElem = (
-    <Tag
-      closable
-      onClose={(e) => {
-        e.preventDefault();
-        updateSet(onTagRemove(set, tag));
-      }}
-    >
-      {tag}
-    </Tag>
-  );
-  
-  return (
-    <span key={tag} style={{ display: 'inline-block' }}>
-      {tagElem}
-    </span>
-  );
-});
 
 const Presentational = () => {
-  const [tagsInputValue, setTagsInputValue] = useState('');
-  const [showLanguagesInput, setShowLanguagesInput] = useState(false);
-  const [showDatabasesInput, setShowDatabasesInput] = useState(false);
   const [languages, setLanguages] = useState([
     'JavaScript',
     'Python',
@@ -255,6 +216,38 @@ const Presentational = () => {
     'MongoDB',
     'MySQL',
     'PostgreSQL',
+  ]);
+  const [backendFrameworks, setBackendFrameworks] = useState([
+    'Express.js',
+    'Flask',
+  ]); 
+  const [frontendFrameworks, setFrontendFrameworks] = useState([
+    'ReactJS',
+    'VueJS',
+  ]); 
+  const [operationsAndInfrastructure, setOperationsAndInfrastructure] = useState([
+    'Docker',
+    'JWT',
+    'nginx',
+  ]); 
+  const [integrationAndDeployment, setIntegrationAndDeployment] = useState([
+    'Jenkins',
+  ]);
+  const [testing, setTesting] = useState([
+    'Jest',
+  ]);
+  const [thirdParty, setThirdParty] = useState([
+    'Google Analytics',
+    'Azure Content Moderator',
+  ]);
+  const [agile, setAgile] = useState([
+    'Kanban',
+    'Scrum',
+  ]);
+  const [other, setOther] = useState([
+    'Natural Language Processing',
+    'Android Development',
+    'Machine Learning',
   ]);
 
   return (
@@ -305,81 +298,101 @@ const Presentational = () => {
             name="languages" 
             label={i18n.t('formPage.languages')}
           >
-            <TweenOneGroup array={generateTags(languages, setLanguages)} />
-            {showLanguagesInput && (
-              <Input
-                name="languages"
-                type="text"
-                size="small"
-                style={{ width: 82 }}
-                value={tagsInputValue}
-                onChange={(e) => setTagsInputValue(e.target.value)}
-                onMouseOver={(e) => e.target.focus()}
-                onBlur={() => onTagsInputConfirm(
-                  tagsInputValue, 
-                  languages, 
-                  setTagsInputValue, 
-                  setLanguages,
-                  setShowLanguagesInput,
-                )}
-                onPressEnter={() => onTagsInputConfirm(
-                  tagsInputValue, 
-                  languages, 
-                  setTagsInputValue, 
-                  setLanguages,
-                  setShowLanguagesInput,
-                )}
-              />
-            )}
-            {!showLanguagesInput && (
-              <Tag 
-                onClick={() => setShowLanguagesInput(true)} 
-                className="site-tag-plus"
-              >
-                <PlusOutlined /> 
-                {i18n.t('formPage.newItem')}
-              </Tag>
-            )}
+            <ArrayInput
+              array={languages} 
+              setArray={setLanguages}
+              name={i18n.t('formPage.languages')}
+            />
           </FormItem>
           <FormItem
             name="databases" 
             label={i18n.t('formPage.databases')}
           >
-            <TweenOneGroup array={generateTags(databases, setDatabases)} />
-            {showDatabasesInput && (
-              <Input
-                name="databases"
-                type="text"
-                size="small"
-                style={{ width: 82 }}
-                value={tagsInputValue}
-                onChange={(e) => setTagsInputValue(e.target.value)}
-                onMouseOver={(e) => e.target.focus()}
-                onBlur={() => onTagsInputConfirm(
-                  tagsInputValue, 
-                  databases, 
-                  setTagsInputValue, 
-                  setDatabases,
-                  setShowDatabasesInput,
-                )}
-                onPressEnter={() => onTagsInputConfirm(
-                  tagsInputValue, 
-                  databases, 
-                  setTagsInputValue, 
-                  setDatabases,
-                  setShowDatabasesInput,
-                )}
-              />
-            )}
-            {!showDatabasesInput && (
-              <Tag 
-                onClick={() => setShowDatabasesInput(true)} 
-                className="site-tag-plus"
-              >
-                <PlusOutlined /> 
-                {i18n.t('formPage.newItem')}
-              </Tag>
-            )}
+            <ArrayInput
+              array={databases} 
+              setArray={setDatabases}
+              name={i18n.t('formPage.databases')}
+            />
+          </FormItem>
+          <FormItem
+            name="backendFrameworks" 
+            label={i18n.t('formPage.backendFrameworks')}
+          >
+            <ArrayInput
+              array={backendFrameworks} 
+              setArray={setBackendFrameworks}
+              name={i18n.t('formPage.backendFrameworks')}
+            />
+          </FormItem>
+          <FormItem
+            name="frontendFrameworks" 
+            label={i18n.t('formPage.frontendFrameworks')}
+          >
+            <ArrayInput
+              array={frontendFrameworks} 
+              setArray={setFrontendFrameworks}
+              name={i18n.t('formPage.frontendFrameworks')}
+            />
+          </FormItem>
+          <FormItem
+            name="operationsAndInfrastructure" 
+            label={i18n.t('formPage.operationsAndInfrastructure')}
+          >
+            <ArrayInput
+              array={operationsAndInfrastructure} 
+              setArray={setOperationsAndInfrastructure}
+              name={i18n.t('formPage.operationsAndInfrastructure')}
+            />
+          </FormItem>
+          <FormItem
+            name="integrationAndDeployment" 
+            label={i18n.t('formPage.integrationAndDeployment')}
+          >
+            <ArrayInput
+              array={integrationAndDeployment} 
+              setArray={setIntegrationAndDeployment}
+              name={i18n.t('formPage.integrationAndDeployment')}
+            />
+          </FormItem>
+          <FormItem
+            name="testing" 
+            label={i18n.t('formPage.testing')}
+          >
+            <ArrayInput
+              array={testing} 
+              setArray={setTesting}
+              name={i18n.t('formPage.testing')}
+            />
+          </FormItem>
+          <FormItem
+            name="thirdParty" 
+            label={i18n.t('formPage.thirdParty')}
+          >
+            <ArrayInput
+              array={thirdParty} 
+              setArray={setThirdParty}
+              name={i18n.t('formPage.thirdParty')}
+            />
+          </FormItem>
+          <FormItem
+            name="agile" 
+            label={i18n.t('formPage.agile')}
+          >
+            <ArrayInput
+              array={agile} 
+              setArray={setAgile}
+              name={i18n.t('formPage.agile')}
+            />
+          </FormItem>
+          <FormItem
+            name="other" 
+            label={i18n.t('formPage.other')}
+          >
+            <ArrayInput
+              array={other} 
+              setArray={setOther}
+              name={i18n.t('formPage.other')}
+            />
           </FormItem>
         </Form>
       )}
