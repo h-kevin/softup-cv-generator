@@ -70,7 +70,8 @@
       "addNewLanguage": "Add new language",
       "addNewProject": "Add new project",
       "addNewInstitution": "Add new institution",
-      "submit": "Submit",
+      "create": "Create",
+      "update": "Update",
       "cancel": "Cancel"
     }
   }

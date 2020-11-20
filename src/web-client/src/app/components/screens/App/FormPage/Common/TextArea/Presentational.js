@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { Form, Input } from 'antd';
 import { ErrorMessage } from 'formik';
@@ -15,12 +16,17 @@ const Presentational = ({
   error,
   touched,
   setFieldTouched,
+  value,
+  style,
+  help,
 }) => (
   <Form.Item
     label={label}
     required={required}
     validateTrigger="onKeyUp"
     validateStatus={error && touched ? 'error' : 'success'}
+    help={help}
+    style={style}
   >
     <Input.TextArea
       onBlur={(...args) => {
@@ -29,6 +35,7 @@ const Presentational = ({
       }}
       name={name}
       placeholder={placeholder} 
+      defaultValue={value}
       autoSize={autoSize}
       style={{
         resize: 'none',
@@ -49,6 +56,7 @@ const Presentational = ({
 Presentational.propTypes = {
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
+  value: PropTypes.string,
   label: PropTypes.string,
   required: PropTypes.bool,
   placeholder: PropTypes.string,
@@ -56,15 +64,20 @@ Presentational.propTypes = {
   error: PropTypes.string,
   touched: PropTypes.bool,
   setFieldTouched: PropTypes.func.isRequired,
+  style: PropTypes.shape({}),
+  help: PropTypes.string,
 };
 
 Presentational.defaultProps = {
+  value: '',
   label: undefined,
   required: false,
   placeholder: '',
   autoSize: false,
   touched: false,
   error: undefined,
+  style: undefined,
+  help: undefined,
 };
 
 export default Presentational;

@@ -15,6 +15,7 @@ const Presentational = ({
   placeholder,
   error,
   setFieldTouched,
+  setFieldValue,
   value,
   style,
   help,
@@ -23,17 +24,25 @@ const Presentational = ({
     <Form.Item
       label={label}
       required={required}
+      validateTrigger="onBlur"
       validateStatus={error && touched ? 'error' : 'success'}
       hasFeedback={touched && hasFeedback}
       style={style}
       help={help}
     >
       <Input 
-        onChange={(...args) => {
+        onBlur={(...args) => {
           setFieldTouched(name);
           onChange(...args);
+          setFieldValue(
+            name,
+            args[0].target.value
+              .replace(/ +/g, ' ')
+              .split(/\s*,\s*/)
+              .filter((item) => item),
+          );
         }}
-        value={value}
+        defaultValue={value}
         name={name} 
         placeholder={placeholder} 
         onKeyPress={(e) => {
@@ -55,6 +64,7 @@ const Presentational = ({
 
 Presentational.propTypes = {
   setFieldTouched: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,

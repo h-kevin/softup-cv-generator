@@ -32,7 +32,10 @@ const reducer = (state = initState, action) => {
         null,
         () => ({
           ...state._data,
-          ...action.payload,
+          cvs: updateObjectInArray(
+            state._data?.cvs,
+            action.payload.cv,
+          ),
         }),
         null,
       );

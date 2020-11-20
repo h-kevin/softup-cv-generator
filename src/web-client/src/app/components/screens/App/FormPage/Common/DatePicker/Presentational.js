@@ -1,12 +1,11 @@
 import React from 'react';
-import { Form, Input } from 'antd';
+import { Form, DatePicker } from 'antd';
 import { ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
 
 import classes from './Styles.module.scss';
 
 const Presentational = ({ 
-  onChange,
   touched,
   name,
   label,
@@ -15,6 +14,7 @@ const Presentational = ({
   placeholder,
   error,
   setFieldTouched,
+  setFieldValue,
   value,
   style,
   help,
@@ -23,15 +23,16 @@ const Presentational = ({
     <Form.Item
       label={label}
       required={required}
+      validateTrigger="onBlur"
       validateStatus={error && touched ? 'error' : 'success'}
       hasFeedback={touched && hasFeedback}
       style={style}
       help={help}
     >
-      <Input 
-        onChange={(...args) => {
+      <DatePicker
+        onChange={(date) => {
           setFieldTouched(name);
-          onChange(...args);
+          setFieldValue(name, date);
         }}
         value={value}
         name={name} 
@@ -55,9 +56,9 @@ const Presentational = ({
 
 Presentational.propTypes = {
   setFieldTouched: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.shape({}),
   label: PropTypes.string,
   required: PropTypes.bool,
   hasFeedback: PropTypes.bool,
@@ -69,7 +70,7 @@ Presentational.propTypes = {
 };
 
 Presentational.defaultProps = {
-  value: '',
+  value: undefined,
   label: '',
   required: false,
   hasFeedback: false,

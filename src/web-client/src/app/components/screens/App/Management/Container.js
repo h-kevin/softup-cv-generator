@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 
 import Presentational from './Presentational';
-
 import { getCvs } from '../../../../redux/modules/cvs/actions/read';
 import { generateDocx } from '../../../../redux/modules/cvs/actions/generateDocx';
 import { deleteCv } from '../../../../redux/modules/cvs/actions/delete';
