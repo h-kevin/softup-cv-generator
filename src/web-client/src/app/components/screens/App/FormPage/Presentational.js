@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import { 
@@ -13,6 +11,10 @@ import {
   Form,
   DatePicker,
   Upload,
+  PageHeader,
+  Divider,
+  Row,
+  Col,
 } from 'antd';
 import AntInput from 'antd/lib/input/Input';
 import AntTextArea from 'antd/lib/input/TextArea';
@@ -28,6 +30,7 @@ import Input from './Common/Input/Presentational';
 import TextArea from './Common/TextArea/Presentational';
 import ArrayInput from './Common/ArrayInput/Presentational';
 import { antRules } from '../../../../helpers/validation';
+import classes from './Styles.module.scss';
 
 const initialValues = {
   firstName: '',
@@ -52,176 +55,60 @@ const initialValues = {
   profileImage: '',
 };
 const validation = () => Yup.object().shape({
-  firstName: Yup
-    .string()
-    .required(i18n.t('formPage.fieldIsRequired')),
-  lastName: Yup
-    .string()
-    .required(i18n.t('formPage.fieldIsRequired')),
-  role: Yup
-    .string()
-    .required(i18n.t('formPage.fieldIsRequired')),
-  summary: Yup
-    .string()
-    .required(i18n.t('formPage.fieldIsRequired')),
-  skills: Yup
-    .object()
-    .shape({
-      languages: Yup
-        .array()
-        .of(
-          Yup
-            .string()
-            .required(),
-        ),
-      databases: Yup
-        .array()
-        .of(
-          Yup
-            .string()
-            .required(),
-        ),
-      backendFrameworks: Yup
-        .array()
-        .of(
-          Yup
-            .string()
-            .required(),
-        ),
-      frontendFrameworks: Yup
-        .array()
-        .of(
-          Yup
-            .string()
-            .required(),
-        ),
-      operationsAndInfrastructure: Yup
-        .array()
-        .of(
-          Yup
-            .string()
-            .required(),
-        ),
-      integrationAndDeployment: Yup
-        .array()
-        .of(
-          Yup
-            .string()
-            .required(),
-        ),
-      testing: Yup
-        .array()
-        .of(
-          Yup
-            .string()
-            .required(),
-        ),
-      thirdParty: Yup
-        .array()
-        .of(
-          Yup
-            .string()
-            .required(),
-        ),
-      agile: Yup
-        .array()
-        .of(
-          Yup
-            .string()
-            .required(),
-        ),
-      other: Yup
-        .array()
-        .of(
-          Yup
-            .string()
-            .required(),
-        ),
-    })
-    .required(),
+  firstName: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
+  lastName: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
+  role: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
+  summary: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
+  skills: Yup.object().shape({
+    languages: Yup.array().of(Yup.string().required()),
+    databases: Yup.array().of(Yup.string().required()),
+    backendFrameworks: Yup.array().of(Yup.string().required()),
+    frontendFrameworks: Yup.array().of(Yup.string().required()),
+    operationsAndInfrastructure: Yup.array().of(Yup.string().required()),
+    integrationAndDeployment: Yup.array().of(Yup.string().required()),
+    testing: Yup.array().of(Yup.string().required()),
+    thirdParty: Yup.array().of(Yup.string().required()),
+    agile: Yup.array().of(Yup.string().required()),
+    other: Yup.array().of(Yup.string().required()),
+  }).required(),
   spokenLanguages: Yup
-    .array()
-    .of(
-      Yup
-        .object()
-        .shape({
-          language: Yup
-            .string()
-            .required(i18n.t('formPage.fieldIsRequired')),
-          level: Yup
-            .string()
-            .required(),
-        }),
-    )
-    .required(),
+    .array().of(Yup.object().shape({
+      language: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
+      level: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
+    })).defined(),
   projects: Yup
-    .array()
-    .of(
-      Yup
-        .object()
-        .shape({
-          period: Yup
-            .object()
-            .shape({
-              startDate: Yup
-                .string()
-                .matches(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/)
-                .required(i18n.t('formPage.fieldIsRequired')),
-              endDate: Yup
-                .string()
-                .matches(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/),
-            })
-            .required(),
-          client: Yup
-            .string()
-            .required(i18n.t('formPage.fieldIsRequired')),
-          position: Yup
-            .string()
-            .required(i18n.t('formPage.fieldIsRequired')),
-          technologies: Yup
-            .array()
-            .of(
-              Yup
-                .string()
-                .required(),
-            ),
-          responsibilities: Yup
-            .string()
-            .required(i18n.t('formPage.fieldIsRequired')),
-        }),
-    )
-    .required(),
-  education: Yup
-    .array()
-    .of(
-      Yup
-        .object()
-        .shape({
-          institution: Yup
-            .string()
-            .required(i18n.t('formPage.fieldIsRequired')),
-          qualifications: Yup
-            .array()
-            .of(
-              Yup
-                .string()
-                .required(),
-            ),
-          period: Yup
-            .object()
-            .shape({
-              startDate: Yup
-                .string()
-                .matches(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/)
-                .required(i18n.t('formPage.fieldIsRequired')),
-              endDate: Yup
-                .string()
-                .matches(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/),
-            })
-            .required(),
-        }),
-    )
-    .required(),
+    .array().of(Yup.object().shape({
+      period: Yup.object().shape({
+        startDate: Yup
+          .string()
+          .matches(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/)
+          .required(i18n.t('formPage.fieldIsRequired')),
+        endDate: Yup
+          .string()
+          .matches(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/),
+      }).required(),
+      client: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
+      position: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
+      technologies: Yup.array().of(Yup.string().required()),
+      responsibilities: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
+    })).defined(),
+  education: Yup.array()
+    .of(Yup.object().shape({
+      institution: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
+      qualifications: Yup.array().of(Yup.string().required(i18n.t('formPage.fieldIsRequired'))),
+      period: Yup.object().shape({
+        startDate: Yup
+          .string()
+          .matches(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/)
+          .required(i18n.t('formPage.fieldIsRequired')),
+        endDate: Yup
+          .string()
+          .matches(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/),
+      }).required(),
+    })).defined(),
+  profileImage: Yup.object().shape({
+    size: Yup.number().max(300000, i18n.t('formPage.profileImageRequiredSize')),
+  }),
 });
 // const onSubmit = async () => {
   
@@ -284,6 +171,11 @@ const Presentational = () => {
         setFieldValue,
       }) => (
         <Form layout="vertical" noValidate>
+          <PageHeader 
+            style={{ padding: '0 0 16px 0' }}
+            title={i18n.t('formPage.generalInformationSection')}
+            backIcon={false}
+          />
           <Field
             as={Input}
             name="firstName" 
@@ -328,6 +220,7 @@ const Presentational = () => {
             error={errors.summary}
             placeholder={i18n.t('formPage.summaryEx')} 
           />
+          <Divider orientation="left">{i18n.t('formPage.skillsSection')}</Divider>
           <ArrayInput
             array={languages} 
             setArray={setLanguages}
@@ -388,13 +281,14 @@ const Presentational = () => {
             name={i18n.t('formPage.other')}
             label={i18n.t('formPage.other')}
           />
+          <Divider orientation="left">{i18n.t('formPage.spokenLanguagesSection')}</Divider>
           <FieldArray
             name="spokenLanguages"
             render={(arrayHelpers) => (
               <div>
                 {values.spokenLanguages.map((_language, index) => (
                   <Space 
-                    key={index}
+                    key={`spokenLanguages-${Math.random()}`}
                     style={{
                       display: 'flex', 
                       marginBottom: 10,
@@ -433,34 +327,33 @@ const Presentational = () => {
                   </Space>
                 ))}
                 <Form.Item name="button">
-                    <Button
-                      id="addLanguages"
-                      name="button"
-                      type="dashed"
-                      onClick={() => arrayHelpers.push({ 
-                        language: '', 
-                        level: '',
-                      })}
-                      style={{ width: '100%' }}
-                    >
-                      <PlusOutlined /> 
-                      Add new language
-                    </Button>
-                  </Form.Item>
+                  <Button
+                    id="addLanguages"
+                    name="button"
+                    type="dashed"
+                    onClick={() => arrayHelpers.push({})}
+                    style={{ width: '100%' }}
+                  >
+                    <PlusOutlined /> 
+                    {i18n.t('formPage.addNewLanguage')}
+                  </Button>
+                </Form.Item>
               </div>
             )}
           />
+          <Divider orientation="left">{i18n.t('formPage.projectsSection')}</Divider>
           <FieldArray
             name="projects"
             render={(arrayHelpers) => (
               <div>
                 {values.projects.map((_project, index) => (
-                  <div key={index}>
+                  <div key={`projects-${Math.random()}`}>
                     <Space 
                       style={{
                         display: 'flex', 
                         marginBottom: 4,
                       }} 
+                      size="small"
                       align="baseline"
                     >
                       <Form.Item
@@ -492,11 +385,9 @@ const Presentational = () => {
                       </Form.Item>
                     </Space>
                     <Space 
-                      style={{
-                        display: 'flex', 
-                        marginBottom: 4,
-                      }} 
+                      style={{ display: 'flex' }} 
                       align="baseline"
+                      size="small"
                     >
                       <Form.Item
                         hasFeedback
@@ -528,20 +419,19 @@ const Presentational = () => {
                       </Form.Item>
                     </Space>
                     <Space 
-                      style={{
-                        display: 'flex', 
-                        marginBottom: 4,
-                      }} 
+                      style={{ display: 'flex' }} 
                       align="baseline"
                       size="small"
                     >
                       <Form.Item
-                      style={{
-                        width: '376px'
-                      }} 
+                        style={{
+                          minWidth: '250px',
+                          maxWidth: '400px',
+                          width: '60vw',
+                        }} 
                         hasFeedback
+                        help={i18n.t('formPage.technologiesEx')}
                         name={`projects[${index}].technologies`}
-                        rules={antRules()}
                       >
                         <AntInput 
                           name={`projects.${index}.technologies`} 
@@ -557,23 +447,22 @@ const Presentational = () => {
                       </Form.Item>
                     </Space>
                     <Space 
-                      style={{
-                        display: 'flex', 
-                        marginBottom: 10,
-                      }} 
+                      style={{ display: 'flex' }} 
                       align="baseline"
                       size="small"
                     >
                       <Form.Item
-                      style={{
-                        width: '376px'
-                      }} 
+                        style={{
+                          minWidth: '250px',
+                          maxWidth: '400px',
+                          width: '60vw',
+                        }} 
                         name={`projects[${index}].responsibilities`}
                         rules={antRules()}
                       >
                         <AntTextArea 
                           style={{ resize: 'none' }}
-                          autoSize={true}
+                          autoSize
                           name={`projects.${index}.responsibilities`} 
                           placeholder={i18n.t('formPage.responsibilities')} 
                           onBlur={(e) => setFieldValue(
@@ -587,32 +476,31 @@ const Presentational = () => {
                   </div>
                 ))}
                 <Form.Item name="button">
-                    <Button
-                      id="addProjects"
-                      name="button"
-                      type="dashed"
-                      onClick={() => arrayHelpers.push({})}
-                      style={{ width: '100%' }}
-                    >
-                      <PlusOutlined /> 
-                      Add new Project
-                    </Button>
-                  </Form.Item>
+                  <Button
+                    id="addProjects"
+                    name="button"
+                    type="dashed"
+                    onClick={() => arrayHelpers.push({})}
+                    style={{ width: '100%' }}
+                  >
+                    <PlusOutlined /> 
+                    {i18n.t('formPage.addNewProject')}
+                  </Button>
+                </Form.Item>
               </div>
             )}
           />
+          <Divider orientation="left">{i18n.t('formPage.educationSection')}</Divider>
           <FieldArray
             name="education"
             render={(arrayHelpers) => (
               <div>
                 {values.education.map((_item, index) => (
-                  <div key={index}>
+                  <div key={`education-${Math.random()}`}>
                     <Space 
-                      style={{
-                        display: 'flex', 
-                        marginBottom: 4,
-                      }} 
+                      style={{ display: 'flex' }} 
                       align="baseline"
+                      size="small"
                     >
                       <Form.Item
                         hasFeedback
@@ -630,20 +518,19 @@ const Presentational = () => {
                       </Form.Item>
                     </Space>
                     <Space 
-                      style={{
-                        display: 'flex', 
-                        marginBottom: 4,
-                      }} 
+                      style={{ display: 'flex' }} 
                       align="baseline"
                       size="small"
                     >
                       <Form.Item
-                      style={{
-                        width: '500px'
-                      }} 
+                        style={{
+                          minWidth: '250px',
+                          maxWidth: '400px',
+                          width: '60vw',
+                        }} 
+                        help={i18n.t('formPage.qualificationsEx')}
                         hasFeedback
                         name={`education[${index}].qualifications`}
-                        rules={antRules()}
                       >
                         <AntInput 
                           name={`education.${index}.qualifications`} 
@@ -659,11 +546,9 @@ const Presentational = () => {
                       </Form.Item>
                     </Space>
                     <Space 
-                      style={{
-                        display: 'flex', 
-                        marginBottom: 10,
-                      }} 
+                      style={{ display: 'flex' }} 
                       align="baseline"
+                      size="small"
                     >
                       <Form.Item
                         hasFeedback
@@ -697,42 +582,56 @@ const Presentational = () => {
                   </div>
                 ))}
                 <Form.Item name="button">
-                    <Button
-                      id="addInstitutions"
-                      name="button"
-                      type="dashed"
-                      onClick={() => arrayHelpers.push()}
-                      style={{ width: '100%' }}
-                    >
-                      <PlusOutlined /> 
-                      Add new institution
-                    </Button>
-                  </Form.Item>
+                  <Button
+                    id="addInstitutions"
+                    name="button"
+                    type="dashed"
+                    onClick={() => arrayHelpers.push({})}
+                    style={{ width: '100%' }}
+                  >
+                    <PlusOutlined /> 
+                    {i18n.t('formPage.addNewInstitution')}
+                  </Button>
+                </Form.Item>
               </div>
             )}
           />
+          <Divider orientation="left">{i18n.t('formPage.uploadSection')}</Divider>
           <Form.Item>
             <Upload 
-              name="file"
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              headers={{ authorization: 'authorization-text' }}
+              name="profileImage"
+              multiple={false}
+              accept="image/jpeg,image/jpg,image/png"
+              customRequest={({ onSuccess }) => setTimeout(() => { onSuccess('OK') }, 0)}
+              onChange={(e) => setFieldValue('profileImage', e.file)}
+              fileList={values.profileImage ? [values.profileImage] : []}
             >
               <Button 
                 icon={<UploadOutlined />}
               >
-                Click to Upload
+                {i18n.t('formPage.clickToUpload')}
               </Button>
             </Upload>
           </Form.Item>
-          <Form.Item>
-            <Button 
-              onClick={() => console.log(values)} 
-              type="primary" 
-              htmlType="submit"
-            >
-              Submit
-            </Button>
-          </Form.Item>
+          <Row gutter={[10, 10]} justify="end">
+            <Col>
+              <Button 
+                className={classes.Button} 
+                onClick={() => {}}
+              >
+                {i18n.t('formPage.cancel')}
+              </Button>
+            </Col>
+            <Col>
+              <Button 
+                className={classes.Button} 
+                type="primary" 
+                htmlType="submit"
+              >
+                {i18n.t('formPage.submit')}
+              </Button>
+            </Col>
+          </Row>
         </Form>
       )}
     </Formik>

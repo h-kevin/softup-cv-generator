@@ -24,6 +24,7 @@
       "cancelText": "No"
     },
     "formPage": {
+      "generalInformationSection": "General Information",
       "firstName": "First Name",
       "firstNameEx": "John",
       "lastName": "Last Name",
@@ -32,7 +33,7 @@
       "roleEx": "Junior Software Developer",
       "summary": "Summary",
       "summaryEx": "John Smith is a highly _skilled_ software *developer* \nwith experience...",
-      "skills": "Skills",
+      "skillsSection": "Skills",
       "languages": "Languages",
       "databases": "Databases",
       "backendFrameworks": "Backend Frameworks",
@@ -43,10 +44,10 @@
       "thirdParty": "Third-Party Integrations",
       "agile": "Agile",
       "other": "Other",
-      "spokenLanguages": "Spoken Languages",
+      "spokenLanguagesSection": "Spoken Languages",
       "language": "Language",
       "level": "Level",
-      "projects": "Projects",
+      "projectsSection": "Projects",
       "period": "Period",
       "startDate": "Start Date",
       "endDate": "End Date",
@@ -54,13 +55,23 @@
       "clientEx": "Real Estate Industry",
       "position": "Position",
       "positionEx": "Junior Software Developer",
-      "technologies": "Technologies e.g. Node.JS, Python, Flask...",
+      "technologies": "Technologies",
+      "technologiesEx": "e.g. Node.JS, Python, Flask...",
       "responsibilities": "Responsibilities \n\ne.g. Implemented initial _system_ \n*architecture* and...",
-      "education": "Education",
+      "educationSection": "Education",
       "institution": "Institution",
-      "qualifications": "Qualifications e.g. Bachelor of Science (BSc), Software Engineering...",
+      "qualifications": "Qualifications",
+      "qualificationsEx": "e.g. Bachelor of Science (BSc), Software Engineering...",
       "fieldIsRequired": "Field is required",
-      "newItem": "New item"
+      "newItem": "New item",
+      "uploadSection": "Photo",
+      "clickToUpload": "Click to upload",
+      "profileImageRequiredSize": "Image must be less then or equal to 300KB",
+      "addNewLanguage": "Add new language",
+      "addNewProject": "Add new project",
+      "addNewInstitution": "Add new institution",
+      "submit": "Submit",
+      "cancel": "Cancel"
     }
   }
 }

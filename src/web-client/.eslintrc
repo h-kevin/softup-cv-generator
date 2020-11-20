@@ -19,6 +19,7 @@
     "react/jsx-props-no-spreading": "off",
     "no-param-reassign": "off",
     "import/no-extraneous-dependencies": "off",
-    "import/no-named-as-default": "off"
+    "import/no-named-as-default": "off",
+    "react/no-array-index-key": "off"
   }
 }
