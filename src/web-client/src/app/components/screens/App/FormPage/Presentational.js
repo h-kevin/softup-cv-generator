@@ -156,7 +156,6 @@ const onSubmit = async ({ ...args }) => {
   }
 
   args.actions.resetForm();
-  formValues = { ...initialValues }
   args.history.replace(routes.APP.INDEX);
 };
 
@@ -217,7 +216,7 @@ const Presentational = ({
     'Machine Learning',
   ]);
   const queryParams = queryString.parse(location.search);
-
+  
   useEffect(() => {
     if (queryParams.id) {
       getCv({ id: queryParams.id });
@@ -239,6 +238,10 @@ const Presentational = ({
       setOther(cv.skills.other);
     }
   }, [cv]);
+
+  useEffect(() => () => {
+    formValues = { ...initialValues }
+  }, []);
 
   useEffect(() => {
     if (error) {
@@ -693,7 +696,6 @@ const Presentational = ({
                 className={classes.Button} 
                 onClick={() => {
                   resetForm();
-                  formValues = { ...initialValues }
                   history.replace(routes.APP.INDEX);
                 }}
               >

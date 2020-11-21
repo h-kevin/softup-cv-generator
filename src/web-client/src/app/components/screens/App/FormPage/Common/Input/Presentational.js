@@ -19,10 +19,11 @@ const Presentational = ({
 }) => (
   <>
     <Form.Item
+      className={classes.InputWrapper}
       label={label}
       required={required}
-      validateStatus={error ? 'error' : ''}
       hasFeedback={hasFeedback}
+      validateStatus={error ? 'error' : ''}
       style={style}
       help={help}
     >

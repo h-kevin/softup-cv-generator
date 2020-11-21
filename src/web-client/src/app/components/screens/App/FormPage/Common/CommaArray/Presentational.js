@@ -21,7 +21,6 @@ const Presentational = ({
     <Form.Item
       label={label}
       required={required}
-      validateTrigger="onBlur"
       validateStatus={error ? 'error' : ''}
       hasFeedback={hasFeedback}
       style={style}

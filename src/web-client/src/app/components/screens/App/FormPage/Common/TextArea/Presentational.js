@@ -20,7 +20,6 @@ const Presentational = ({
   <Form.Item
     label={label}
     required={required}
-    validateTrigger="onKeyUp"
     validateStatus={error ? 'error' : ''}
     help={help}
     style={style}

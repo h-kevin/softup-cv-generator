@@ -7,6 +7,7 @@ import {
   Row,
   Col,
   Tooltip,
+  Popconfirm,
   notification,
 } from 'antd';
 import {
@@ -17,7 +18,6 @@ import {
 } from '@ant-design/icons'
 
 import { SearchModal, SearchIcon } from '../../../common/TableSearch/Presentational';
-import PopConfirm from '../../../common/PopConfirm/Presentational';
 import routes from '../../../../constants/routes';
 import classes from './Styles.module.scss';
 
@@ -64,7 +64,8 @@ const generateColumns = (
           </Tooltip>
         </Col>
         <Col>
-          <PopConfirm
+          <Popconfirm
+            placement="left"
             title={i18n.t('management.confirmDelete')}
             okText={i18n.t('management.okText')}
             cancelText={i18n.t('management.cancelText')}
@@ -79,7 +80,7 @@ const generateColumns = (
                 danger
               />
             </Tooltip>
-          </PopConfirm>
+          </Popconfirm>
         </Col>
       </Row>
     ),
