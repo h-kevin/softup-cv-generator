@@ -4,7 +4,6 @@ import actionTypes from '../action_types';
 import config from '../../../../config';
 import getError from '../../../../utils/error_message';
 import { start, success, fail } from '../../../../utils/actions';
-import { updateProfileImage } from './update';
 
 /**
  * Create CV
@@ -25,13 +24,13 @@ import { updateProfileImage } from './update';
  *  @param {Array} params.agile: Agile
  *  @param {Array} params.other: Other
  * }
- * @param {Array} spokenLanguages: [
+ * @param {Array} params.spokenLanguages: [
  *  {
  *    @param {String} language: Language
  *    @param {String} level: Level
  *  }
  * ]
- * @param {Array} projects: [
+ * @param {Array} params.projects: [
  *  {
  *    @param {Object} period: {
  *      @param {String} startDate: Start date
@@ -43,7 +42,7 @@ import { updateProfileImage } from './update';
  *    @param {String} responsibilities: Responsibilities
  *  }
  * ]
- * @param {Array} education: [
+ * @param {Array} params.education: [
  *  {
  *    @param {String} institution: Institution
  *    @param {Array} qualifications: Qualifications
@@ -53,7 +52,6 @@ import { updateProfileImage } from './update';
  *    }
  *  }
  * ]
- * @param {FormData} (data) profileImage: Profile image
  */
 
 export const createCv = (params) => async (dispatch) => {
@@ -76,13 +74,8 @@ export const createCv = (params) => async (dispatch) => {
     const { data } = response;
 
     success(dispatch, actionTypes.CREATE_CV, { cv: { ...data } });
-    
-    updateProfileImage({
-      id: data.id,
-      profileImage: params.profileImage,
-    });
 
-    return true;
+    return data._id;
   } catch (error) {
     fail(dispatch, actionTypes.CREATE_CV, { error: getError(error) });
 

@@ -5,11 +5,11 @@ import {
   Formik, 
   FieldArray, 
   Field,
+  Form,
 } from 'formik';
 import { 
   Button, 
   Space, 
-  Form,
   Upload,
   PageHeader,
   Divider,
@@ -29,12 +29,12 @@ import i18n from 'i18next';
 import Input from './Common/Input/Presentational';
 import TextArea from './Common/TextArea/Presentational';
 import ArrayInput from './Common/ArrayInput/Presentational';
-import DatePickerC from './Common/DatePicker/Presentational';
+import DatePicker from './Common/DatePicker/Presentational';
 import CommaArray from './Common/CommaArray/Presentational';
 import routes from '../../../../constants/routes';
 import classes from './Styles.module.scss';
 
-let initialValues = {
+const initialValues = {
   firstName: '',
   lastName: '',
   role: '',
@@ -56,6 +56,7 @@ let initialValues = {
   education: [],
   profileImage: '',
 };
+let formValues = { ...initialValues };
 const validation = () => Yup.object().shape({
   firstName: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
   lastName: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
@@ -81,13 +82,8 @@ const validation = () => Yup.object().shape({
   projects: Yup
     .array().of(Yup.object().shape({
       period: Yup.object().shape({
-        startDate: Yup
-          .string()
-          .matches(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/)
-          .required(i18n.t('formPage.fieldIsRequired')),
-        endDate: Yup
-          .string()
-          .matches(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/),
+        startDate: Yup.date().required(i18n.t('formPage.fieldIsRequired')).nullable(),
+        endDate: Yup.date().nullable(),
       }).required(),
       client: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
       position: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
@@ -99,26 +95,76 @@ const validation = () => Yup.object().shape({
       institution: Yup.string().required(i18n.t('formPage.fieldIsRequired')),
       qualifications: Yup.string(),
       period: Yup.object().shape({
-        startDate: Yup
-          .string()
-          .matches(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/)
-          .required(i18n.t('formPage.fieldIsRequired')),
-        endDate: Yup
-          .string()
-          .matches(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/),
+        startDate: Yup.date().required(i18n.t('formPage.fieldIsRequired')).nullable(),
+        endDate: Yup.date().nullable(),
       }).required(),
     })).defined(),
   profileImage: Yup.object().shape({
     size: Yup.number().max(300000, i18n.t('formPage.profileImageRequiredSize')),
   }),
 });
-const onSubmit = async () => {
-  
+const onSubmit = async ({ ...args }) => {
+  const formValidation = await args.actions.validateForm();
+  if (!formValidation) return;
+
+  const skills = {
+    languages: args.languages,
+    databases: args.databases,
+    backendFrameworks: args.backendFrameworks,
+    frontendFrameworks: args.frontendFrameworks,
+    operationsAndInfrastructure: args.operationsAndInfrastructure,
+    integrationAndDeployment: args.integrationAndDeployment,
+    testing: args.testing,
+    thirdParty: args.thirdParty,
+    agile: args.agile,
+    other: args.other,
+  }
+
+  const requestBody = {
+    firstName: args.values.firstName,
+    lastName: args.values.lastName,
+    role: args.values.role,
+    summary: args.values.summary,
+    skills,
+    spokenLanguages: args.values.spokenLanguages,
+    projects: args.values.projects,
+    education: args.values.education,
+  };
+
+  let createdCvId;
+
+  if (!args.cv) {
+    createdCvId = await args.createCv(requestBody);
+    
+    if (!createdCvId) return;
+  } else {
+    requestBody.id = args.cv._id;
+    const didUpdate = await args.updateCv(requestBody);
+    
+    if (!didUpdate) return;
+  }
+
+  if (args.values.profileImage !== '') {
+    const cvId = args.cv ? args.cv._id : createdCvId;
+
+    const response = await args.updateProfileImage({
+      id: cvId,
+      profileImage: args.values.profileImage,
+    });
+
+    if (!response) return;
+  }
+
+  args.actions.resetForm();
+  formValues = { ...initialValues }
+  args.history.replace(routes.APP.INDEX);
 };
 
 const Presentational = ({
   cv,
   isReadingCv,
+  isCreatingCv,
+  isUpdatingCv,
   error,
   getCv,
   createCv,
@@ -180,7 +226,7 @@ const Presentational = ({
 
   useEffect(() => {
     if (cv) {
-      initialValues = { ...cv };
+      formValues = { ...cv };
       setLanguages(cv.skills.languages);
       setDatabases(cv.skills.databases);
       setBackendFrameworks(cv.skills.backendFrameworks);
@@ -220,15 +266,15 @@ const Presentational = ({
       </Row>
     );
   }
-
+  
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={formValues}
       enableReinitialize
       validationSchema={validation}
       validateOnChange={false}
       validateOnBlur={false}
-      onSubmit={({ values, actions }) => onSubmit(
+      onSubmit={(values, actions) => onSubmit({
         values,
         actions,
         languages,
@@ -245,14 +291,15 @@ const Presentational = ({
         createCv,
         updateCv,
         updateProfileImage,
-      )}
+        history,
+      })}
     >
       {({
         values, 
         errors,
-        touched, 
         setFieldTouched,
         setFieldValue,
+        resetForm,
       }) => (
         <Form layout="vertical" noValidate>
           <PageHeader 
@@ -266,7 +313,6 @@ const Presentational = ({
             label={i18n.t('formPage.firstName')}
             required
             hasFeedback
-            touched={touched.firstName}
             setFieldTouched={setFieldTouched}
             setFieldValue={setFieldValue}
             value={values.firstName}
@@ -279,7 +325,6 @@ const Presentational = ({
             label={i18n.t('formPage.lastName')}
             required
             hasFeedback
-            touched={touched.lastName}
             setFieldTouched={setFieldTouched}
             setFieldValue={setFieldValue}
             value={values.lastName}
@@ -292,7 +337,6 @@ const Presentational = ({
             label={i18n.t('formPage.role')}
             required
             hasFeedback
-            touched={touched.role}
             setFieldTouched={setFieldTouched}
             setFieldValue={setFieldValue}
             value={values.role}
@@ -305,7 +349,6 @@ const Presentational = ({
             label={i18n.t('formPage.summary')}
             required
             autoSize
-            touched={touched.summary}
             setFieldTouched={setFieldTouched}
             setFieldValue={setFieldValue}
             value={values.summary}
@@ -391,7 +434,6 @@ const Presentational = ({
                       as={Input}
                       name={`spokenLanguages[${index}].language`}
                       hasFeedback
-                      touched={touched.spokenLanguages && touched.spokenLanguages[index]?.language}
                       setFieldTouched={setFieldTouched}
                       setFieldValue={setFieldValue}
                       value={language.language}
@@ -402,7 +444,6 @@ const Presentational = ({
                       as={Input}
                       name={`spokenLanguages[${index}].level`}
                       hasFeedback
-                      touched={touched.spokenLanguages && touched.spokenLanguages[index]?.level}
                       setFieldTouched={setFieldTouched}
                       setFieldValue={setFieldValue}
                       value={language?.level}
@@ -412,18 +453,16 @@ const Presentational = ({
                     <MinusCircleOutlined onClick={() => arrayHelpers.remove(index)} />
                   </Space>
                 ))}
-                <Form.Item name="button">
-                  <Button
-                    id="addLanguages"
-                    name="button"
-                    type="dashed"
-                    onClick={() => arrayHelpers.push({})}
-                    style={{ width: '100%' }}
-                  >
-                    <PlusOutlined /> 
-                    {i18n.t('formPage.addNewLanguage')}
-                  </Button>
-                </Form.Item>
+                <Button
+                  id="addLanguages"
+                  name="button"
+                  type="dashed"
+                  onClick={() => arrayHelpers.push({})}
+                  style={{ width: '100%' }}
+                >
+                  <PlusOutlined /> 
+                  {i18n.t('formPage.addNewLanguage')}
+                </Button>
               </div>
             )}
           />
@@ -443,10 +482,9 @@ const Presentational = ({
                       align="baseline"
                     >
                       <Field
-                        as={DatePickerC}
+                        as={DatePicker}
                         name={`projects[${index}].period.startDate`}
                         hasFeedback
-                        touched={touched.projects && touched.projects[index]?.period?.startDate}
                         setFieldTouched={setFieldTouched}
                         setFieldValue={setFieldValue}
                         value={project?.period?.startDate}
@@ -454,10 +492,9 @@ const Presentational = ({
                         placeholder={i18n.t('formPage.startDate')}
                       />
                       <Field
-                        as={DatePickerC}
+                        as={DatePicker}
                         name={`projects[${index}].period.endDate`}
                         hasFeedback
-                        touched={touched.projects && touched.projects[index]?.period?.endDate}
                         setFieldTouched={setFieldTouched}
                         setFieldValue={setFieldValue}
                         value={project?.period?.endDate}
@@ -474,7 +511,6 @@ const Presentational = ({
                         as={Input}
                         name={`projects[${index}].client`}
                         hasFeedback
-                        touched={touched.projects && touched.projects[index]?.client}
                         setFieldTouched={setFieldTouched}
                         setFieldValue={setFieldValue}
                         value={project?.client}
@@ -485,7 +521,6 @@ const Presentational = ({
                         as={Input}
                         name={`projects[${index}].position`}
                         hasFeedback
-                        touched={touched.projects && touched.projects[index]?.position}
                         setFieldTouched={setFieldTouched}
                         setFieldValue={setFieldValue}
                         value={project?.position}
@@ -507,13 +542,11 @@ const Presentational = ({
                         as={CommaArray}
                         name={`projects[${index}].technologies`}
                         hasFeedback
-                        touched={touched.projects && touched.projects[index]?.technologies}
                         setFieldTouched={setFieldTouched}
                         setFieldValue={setFieldValue}
                         value={project?.technologies}
                         error={errors.projects && errors.projects[index]?.technologies}
                         placeholder={i18n.t('formPage.technologies')} 
-                        help={i18n.t('formPage.technologiesEx')}
                       />
                     </Space>
                     <Space 
@@ -529,7 +562,6 @@ const Presentational = ({
                         }} 
                         as={TextArea}
                         name={`projects[${index}].responsibilities`} 
-                        touched={touched.projects && touched.projects[index]?.responsibilities}
                         setFieldTouched={setFieldTouched}
                         setFieldValue={setFieldValue}
                         value={project?.responsibilities}
@@ -541,18 +573,16 @@ const Presentational = ({
                     </Space>
                   </div>
                 ))}
-                <Form.Item name="button">
-                  <Button
-                    id="addProjects"
-                    name="button"
-                    type="dashed"
-                    onClick={() => arrayHelpers.push({})}
-                    style={{ width: '100%' }}
-                  >
-                    <PlusOutlined /> 
-                    {i18n.t('formPage.addNewProject')}
-                  </Button>
-                </Form.Item>
+                <Button
+                  id="addProjects"
+                  name="button"
+                  type="dashed"
+                  onClick={() => arrayHelpers.push({})}
+                  style={{ width: '100%' }}
+                >
+                  <PlusOutlined /> 
+                  {i18n.t('formPage.addNewProject')}
+                </Button>
               </div>
             )}
           />
@@ -572,7 +602,6 @@ const Presentational = ({
                         as={Input}
                         name={`education[${index}].institution`}
                         hasFeedback
-                        touched={touched.education && touched.education[index]?.institution}
                         setFieldTouched={setFieldTouched}
                         setFieldValue={setFieldValue}
                         value={item?.institution}
@@ -594,13 +623,11 @@ const Presentational = ({
                         as={CommaArray}
                         name={`education[${index}].qualifications`}
                         hasFeedback
-                        touched={touched.education && touched.education[index]?.qualifications}
                         setFieldTouched={setFieldTouched}
                         setFieldValue={setFieldValue}
                         value={item?.qualifications}
                         error={errors.education && errors.education[index]?.qualifications}
                         placeholder={i18n.t('formPage.qualifications')} 
-                        help={i18n.t('formPage.qualificationsEx')}
                       />
                     </Space>
                     <Space 
@@ -609,68 +636,66 @@ const Presentational = ({
                       size="small"
                     >
                       <Field
-                        as={DatePickerC}
+                        as={DatePicker}
                         name={`education[${index}].period.startDate`}
                         hasFeedback
-                        touched={touched.education && touched.education[index]?.period?.startDate}
                         setFieldTouched={setFieldTouched}
                         setFieldValue={setFieldValue}
                         value={item?.period?.startDate}
-                        error={errors.period && errors.period[index]?.period?.startDate}
+                        error={errors.education && errors.education[index]?.period?.startDate}
                         placeholder={i18n.t('formPage.startDate')}
                       />
                       <Field
-                        as={DatePickerC}
+                        as={DatePicker}
                         name={`education[${index}].period.endDate`}
                         hasFeedback
-                        touched={touched.education && touched.education[index]?.period?.endDate}
                         setFieldTouched={setFieldTouched}
                         setFieldValue={setFieldValue}
                         value={item?.period?.endDate}
-                        error={errors.period && errors.period[index]?.period?.endDate}
+                        error={errors.education && errors.education[index]?.period?.endDate}
                         placeholder={i18n.t('formPage.endDate')}
                       />
                       <MinusCircleOutlined onClick={() => arrayHelpers.remove(index)} />
                     </Space>
                   </div>
                 ))}
-                <Form.Item name="button">
-                  <Button
-                    id="addInstitutions"
-                    name="button"
-                    type="dashed"
-                    onClick={() => arrayHelpers.push({})}
-                    style={{ width: '100%' }}
-                  >
-                    <PlusOutlined /> 
-                    {i18n.t('formPage.addNewInstitution')}
-                  </Button>
-                </Form.Item>
+                <Button
+                  id="addInstitutions"
+                  name="button"
+                  type="dashed"
+                  onClick={() => arrayHelpers.push({})}
+                  style={{ width: '100%' }}
+                >
+                  <PlusOutlined /> 
+                  {i18n.t('formPage.addNewInstitution')}
+                </Button>
               </div>
             )}
           />
           <Divider orientation="left">{i18n.t('formPage.uploadSection')}</Divider>
-          <Form.Item>
-            <Upload 
-              name="profileImage"
-              multiple={false}
-              accept="image/jpeg,image/jpg,image/png"
-              customRequest={({ onSuccess }) => setTimeout(() => { onSuccess('OK') }, 0)}
-              onChange={(e) => setFieldValue('profileImage', e.file)}
-              fileList={values.profileImage ? [values.profileImage] : []}
+          <Upload 
+            name="profileImage"
+            multiple={false}
+            accept="image/jpeg,image/jpg,image/png"
+            customRequest={({ onSuccess }) => setTimeout(() => { onSuccess('OK') }, 0)}
+            onChange={(e) => setFieldValue('profileImage', e.file)}
+            fileList={values.profileImage ? [values.profileImage] : []}
+          >
+            <Button 
+              icon={<UploadOutlined />}
             >
-              <Button 
-                icon={<UploadOutlined />}
-              >
-                {i18n.t('formPage.clickToUpload')}
-              </Button>
-            </Upload>
-          </Form.Item>
+              {i18n.t('formPage.clickToUpload')}
+            </Button>
+          </Upload>
           <Row gutter={[10, 10]} justify="end">
             <Col>
               <Button 
                 className={classes.Button} 
-                onClick={() => history.replace(routes.APP.INDEX)}
+                onClick={() => {
+                  resetForm();
+                  formValues = { ...initialValues }
+                  history.replace(routes.APP.INDEX);
+                }}
               >
                 {i18n.t('formPage.cancel')}
               </Button>
@@ -680,6 +705,7 @@ const Presentational = ({
                 className={classes.Button} 
                 type="primary" 
                 htmlType="submit"
+                loading={isCreatingCv || isUpdatingCv}
               >
                 {cv ? i18n.t('formPage.update') : i18n.t('formPage.create')}
               </Button>
@@ -727,6 +753,8 @@ Presentational.propTypes = {
     }).isRequired,
   }),
   isReadingCv: PropTypes.bool,
+  isCreatingCv: PropTypes.bool,
+  isUpdatingCv: PropTypes.bool,
   error: PropTypes.string,
   getCv: PropTypes.func.isRequired,
   createCv: PropTypes.func.isRequired,
@@ -744,6 +772,8 @@ Presentational.propTypes = {
 Presentational.defaultProps = {
   cv: undefined,
   isReadingCv: false,
+  isCreatingCv: false,
+  isUpdatingCv: false,
   error: undefined,
 };
 

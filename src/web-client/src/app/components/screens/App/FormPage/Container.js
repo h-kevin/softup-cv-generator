@@ -15,18 +15,20 @@ const mapStateToProps = (state, ownProps) => {
 
   const queryParams = queryString.parse(ownProps.location?.search);
   const cv = cvs?.find((item) => item._id === queryParams.id);
-
+  
   return ({
     cv: modifyApiResponse(cv),
     isReadingCv: state.cvs.isReading,
+    isCreatingCv: state.cvs.isCreating,
+    isUpdatingCv: state.cvs.isUpdating,
     error: state.cvs.error,
   });
 };
 
 const mapDispatchToProps = (dispatch) => ({
   getCv: (params) => dispatch(getCv(params)),
-  createCv: (params) => dispatch(modifyApiRequest(createCv(params))),
-  updateCv: (params) => dispatch(modifyApiRequest(updateCv(params))),
+  createCv: (params) => dispatch(createCv(modifyApiRequest(params))),
+  updateCv: (params) => dispatch(updateCv(modifyApiRequest(params))),
   updateProfileImage: (params) => dispatch(updateProfileImage(params)),
   clearState: () => clearState(dispatch, 'cvs'),
 });

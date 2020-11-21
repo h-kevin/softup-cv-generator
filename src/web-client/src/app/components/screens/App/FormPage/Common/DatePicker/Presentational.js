@@ -1,6 +1,5 @@
 import React from 'react';
 import { Form } from 'antd';
-import { ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
 import dateFnsGenerateConfig from 'rc-picker/lib/generate/dateFns';
 import generatePicker from 'antd/es/date-picker/generatePicker';
@@ -8,7 +7,6 @@ import generatePicker from 'antd/es/date-picker/generatePicker';
 import classes from './Styles.module.scss';
 
 const Presentational = ({ 
-  touched,
   name,
   label,
   required,
@@ -22,15 +20,14 @@ const Presentational = ({
   help,
 }) => {
   const DatePicker = generatePicker(dateFnsGenerateConfig);
-
   return (
     <>
       <Form.Item
         label={label}
         required={required}
         validateTrigger="onBlur"
-        validateStatus={error && touched ? 'error' : ''}
-        hasFeedback={touched && hasFeedback}
+        validateStatus={error ? 'error' : ''}
+        hasFeedback={hasFeedback}
         style={style}
         help={help}
       >
@@ -47,15 +44,11 @@ const Presentational = ({
           }}
         />
       </Form.Item>
-      {error && touched
-        ? (
-          <ErrorMessage 
-            name={name} 
-            render={() => (
-              <div className={classes.Error}>{error}</div> 
-            )} 
-          />
-        ) : null}
+      {
+        error
+          ? <div className={classes.Error}>{error}</div> 
+          : null
+      }
     </>
   );
 };
@@ -70,7 +63,6 @@ Presentational.propTypes = {
   hasFeedback: PropTypes.bool,
   placeholder: PropTypes.string,
   error: PropTypes.string,
-  touched: PropTypes.bool,
   style: PropTypes.shape({}),
   help: PropTypes.string,
 };
@@ -82,7 +74,6 @@ Presentational.defaultProps = {
   hasFeedback: false,
   placeholder: undefined,
   error: undefined,
-  touched: false,
   style: undefined,
   help: undefined,
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Form, Input } from 'antd';
-import { ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
 
 import classes from './Styles.module.scss';
@@ -12,7 +11,6 @@ const Presentational = ({
   placeholder,
   autoSize,
   error,
-  touched,
   setFieldTouched,
   setFieldValue,
   value,
@@ -23,7 +21,7 @@ const Presentational = ({
     label={label}
     required={required}
     validateTrigger="onKeyUp"
-    validateStatus={error && touched ? 'error' : ''}
+    validateStatus={error ? 'error' : ''}
     help={help}
     style={style}
   >
@@ -40,15 +38,11 @@ const Presentational = ({
         resize: 'none',
       }}
     />
-    {error && touched
-      ? (
-        <ErrorMessage 
-          name={name} 
-          render={() => (
-            <div className={classes.Error}>{error}</div> 
-          )} 
-        />
-      ) : null}
+    {
+      error
+        ? <div className={classes.Error}>{error}</div> 
+        : null
+    }
   </Form.Item>
 );
 
@@ -61,7 +55,6 @@ Presentational.propTypes = {
   placeholder: PropTypes.string,
   autoSize: PropTypes.bool,
   error: PropTypes.string,
-  touched: PropTypes.bool,
   setFieldTouched: PropTypes.func.isRequired,
   style: PropTypes.shape({}),
   help: PropTypes.string,
@@ -73,7 +66,6 @@ Presentational.defaultProps = {
   required: false,
   placeholder: '',
   autoSize: false,
-  touched: false,
   error: undefined,
   style: undefined,
   help: undefined,

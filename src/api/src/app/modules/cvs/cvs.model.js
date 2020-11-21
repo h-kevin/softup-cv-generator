@@ -22,43 +22,43 @@ const schema = new Mongoose.Schema({
   skills: {
     languages: [{
       type: Mongoose.Schema.Types.String,
-      required: true,
+      required: false,
     }],
     databases: [{
       type: Mongoose.Schema.Types.String,
-      required: true,
+      required: false,
     }],
     backendFrameworks: [{
       type: Mongoose.Schema.Types.String,
-      required: true,
+      required: false,
     }],
     frontendFrameworks: [{
       type: Mongoose.Schema.Types.String,
-      required: true,
+      required: false,
     }],
     operationsAndInfrastructure: [{
       type: Mongoose.Schema.Types.String,
-      required: true,
+      required: false,
     }],
     integrationAndDeployment: [{
       type: Mongoose.Schema.Types.String,
-      required: true,
+      required: false,
     }],
     testing: [{
       type: Mongoose.Schema.Types.String,
-      required: true,
+      required: false,
     }],
     thirdParty: [{
       type: Mongoose.Schema.Types.String,
-      required: true,
+      required: false,
     }],
     agile: [{
       type: Mongoose.Schema.Types.String,
-      required: true,
+      required: false,
     }],
     other: [{
       type: Mongoose.Schema.Types.String,
-      required: true,
+      required: false,
     }],
   },
   spokenLanguages: [{
@@ -79,7 +79,7 @@ const schema = new Mongoose.Schema({
       },
       endDate: {
         type: Mongoose.Schema.Types.Date,
-        required: true,
+        required: false,
       },
     },
     client: {
@@ -92,7 +92,7 @@ const schema = new Mongoose.Schema({
     },
     technologies: [{
       type: Mongoose.Schema.Types.String,
-      required: true,
+      required: false,
     }],
     responsibilities: {
       type: Mongoose.Schema.Types.String,
@@ -106,7 +106,7 @@ const schema = new Mongoose.Schema({
     },
     qualifications: [{
       type: Mongoose.Schema.Types.String,
-      required: true,
+      required: false,
     }],
     period: {
       startDate: {
@@ -115,7 +115,7 @@ const schema = new Mongoose.Schema({
       },
       endDate: {
         type: Mongoose.Schema.Types.Date,
-        required: true,
+        required: false,
       },
     },
   }],

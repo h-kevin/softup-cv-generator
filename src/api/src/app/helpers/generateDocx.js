@@ -158,7 +158,7 @@ const generateProjectTables = (projects, tableCellProperties) => {
       
       let endDate = `Present`;
 
-      if (project.period.endDate) {
+      if (project?.period?.endDate) {
         endDate = new Date(project.period.endDate);
         endDate = `${endDate.getMonth() + 1}/${endDate.getFullYear()}`;
       }
@@ -236,7 +236,7 @@ const generateEducation = (education) => {
     
     let endDate = ` - Present`;
 
-    if (item.period.endDate) {
+    if (item?.period?.endDate) {
       endDate = new Date(item.period.endDate);
       endDate = ` - ${monthNames[endDate.getMonth()]} ${endDate.getFullYear()}`;
     }

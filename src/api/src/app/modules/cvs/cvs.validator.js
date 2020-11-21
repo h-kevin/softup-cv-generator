@@ -14,35 +14,35 @@ export const createCvValidator = (req, _res, next) => {
     summary: Joi.string().required(),
     skills: Joi.object().keys({
       languages: Joi.array().items(
-        Joi.string().required(),
-      ),
+        Joi.string(),
+      ).required(),
       databases: Joi.array().items(
-        Joi.string().required(),
-      ),
+        Joi.string(),
+      ).required(),
       backendFrameworks: Joi.array().items(
-        Joi.string().required(),
-      ),
+        Joi.string(),
+      ).required(),
       frontendFrameworks: Joi.array().items(
-        Joi.string().required(),
-      ),
+        Joi.string(),
+      ).required(),
       operationsAndInfrastructure: Joi.array().items(
-        Joi.string().required(),
-      ),
+        Joi.string(),
+      ).required(),
       integrationAndDeployment: Joi.array().items(
-        Joi.string().required(),
-      ),
+        Joi.string(),
+      ).required(),
       testing: Joi.array().items(
-        Joi.string().required(),
-      ),
+        Joi.string(),
+      ).required(),
       thirdParty: Joi.array().items(
-        Joi.string().required(),
-      ),
+        Joi.string(),
+      ).required(),
       agile: Joi.array().items(
-        Joi.string().required(),
-      ),
+        Joi.string(),
+      ).required(),
       other: Joi.array().items(
-        Joi.string().required(),
-      ),
+        Joi.string(),
+      ).required(),
     }).required(),
     spokenLanguages: Joi.array().items(
       Joi.object().keys({
@@ -54,13 +54,13 @@ export const createCvValidator = (req, _res, next) => {
       Joi.object().keys({
         period: Joi.object().keys({
           startDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
-          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE),
-        }),
+          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE).allow(null),
+        }).required(),
         client: Joi.string().required(),
         position: Joi.string().required(),
         technologies: Joi.array().items(
-          Joi.string().required(),
-        ),
+          Joi.string(),
+        ).required(),
         responsibilities: Joi.string().required(),
       }),
     ).required(),
@@ -68,11 +68,11 @@ export const createCvValidator = (req, _res, next) => {
       Joi.object().keys({
         institution: Joi.string().required(),
         qualifications: Joi.array().items(
-          Joi.string().required(),
-        ),
+          Joi.string(),
+        ).required(),
         period: Joi.object().keys({
           startDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
-          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE),
+          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE).allow(null),
         }).required(),
       }),
     ).required(),
@@ -135,7 +135,7 @@ export const updateCvValidator = (req, _res, next) => {
       Joi.object().keys({
         period: Joi.object().keys({
           startDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
-          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE),
+          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE).allow(null),
         }),
         client: Joi.string(),
         position: Joi.string(),
@@ -149,11 +149,11 @@ export const updateCvValidator = (req, _res, next) => {
       Joi.object().keys({
         institution: Joi.string().required(),
         qualifications: Joi.array().items(
-          Joi.string().required(),
-        ),
+          Joi.string(),
+        ).required(),
         period: Joi.object().keys({
           startDate: Joi.date().format(datetimeFormats.STANDARD_DATE).required(),
-          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE),
+          endDate: Joi.date().format(datetimeFormats.STANDARD_DATE).allow(null),
         }).required(),
       }),
     ),

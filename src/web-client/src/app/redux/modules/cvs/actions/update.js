@@ -26,13 +26,13 @@ import { getCv } from './read';
  *  @param {Array} params.agile: Agile
  *  @param {Array} params.other: Other
  * }
- * @param {Array} spokenLanguages: [
+ * @param {Array} params.spokenLanguages: [
  *  {
  *    @param {String} language: Language
  *    @param {String} level: Level
  *  }
  * ]
- * @param {Array} projects: [
+ * @param {Array} params.projects: [
  *  {
  *    @param {Object} period: {
  *      @param {String} startDate: Start date
@@ -44,7 +44,7 @@ import { getCv } from './read';
  *    @param {String} responsibilities: Responsibilities
  *  }
  * ]
- * @param {Array} education: [
+ * @param {Array} params.education: [
  *  {
  *    @param {String} institution: Institution
  *    @param {Array} qualifications: Qualifications
@@ -94,15 +94,14 @@ export const updateCv = (params) => async (dispatch) => {
 export const updateProfileImage = (params) => async (dispatch) => {
   start(dispatch, actionTypes.UPDATE_PROFILE_IMAGE);
 
-  const URL = `${config.SERVER_URL}/cvs/${params.id}`;
+  const URL = `${config.SERVER_URL}/cvs/${params.id}/profile-image`;
 
-  const data = params.profileImage;
+  const body = {
+    profileImage: params.profileImage,
+  };
 
   try {
-    await axios.put({
-      url: URL,
-      data,
-    });
+    await axios.put(URL, body);
 
     success(dispatch, actionTypes.UPDATE_PROFILE_IMAGE, null);
     
