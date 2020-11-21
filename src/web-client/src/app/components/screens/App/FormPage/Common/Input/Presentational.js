@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 
 import classes from './Styles.module.scss';
 
-const Presentational = ({ 
-  onChange,
+const Presentational = ({
   touched,
   name,
   label,
@@ -15,6 +14,7 @@ const Presentational = ({
   placeholder,
   error,
   setFieldTouched,
+  setFieldValue,
   value,
   style,
   help,
@@ -23,15 +23,15 @@ const Presentational = ({
     <Form.Item
       label={label}
       required={required}
-      validateStatus={error && touched ? 'error' : 'success'}
+      validateStatus={error && touched ? 'error' : ''}
       hasFeedback={touched && hasFeedback}
       style={style}
       help={help}
     >
       <Input 
-        onChange={(...args) => {
+        onChange={(e) => {
           setFieldTouched(name);
-          onChange(...args);
+          setFieldValue(name, e.target.value);
         }}
         value={value}
         name={name} 
@@ -55,7 +55,7 @@ const Presentational = ({
 
 Presentational.propTypes = {
   setFieldTouched: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
   label: PropTypes.string,

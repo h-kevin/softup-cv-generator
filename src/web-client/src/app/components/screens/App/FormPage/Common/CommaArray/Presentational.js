@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import classes from './Styles.module.scss';
 
 const Presentational = ({ 
-  onChange,
   touched,
   name,
   label,
@@ -25,24 +24,17 @@ const Presentational = ({
       label={label}
       required={required}
       validateTrigger="onBlur"
-      validateStatus={error && touched ? 'error' : 'success'}
+      validateStatus={error && touched ? 'error' : ''}
       hasFeedback={touched && hasFeedback}
       style={style}
       help={help}
     >
       <Input 
-        onBlur={(...args) => {
+        onChange={(e) => {
           setFieldTouched(name);
-          onChange(...args);
-          setFieldValue(
-            name,
-            args[0].target.value
-              .replace(/ +/g, ' ')
-              .split(/\s*,\s*/)
-              .filter((item) => item),
-          );
+          setFieldValue(name, e.target.value);
         }}
-        defaultValue={value}
+        value={value}
         name={name} 
         placeholder={placeholder} 
         onKeyPress={(e) => {
@@ -65,7 +57,6 @@ const Presentational = ({
 Presentational.propTypes = {
   setFieldTouched: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
   label: PropTypes.string,

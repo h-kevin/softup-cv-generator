@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import { 
   Formik, 
@@ -11,7 +10,6 @@ import {
   Button, 
   Space, 
   Form,
-  DatePicker,
   Upload,
   PageHeader,
   Divider,
@@ -33,11 +31,10 @@ import TextArea from './Common/TextArea/Presentational';
 import ArrayInput from './Common/ArrayInput/Presentational';
 import DatePickerC from './Common/DatePicker/Presentational';
 import CommaArray from './Common/CommaArray/Presentational';
-import { antRules } from '../../../../helpers/validation';
 import routes from '../../../../constants/routes';
 import classes from './Styles.module.scss';
 
-const initialValues = {
+let initialValues = {
   firstName: '',
   lastName: '',
   role: '',
@@ -120,13 +117,13 @@ const onSubmit = async () => {
 };
 
 const Presentational = ({
-  cvs,
+  cv,
   isReadingCv,
   error,
   getCv,
   createCv,
   updateCv,
-  // updateProfileImage,
+  updateProfileImage,
   clearState,
   history,
   location,
@@ -182,16 +179,8 @@ const Presentational = ({
   }, [getCv, queryParams.id]);
 
   useEffect(() => {
-    if (cvs?.filter((cv) => cv.id !== queryParams.id).length > 0) {
-      const cv = cvs.filter((item) => item.id !== queryParams.id)[0];
-      
-      initialValues.firstName = cv.firstName;
-      initialValues.lastName = cv.lastName;
-      initialValues.role = cv.role;
-      initialValues.summary = cv.summary;
-      initialValues.spokenLanguages = cv.spokenLanguages;
-      initialValues.projects = cv.projects;
-      initialValues.education = cv.education;
+    if (cv) {
+      initialValues = { ...cv };
       setLanguages(cv.skills.languages);
       setDatabases(cv.skills.databases);
       setBackendFrameworks(cv.skills.backendFrameworks);
@@ -203,7 +192,7 @@ const Presentational = ({
       setAgile(cv.skills.agile);
       setOther(cv.skills.other);
     }
-  }, [cvs, queryParams.id]);
+  }, [cv]);
 
   useEffect(() => {
     if (error) {
@@ -252,12 +241,13 @@ const Presentational = ({
         thirdParty,
         agile,
         other,
-        cvs,
+        cv,
         createCv,
         updateCv,
+        updateProfileImage,
       )}
     >
-      {({ 
+      {({
         values, 
         errors,
         touched, 
@@ -278,6 +268,7 @@ const Presentational = ({
             hasFeedback
             touched={touched.firstName}
             setFieldTouched={setFieldTouched}
+            setFieldValue={setFieldValue}
             value={values.firstName}
             error={errors.firstName}
             placeholder={i18n.t('formPage.firstNameEx')} 
@@ -290,6 +281,7 @@ const Presentational = ({
             hasFeedback
             touched={touched.lastName}
             setFieldTouched={setFieldTouched}
+            setFieldValue={setFieldValue}
             value={values.lastName}
             error={errors.lastName}
             placeholder={i18n.t('formPage.lastNameEx')} 
@@ -302,6 +294,7 @@ const Presentational = ({
             hasFeedback
             touched={touched.role}
             setFieldTouched={setFieldTouched}
+            setFieldValue={setFieldValue}
             value={values.role}
             error={errors.role}
             placeholder={i18n.t('formPage.roleEx')} 
@@ -314,6 +307,7 @@ const Presentational = ({
             autoSize
             touched={touched.summary}
             setFieldTouched={setFieldTouched}
+            setFieldValue={setFieldValue}
             value={values.summary}
             error={errors.summary}
             placeholder={i18n.t('formPage.summaryEx')} 
@@ -399,13 +393,10 @@ const Presentational = ({
                       hasFeedback
                       touched={touched.spokenLanguages && touched.spokenLanguages[index]?.language}
                       setFieldTouched={setFieldTouched}
-                      value={values.spokenLanguages && values.spokenLanguages[index]?.language}
+                      setFieldValue={setFieldValue}
+                      value={language.language}
                       error={errors.spokenLanguages && errors.spokenLanguages[index]?.language}
                       placeholder={i18n.t('formPage.language')} 
-                      onBlur={(e) => setFieldValue(
-                        `spokenLanguages[${index}].language`,
-                        e.target.value,
-                      )}
                     />
                     <Field
                       as={Input}
@@ -413,13 +404,10 @@ const Presentational = ({
                       hasFeedback
                       touched={touched.spokenLanguages && touched.spokenLanguages[index]?.level}
                       setFieldTouched={setFieldTouched}
-                      value={values.spokenLanguages && values.spokenLanguages[index]?.level}
+                      setFieldValue={setFieldValue}
+                      value={language?.level}
                       error={errors.spokenLanguages && errors.spokenLanguages[index]?.level}
                       placeholder={i18n.t('formPage.level')} 
-                      onBlur={(e) => setFieldValue(
-                        `spokenLanguages[${index}].level`,
-                        e.target.value,
-                      )}
                     />
                     <MinusCircleOutlined onClick={() => arrayHelpers.remove(index)} />
                   </Space>
@@ -461,9 +449,9 @@ const Presentational = ({
                         touched={touched.projects && touched.projects[index]?.period?.startDate}
                         setFieldTouched={setFieldTouched}
                         setFieldValue={setFieldValue}
-                        value={values.projects && moment(values.projects[index]?.period?.startDate)}
+                        value={project?.period?.startDate}
                         error={errors.projects && errors.projects[index]?.period?.startDate}
-                        placeholder={i18n.t('formPage.period.startDate')}
+                        placeholder={i18n.t('formPage.startDate')}
                       />
                       <Field
                         as={DatePickerC}
@@ -472,9 +460,9 @@ const Presentational = ({
                         touched={touched.projects && touched.projects[index]?.period?.endDate}
                         setFieldTouched={setFieldTouched}
                         setFieldValue={setFieldValue}
-                        value={values.projects && moment(values.projects[index]?.period?.endDate)}
+                        value={project?.period?.endDate}
                         error={errors.projects && errors.projects[index]?.period?.endDate}
-                        placeholder={i18n.t('formPage.period.endDate')}
+                        placeholder={i18n.t('formPage.endDate')}
                       />
                     </Space>
                     <Space 
@@ -488,13 +476,10 @@ const Presentational = ({
                         hasFeedback
                         touched={touched.projects && touched.projects[index]?.client}
                         setFieldTouched={setFieldTouched}
-                        value={values.projects && values.projects[index]?.client}
+                        setFieldValue={setFieldValue}
+                        value={project?.client}
                         error={errors.projects && errors.projects[index]?.client}
                         placeholder={i18n.t('formPage.client')} 
-                        onBlur={(e) => setFieldValue(
-                          `projects[${index}].client`,
-                          e.target.value,
-                        )}
                       />
                       <Field
                         as={Input}
@@ -502,13 +487,10 @@ const Presentational = ({
                         hasFeedback
                         touched={touched.projects && touched.projects[index]?.position}
                         setFieldTouched={setFieldTouched}
-                        value={values.projects && values.projects[index]?.position}
+                        setFieldValue={setFieldValue}
+                        value={project?.position}
                         error={errors.projects && errors.projects[index]?.position}
                         placeholder={i18n.t('formPage.position')} 
-                        onBlur={(e) => setFieldValue(
-                          `projects[${index}].position`,
-                          e.target.value,
-                        )}
                       />
                     </Space>
                     <Space 
@@ -528,7 +510,7 @@ const Presentational = ({
                         touched={touched.projects && touched.projects[index]?.technologies}
                         setFieldTouched={setFieldTouched}
                         setFieldValue={setFieldValue}
-                        value={values.projects && values.projects[index]?.technologies.toString()}
+                        value={project?.technologies}
                         error={errors.projects && errors.projects[index]?.technologies}
                         placeholder={i18n.t('formPage.technologies')} 
                         help={i18n.t('formPage.technologiesEx')}
@@ -549,7 +531,8 @@ const Presentational = ({
                         name={`projects[${index}].responsibilities`} 
                         touched={touched.projects && touched.projects[index]?.responsibilities}
                         setFieldTouched={setFieldTouched}
-                        value={values.projects && values.projects[index]?.responsibilities}
+                        setFieldValue={setFieldValue}
+                        value={project?.responsibilities}
                         error={errors.projects && errors.projects[index]?.responsibilities}
                         placeholder={i18n.t('formPage.responsibilities')} 
                         autoSize
@@ -591,13 +574,10 @@ const Presentational = ({
                         hasFeedback
                         touched={touched.education && touched.education[index]?.institution}
                         setFieldTouched={setFieldTouched}
-                        value={values.education && values.education[index]?.institution}
+                        setFieldValue={setFieldValue}
+                        value={item?.institution}
                         error={errors.education && errors.education[index]?.institution}
                         placeholder={i18n.t('formPage.institution')} 
-                        onBlur={(e) => setFieldValue(
-                          `education[${index}].institution`,
-                          e.target.value,
-                        )}
                       />
                     </Space>
                     <Space 
@@ -617,9 +597,7 @@ const Presentational = ({
                         touched={touched.education && touched.education[index]?.qualifications}
                         setFieldTouched={setFieldTouched}
                         setFieldValue={setFieldValue}
-                        value={
-                          values.education && values.education[index]?.qualifications.toString()
-                        }
+                        value={item?.qualifications}
                         error={errors.education && errors.education[index]?.qualifications}
                         placeholder={i18n.t('formPage.qualifications')} 
                         help={i18n.t('formPage.qualificationsEx')}
@@ -630,33 +608,28 @@ const Presentational = ({
                       align="baseline"
                       size="small"
                     >
-                      <Form.Item
-                        hasFeedback
+                      <Field
+                        as={DatePickerC}
                         name={`education[${index}].period.startDate`}
-                        rules={antRules()}
-                      >
-                        <DatePicker
-                          name={`education[${index}].period.startDate`}
-                          placeholder={i18n.t('formPage.startDate')}
-                          onChange={(e) => setFieldValue(
-                            `education[${index}].period.startDate`,
-                            e?._d,
-                          )}
-                        />
-                      </Form.Item>
-                      <Form.Item
                         hasFeedback
+                        touched={touched.education && touched.education[index]?.period?.startDate}
+                        setFieldTouched={setFieldTouched}
+                        setFieldValue={setFieldValue}
+                        value={item?.period?.startDate}
+                        error={errors.period && errors.period[index]?.period?.startDate}
+                        placeholder={i18n.t('formPage.startDate')}
+                      />
+                      <Field
+                        as={DatePickerC}
                         name={`education[${index}].period.endDate`}
-                      >
-                        <DatePicker 
-                          name={`education[${index}].period.endDate`} 
-                          placeholder={i18n.t('formPage.endDate')} 
-                          onChange={(e) => setFieldValue(
-                            `education[${index}].period.endDate`,
-                            e?._d,
-                          )}
-                        />
-                      </Form.Item>
+                        hasFeedback
+                        touched={touched.education && touched.education[index]?.period?.endDate}
+                        setFieldTouched={setFieldTouched}
+                        setFieldValue={setFieldValue}
+                        value={item?.period?.endDate}
+                        error={errors.period && errors.period[index]?.period?.endDate}
+                        placeholder={i18n.t('formPage.endDate')}
+                      />
                       <MinusCircleOutlined onClick={() => arrayHelpers.remove(index)} />
                     </Space>
                   </div>
@@ -708,7 +681,7 @@ const Presentational = ({
                 type="primary" 
                 htmlType="submit"
               >
-                {cvs ? i18n.t('formPage.update') : i18n.t('formPage.create')}
+                {cv ? i18n.t('formPage.update') : i18n.t('formPage.create')}
               </Button>
             </Col>
           </Row>
@@ -719,15 +692,46 @@ const Presentational = ({
 };
 
 Presentational.propTypes = {
-  cvs: PropTypes.arrayOf(
-    PropTypes.shape({}),
-  ),
+  cv: PropTypes.shape({
+    skills: PropTypes.shape({
+      languages: PropTypes.arrayOf(
+        PropTypes.string.isRequired,
+      ),
+      databases: PropTypes.arrayOf(
+        PropTypes.string.isRequired,
+      ),
+      backendFrameworks: PropTypes.arrayOf(
+        PropTypes.string.isRequired,
+      ),
+      frontendFrameworks: PropTypes.arrayOf(
+        PropTypes.string.isRequired,
+      ),
+      operationsAndInfrastructure: PropTypes.arrayOf(
+        PropTypes.string.isRequired,
+      ),
+      integrationAndDeployment: PropTypes.arrayOf(
+        PropTypes.string.isRequired,
+      ),
+      testing: PropTypes.arrayOf(
+        PropTypes.string.isRequired,
+      ),
+      thirdParty: PropTypes.arrayOf(
+        PropTypes.string.isRequired,
+      ),
+      agile: PropTypes.arrayOf(
+        PropTypes.string.isRequired,
+      ),
+      other: PropTypes.arrayOf(
+        PropTypes.string.isRequired,
+      ),
+    }).isRequired,
+  }),
   isReadingCv: PropTypes.bool,
   error: PropTypes.string,
   getCv: PropTypes.func.isRequired,
   createCv: PropTypes.func.isRequired,
   updateCv: PropTypes.func.isRequired,
-  // updateProfileImage: PropTypes.func.isRequired,
+  updateProfileImage: PropTypes.func.isRequired,
   clearState: PropTypes.func.isRequired,
   history: PropTypes.shape({
     replace: PropTypes.func.isRequired,
@@ -738,7 +742,7 @@ Presentational.propTypes = {
 };
 
 Presentational.defaultProps = {
-  cvs: undefined,
+  cv: undefined,
   isReadingCv: false,
   error: undefined,
 };

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import { Form, Input } from 'antd';
 import { ErrorMessage } from 'formik';
@@ -7,7 +6,6 @@ import PropTypes from 'prop-types';
 import classes from './Styles.module.scss';
 
 const Presentational = ({ 
-  onChange,
   name,
   label,
   required,
@@ -16,6 +14,7 @@ const Presentational = ({
   error,
   touched,
   setFieldTouched,
+  setFieldValue,
   value,
   style,
   help,
@@ -24,18 +23,18 @@ const Presentational = ({
     label={label}
     required={required}
     validateTrigger="onKeyUp"
-    validateStatus={error && touched ? 'error' : 'success'}
+    validateStatus={error && touched ? 'error' : ''}
     help={help}
     style={style}
   >
     <Input.TextArea
-      onBlur={(...args) => {
+      onChange={(e) => {
         setFieldTouched(name);
-        onChange(...args);
+        setFieldValue(name, e.target.value);
       }}
       name={name}
       placeholder={placeholder} 
-      defaultValue={value}
+      value={value}
       autoSize={autoSize}
       style={{
         resize: 'none',
@@ -54,7 +53,7 @@ const Presentational = ({
 );
 
 Presentational.propTypes = {
-  onChange: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
   label: PropTypes.string,

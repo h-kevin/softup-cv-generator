@@ -1,7 +1,9 @@
 import React from 'react';
-import { Form, DatePicker } from 'antd';
+import { Form } from 'antd';
 import { ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
+import dateFnsGenerateConfig from 'rc-picker/lib/generate/dateFns';
+import generatePicker from 'antd/es/date-picker/generatePicker';
 
 import classes from './Styles.module.scss';
 
@@ -18,41 +20,45 @@ const Presentational = ({
   value,
   style,
   help,
-}) => (
-  <>
-    <Form.Item
-      label={label}
-      required={required}
-      validateTrigger="onBlur"
-      validateStatus={error && touched ? 'error' : 'success'}
-      hasFeedback={touched && hasFeedback}
-      style={style}
-      help={help}
-    >
-      <DatePicker
-        onChange={(date) => {
-          setFieldTouched(name);
-          setFieldValue(name, date);
-        }}
-        value={value}
-        name={name} 
-        placeholder={placeholder} 
-        onKeyPress={(e) => {
-          if (e.key === 'Enter') e.preventDefault();
-        }}
-      />
-    </Form.Item>
-    {error && touched
-      ? (
-        <ErrorMessage 
+}) => {
+  const DatePicker = generatePicker(dateFnsGenerateConfig);
+
+  return (
+    <>
+      <Form.Item
+        label={label}
+        required={required}
+        validateTrigger="onBlur"
+        validateStatus={error && touched ? 'error' : ''}
+        hasFeedback={touched && hasFeedback}
+        style={style}
+        help={help}
+      >
+        <DatePicker
+          onChange={(date) => {
+            setFieldTouched(name);
+            setFieldValue(name, date);
+          }}
+          value={value || null}
           name={name} 
-          render={() => (
-            <div className={classes.Error}>{error}</div> 
-          )} 
+          placeholder={placeholder} 
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') e.preventDefault();
+          }}
         />
-      ) : null}
-  </>
-);
+      </Form.Item>
+      {error && touched
+        ? (
+          <ErrorMessage 
+            name={name} 
+            render={() => (
+              <div className={classes.Error}>{error}</div> 
+            )} 
+          />
+        ) : null}
+    </>
+  );
+};
 
 Presentational.propTypes = {
   setFieldTouched: PropTypes.func.isRequired,
