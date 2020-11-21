@@ -7,7 +7,6 @@ import {
   Row,
   Col,
   Tooltip,
-  // Popconfirm,
   notification,
 } from 'antd';
 import {
@@ -94,6 +93,7 @@ const generateData = (cvs) => {
   if (cvs) {
     data = cvs.map((cv) => ({
       key: cv._id,
+      rowKey: cv._id,
       name: `${cv.firstName} ${cv.lastName}`,
     }));
   }
@@ -113,7 +113,9 @@ const Presentational = ({
   lastDeleted,
   history,
 }) => {
-  useEffect(() => getCvs(), [getCvs]);
+  useEffect(() => {
+    getCvs();
+  }, [getCvs]);
 
   useEffect(() => {
     if (error) {
@@ -124,7 +126,7 @@ const Presentational = ({
       clearState();
     }
   }, [error, clearState]);
-
+  
   return (
     <Table 
       columns={generateColumns(
@@ -160,6 +162,7 @@ const Presentational = ({
         defaultCurrent: 1,
       }}
       scroll={{ x: 400 }}
+      key={(record) => record._id}
       loading={isReadingCvs}
       bordered
       sticky

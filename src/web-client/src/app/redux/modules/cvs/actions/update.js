@@ -4,7 +4,6 @@ import actionTypes from '../action_types';
 import config from '../../../../config';
 import getError from '../../../../utils/error_message';
 import { start, success, fail } from '../../../../utils/actions';
-import { getCv } from './read';
 
 /**
  * Update CV
@@ -71,6 +70,9 @@ export const updateCv = (params) => async (dispatch) => {
     education: params.education,
   }
 
+  params._id = params.id;
+  delete params.id;
+
   try {
     await axios.patch(URL, body);
 
@@ -96,16 +98,18 @@ export const updateProfileImage = (params) => async (dispatch) => {
 
   const URL = `${config.SERVER_URL}/cvs/${params.id}/profile-image`;
 
-  const body = {
-    profileImage: params.profileImage,
-  };
+  const data = new FormData();
+  data.append('profileImage', params.profileImage.originFileObj);
 
   try {
-    await axios.put(URL, body);
+    await axios({
+      method: 'put',
+      headers: { 'Content-Type': 'multipart/form-data' },
+      url: URL,
+      data,
+    });
 
     success(dispatch, actionTypes.UPDATE_PROFILE_IMAGE, null);
-    
-    getCv(params.id);
 
     return true;
   } catch (error) {

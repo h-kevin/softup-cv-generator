@@ -106,13 +106,7 @@ const reducer = (state = initState, action) => {
         action,
         actions.UPDATE,
         null,
-        () => ({
-          ...state._data,
-          cvs: updateObjectInArray(
-            state._data?.cvs,
-            action.payload.updatedCv,
-          ),
-        }),
+        null,
         null,
       );
     default:
