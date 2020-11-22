@@ -3,6 +3,13 @@
 .Error {
   margin-top: -20px !important;
   color: $blood-burst;
+  margin-left: 200px;
+}
+
+@media (max-width: 469px) {
+  .Error {
+    margin-left: 0;
+  }
 }
 
 .InputWrapper {
@@ -10,14 +17,12 @@
     display: flex;
 
     &:nth-child(1) {
-      flex: 1;
+      min-width: 200px;
 
       label {}
     }
 
     &:nth-child(2) {
-      flex: 6;
-
       div {
         div {
           input {}

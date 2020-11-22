@@ -3,7 +3,7 @@ import { TweenOneGroup } from 'rc-tween-one';
 import PropTypes from 'prop-types';
 
 const Presentational = ({ array }) => (
-  <div style={{ marginBottom: 16 }}>
+  <div>
     <TweenOneGroup
       enter={{
         scale: 0.8,

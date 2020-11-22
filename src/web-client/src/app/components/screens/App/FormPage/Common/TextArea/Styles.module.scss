@@ -10,14 +10,12 @@
     display: flex;
 
     &:nth-child(1) {
-      flex: 1;
+      min-width: 200px;
 
       label {}
     }
 
     &:nth-child(2) {
-      flex: 6;
-
       div {
         div {
           textarea {}

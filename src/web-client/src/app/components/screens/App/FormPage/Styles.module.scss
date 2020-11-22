@@ -1,3 +1,35 @@
+@import '../../../../styles/abstracts/variables.scss';
+
 .Button {
   border-radius: 7px !important;
+}
+
+.FieldArrayContainer {
+  margin-bottom: 20px !important;
+  border: 1px dashed $ghost;
+  border-radius: 5px;
+  padding: 0 !important;
+
+  .FormItemContainer {
+    padding-left: 10px;
+
+    div {
+      margin-bottom: 0;
+    }
+  }
+
+  .FormItemSeparator {
+    height: 10px;
+  }
+
+  .RemoveButtonContainer {
+    cursor: pointer;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background-color: $ghost;
+    border: 1px solid $ghost;
+    margin: -1px -1px -1px 1px;
+    border-radius: 0 5px 5px 0;
+  }
 }
