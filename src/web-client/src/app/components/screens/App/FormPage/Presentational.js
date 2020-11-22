@@ -18,7 +18,6 @@ import {
   notification,
 } from 'antd';
 import { 
-  PlusOutlined, 
   MinusCircleOutlined, 
   UploadOutlined,
 } from '@ant-design/icons';
@@ -501,7 +500,7 @@ const Presentational = ({
                           setFieldValue={setFieldValue}
                           value={project?.period?.startDate}
                           error={errors.projects && errors.projects[index]?.period?.startDate}
-                          placeholder={i18n.t('formPage.startDate')}
+                          placeholder={i18n.t('formPage.selectDate')}
                         />
                         <div className={classes.FormItemSeparator} />
                         <Field
@@ -513,7 +512,7 @@ const Presentational = ({
                           setFieldValue={setFieldValue}
                           value={project?.period?.endDate}
                           error={errors.projects && errors.projects[index]?.period?.endDate}
-                          placeholder={i18n.t('formPage.endDate')}
+                          placeholder={i18n.t('formPage.selectDate')}
                         />
                         <div className={classes.FormItemSeparator} />
                         <Field
@@ -591,10 +590,14 @@ const Presentational = ({
             name="education"
             render={(arrayHelpers) => (
               <Row>
-                <Col>
+                <Col span={24}>
                   {values.education.map((item, index) => (
-                    <Row key={`education-${index}`}>
-                      <Col>
+                    <Row 
+                      key={`education-${index}`}
+                      gutter={[0, 20]}
+                      className={classes.FieldArrayContainer}
+                    >
+                      <Col span={21} className={classes.FormItemContainer}>
                         <Field
                           as={Input}
                           name={`education[${index}].institution`}
@@ -606,8 +609,7 @@ const Presentational = ({
                           error={errors.education && errors.education[index]?.institution}
                           placeholder={i18n.t('global.typeSth')} 
                         />
-                      </Col>
-                      <Col>
+                        <div className={classes.FormItemSeparator} />
                         <Field
                           as={CommaArray}
                           name={`education[${index}].qualifications`}
@@ -619,45 +621,49 @@ const Presentational = ({
                           error={errors.education && errors.education[index]?.qualifications}
                           placeholder={i18n.t('formPage.qualificationsEx')} 
                         />
-                      </Col>
-                      <Col>
+                        <div className={classes.FormItemSeparator} />
                         <Field
                           as={DatePicker}
+                          label={i18n.t('formPage.startDate')}
                           name={`education[${index}].period.startDate`}
                           hasFeedback
                           setFieldTouched={setFieldTouched}
                           setFieldValue={setFieldValue}
                           value={item?.period?.startDate}
                           error={errors.education && errors.education[index]?.period?.startDate}
-                          placeholder={i18n.t('formPage.startDate')}
+                          placeholder={i18n.t('formPage.selectDate')}
                         />
-                      </Col>
-                      <Col>
+                        <div className={classes.FormItemSeparator} />
                         <Field
                           as={DatePicker}
+                          label={i18n.t('formPage.endDate')}
                           name={`education[${index}].period.endDate`}
                           hasFeedback
                           setFieldTouched={setFieldTouched}
                           setFieldValue={setFieldValue}
                           value={item?.period?.endDate}
                           error={errors.education && errors.education[index]?.period?.endDate}
-                          placeholder={i18n.t('formPage.endDate')}
+                          placeholder={i18n.t('formPage.selectDate')}
                         />
                       </Col>
-                      <Col>
-                        <MinusCircleOutlined onClick={() => arrayHelpers.remove(index)} />
+                      <Col span={2} />
+                      <Col 
+                        className={classes.RemoveButtonContainer} 
+                        span={1}
+                        onClick={() => arrayHelpers.remove(index)}
+                      >
+                        <MinusCircleOutlined />
                       </Col>
                     </Row>
                   ))}
-                  <Button
-                    id="addInstitutions"
-                    name="button"
-                    type="dashed"
-                    onClick={() => arrayHelpers.push({})}
-                  >
-                    <PlusOutlined /> 
-                    {i18n.t('formPage.addNewInstitution')}
-                  </Button>
+                  <Row>
+                    <Col span={24}>
+                      <AddItemButton 
+                        arrayHelpers={arrayHelpers}
+                        title={i18n.t('formPage.addNewInstitution')}
+                      />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             )}

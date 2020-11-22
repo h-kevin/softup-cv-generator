@@ -51,6 +51,7 @@
       "period": "Period",
       "startDate": "Start Date",
       "endDate": "End Date",
+      "selectDate": "Select date",
       "client": "Client",
       "clientEx": "Real Estate Industry",
       "position": "Position",
