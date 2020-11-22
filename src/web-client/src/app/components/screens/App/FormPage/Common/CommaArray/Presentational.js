@@ -19,6 +19,7 @@ const Presentational = ({
 }) => (
   <>
     <Form.Item
+      className={classes.FormItem}
       label={label}
       required={required}
       colon={false}

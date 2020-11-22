@@ -4,3 +4,15 @@
   margin-top: -20px !important;
   color: $blood-burst;
 }
+
+.FormItem {
+  display: flex;
+
+  label {
+    min-width: 200px;
+  }
+
+  .DatePicker {
+    width: 100%;
+  }
+}

@@ -23,6 +23,7 @@ const Presentational = ({
   return (
     <>
       <Form.Item
+        className={classes.FormItem}
         label={label}
         required={required}
         colon={false}
@@ -32,6 +33,7 @@ const Presentational = ({
         help={help}
       >
         <DatePicker
+          className={classes.DatePicker}
           onChange={(date) => {
             setFieldTouched(name);
             setFieldValue(name, date);

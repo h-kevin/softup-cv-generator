@@ -4,3 +4,11 @@
   margin-top: 4px !important;
   color: $blood-burst;
 }
+
+.FormItem {
+  display: flex;
+
+  label {
+    min-width: 200px;
+  }
+}

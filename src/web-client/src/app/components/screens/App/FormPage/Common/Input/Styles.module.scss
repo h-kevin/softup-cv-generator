@@ -12,22 +12,10 @@
   }
 }
 
-.InputWrapper {
-  div {
-    display: flex;
+.FormItem {
+  display: flex;
 
-    &:nth-child(1) {
-      min-width: 200px;
-
-      label {}
-    }
-
-    &:nth-child(2) {
-      div {
-        div {
-          input {}
-        }
-      }
-    }
+  label {
+    min-width: 200px;
   }
 }

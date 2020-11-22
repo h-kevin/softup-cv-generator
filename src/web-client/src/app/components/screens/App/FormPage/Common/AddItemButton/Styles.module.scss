@@ -5,7 +5,9 @@
   border-color: $ghost !important;
   border-radius: 7px !important;
 
-  &:hover {
-    color: gray !important;
+  &:hover, 
+  &:active,
+  &:focus {
+    color: $regent-gray !important;
   }
 }

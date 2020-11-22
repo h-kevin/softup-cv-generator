@@ -425,8 +425,8 @@ const Presentational = ({
                 <Col span={24}>
                   {values.spokenLanguages.map((language, index) => (
                     <Row 
-                      gutter={[0, 20]}
                       key={`spokenLanguages-${index}`}
+                      gutter={[0, 20]}
                       className={classes.FieldArrayContainer}
                     >
                       <Col span={21} className={classes.FormItemContainer}>
@@ -484,89 +484,104 @@ const Presentational = ({
             name="projects"
             render={(arrayHelpers) => (
               <Row>
-                <Col>
+                <Col span={24}>
                   {values.projects.map((project, index) => (
                     <Row 
-                      className={classes.SpokenLanguagesRow} 
                       key={`projects-${index}`}
                       gutter={[0, 20]}
+                      className={classes.FieldArrayContainer}
                     >
-                      <Field
-                        as={DatePicker}
-                        name={`projects[${index}].period.startDate`}
-                        hasFeedback
-                        setFieldTouched={setFieldTouched}
-                        setFieldValue={setFieldValue}
-                        value={project?.period?.startDate}
-                        error={errors.projects && errors.projects[index]?.period?.startDate}
-                        placeholder={i18n.t('formPage.startDate')}
-                      />
-                      <Field
-                        as={DatePicker}
-                        name={`projects[${index}].period.endDate`}
-                        hasFeedback
-                        setFieldTouched={setFieldTouched}
-                        setFieldValue={setFieldValue}
-                        value={project?.period?.endDate}
-                        error={errors.projects && errors.projects[index]?.period?.endDate}
-                        placeholder={i18n.t('formPage.endDate')}
-                      />
-                      <Field
-                        as={Input}
-                        name={`projects[${index}].client`}
-                        label={i18n.t('formPage.client')}
-                        hasFeedback
-                        setFieldTouched={setFieldTouched}
-                        setFieldValue={setFieldValue}
-                        value={project?.client}
-                        error={errors.projects && errors.projects[index]?.client}
-                        placeholder={i18n.t('global.typeSth')} 
-                      />
-                      <Field
-                        as={Input}
-                        name={`projects[${index}].position`}
-                        label={i18n.t('formPage.position')}
-                        hasFeedback
-                        setFieldTouched={setFieldTouched}
-                        setFieldValue={setFieldValue}
-                        value={project?.position}
-                        error={errors.projects && errors.projects[index]?.position}
-                        placeholder={i18n.t('global.typeSth')} 
-                      />
-                      <Field
-                        as={CommaArray}
-                        name={`projects[${index}].technologies`}
-                        label={i18n.t('formPage.technologies')}
-                        hasFeedback
-                        setFieldTouched={setFieldTouched}
-                        setFieldValue={setFieldValue}
-                        value={project?.technologies}
-                        error={errors.projects && errors.projects[index]?.technologies}
-                        placeholder={i18n.t('formPage.technologiesEx')} 
-                      />
-                      <Field
-                        as={TextArea}
-                        name={`projects[${index}].responsibilities`} 
-                        label={i18n.t('formPage.responsibilities')}
-                        setFieldTouched={setFieldTouched}
-                        setFieldValue={setFieldValue}
-                        value={project?.responsibilities}
-                        error={errors.projects && errors.projects[index]?.responsibilities}
-                        placeholder={i18n.t('formPage.responsibilitiesEx')} 
-                        autoSize
-                      />
-                      <MinusCircleOutlined onClick={() => arrayHelpers.remove(index)} />
+                      <Col span={21} className={classes.FormItemContainer}>
+                        <Field
+                          as={DatePicker}
+                          label={i18n.t('formPage.startDate')}
+                          name={`projects[${index}].period.startDate`}
+                          hasFeedback
+                          setFieldTouched={setFieldTouched}
+                          setFieldValue={setFieldValue}
+                          value={project?.period?.startDate}
+                          error={errors.projects && errors.projects[index]?.period?.startDate}
+                          placeholder={i18n.t('formPage.startDate')}
+                        />
+                        <div className={classes.FormItemSeparator} />
+                        <Field
+                          as={DatePicker}
+                          label={i18n.t('formPage.endDate')}
+                          name={`projects[${index}].period.endDate`}
+                          hasFeedback
+                          setFieldTouched={setFieldTouched}
+                          setFieldValue={setFieldValue}
+                          value={project?.period?.endDate}
+                          error={errors.projects && errors.projects[index]?.period?.endDate}
+                          placeholder={i18n.t('formPage.endDate')}
+                        />
+                        <div className={classes.FormItemSeparator} />
+                        <Field
+                          as={Input}
+                          name={`projects[${index}].client`}
+                          label={i18n.t('formPage.client')}
+                          hasFeedback
+                          setFieldTouched={setFieldTouched}
+                          setFieldValue={setFieldValue}
+                          value={project?.client}
+                          error={errors.projects && errors.projects[index]?.client}
+                          placeholder={i18n.t('global.typeSth')} 
+                        />
+                        <div className={classes.FormItemSeparator} />
+                        <Field
+                          as={Input}
+                          name={`projects[${index}].position`}
+                          label={i18n.t('formPage.position')}
+                          hasFeedback
+                          setFieldTouched={setFieldTouched}
+                          setFieldValue={setFieldValue}
+                          value={project?.position}
+                          error={errors.projects && errors.projects[index]?.position}
+                          placeholder={i18n.t('global.typeSth')} 
+                        />
+                        <div className={classes.FormItemSeparator} />
+                        <Field
+                          as={CommaArray}
+                          name={`projects[${index}].technologies`}
+                          label={i18n.t('formPage.technologies')}
+                          hasFeedback
+                          setFieldTouched={setFieldTouched}
+                          setFieldValue={setFieldValue}
+                          value={project?.technologies}
+                          error={errors.projects && errors.projects[index]?.technologies}
+                          placeholder={i18n.t('formPage.technologiesEx')} 
+                        />
+                        <div className={classes.FormItemSeparator} />
+                        <Field
+                          as={TextArea}
+                          name={`projects[${index}].responsibilities`} 
+                          label={i18n.t('formPage.responsibilities')}
+                          setFieldTouched={setFieldTouched}
+                          setFieldValue={setFieldValue}
+                          value={project?.responsibilities}
+                          error={errors.projects && errors.projects[index]?.responsibilities}
+                          placeholder={i18n.t('formPage.responsibilitiesEx')} 
+                          autoSize
+                        />
+                      </Col>
+                      <Col span={2} />
+                      <Col 
+                        className={classes.RemoveButtonContainer} 
+                        span={1}
+                        onClick={() => arrayHelpers.remove(index)}
+                      >
+                        <MinusCircleOutlined />
+                      </Col>
                     </Row>
                   ))}
-                  <Button
-                    id="addProjects"
-                    name="button"
-                    type="dashed"
-                    onClick={() => arrayHelpers.push({})}
-                  >
-                    <PlusOutlined /> 
-                    {i18n.t('formPage.addNewProject')}
-                  </Button>
+                  <Row>
+                    <Col span={24}>
+                      <AddItemButton 
+                        arrayHelpers={arrayHelpers}
+                        title={i18n.t('formPage.addNewProject')}
+                      />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             )}

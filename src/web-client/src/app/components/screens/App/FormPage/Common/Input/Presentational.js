@@ -19,7 +19,7 @@ const Presentational = ({
 }) => (
   <>
     <Form.Item
-      className={classes.InputWrapper}
+      className={classes.FormItem}
       label={label}
       required={required}
       hasFeedback={hasFeedback}
