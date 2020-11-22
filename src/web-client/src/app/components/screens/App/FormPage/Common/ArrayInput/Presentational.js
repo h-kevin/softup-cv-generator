@@ -25,6 +25,7 @@ const onTagsInputConfirm = (
 const generateTags = (set, updateSet) => set.map((tag) => {
   const tagElem = (
     <Tag
+      className={classes.Tags}
       closable
       onClose={(e) => {
         e.preventDefault();
@@ -53,44 +54,51 @@ const Presentational = ({
 
   return (
     <Form.Item
-      className={classes.TagsWrapper}
+      className={classes.TagsFormItem}
       colon={false}
       label={label}
     >
-      <TweenOneGroup array={generateTags(array, setArray)} />
-      {showArrayInput && (
-        <Input
-          name={name}
-          type="text"
-          size="small"
-          style={{ width: 82 }}
-          value={tagsInputValue}
-          onChange={(e) => setTagsInputValue(e.target.value)}
-          onMouseOver={(e) => e.target.focus()}
-          onBlur={() => onTagsInputConfirm(
-            tagsInputValue, 
-            array, 
-            setTagsInputValue, 
-            setArray,
-            setShowArrayInput,
-          )}
-          onPressEnter={() => onTagsInputConfirm(
-            tagsInputValue, 
-            array, 
-            setTagsInputValue, 
-            setArray,
-            setShowArrayInput,
-          )}
-        />
-      )}
-      {!showArrayInput && (
-        <Tag 
-          onClick={() => setShowArrayInput(true)} 
-        >
-          <PlusOutlined /> 
-          {i18n.t('formPage.newItem')}
-        </Tag>
-      )}
+      <TweenOneGroup 
+        styles={classes.TagsContainer} 
+        array={generateTags(array, setArray)} 
+      />
+      <div className={classes.AddTagContainer}>
+        {showArrayInput && (
+          <Input
+            className={classes.AddTagInput}
+            name={name}
+            type="text"
+            size="small"
+            style={{ width: 82 }}
+            value={tagsInputValue}
+            onChange={(e) => setTagsInputValue(e.target.value)}
+            onMouseOver={(e) => e.target.focus()}
+            onBlur={() => onTagsInputConfirm(
+              tagsInputValue, 
+              array, 
+              setTagsInputValue, 
+              setArray,
+              setShowArrayInput,
+            )}
+            onPressEnter={() => onTagsInputConfirm(
+              tagsInputValue, 
+              array, 
+              setTagsInputValue, 
+              setArray,
+              setShowArrayInput,
+            )}
+          />
+        )}
+        {!showArrayInput && (
+          <Tag 
+            className={classes.AddTagButton}
+            onClick={() => setShowArrayInput(true)} 
+          >
+            <PlusOutlined /> 
+            {i18n.t('formPage.newItem')}
+          </Tag>
+        )}
+      </div>
     </Form.Item>
   );
 };

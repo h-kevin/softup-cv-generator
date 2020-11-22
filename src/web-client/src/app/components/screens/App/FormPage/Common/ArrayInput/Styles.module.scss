@@ -1,49 +1,33 @@
-.TagsWrapper {
-  div {
-    display: flex;
+@import "../../../../../../styles/abstracts/variables.scss";
 
-    &:nth-child(1) {
-      flex: 2;
+.TagsFormItem {
+  display: flex;
 
-      label {
+  label {
+    width: 200px;
+    white-space: normal;
+    text-align: left;
+  }
 
-      }
+  .TagsContainer {
+    .Tags {
+      margin-bottom: 5px;
+      border-radius: 7px;
+    }
+  }
+
+  .AddTagContainer {
+    .AddTagInput {
+      width: min-content;
+      border-radius: 7px;
     }
 
-    &:nth-child(2) {
-      flex: 4;
-
-      div {
-        div {
-          display: flex;
-          flex-flow: column;
-
-          div {
-            display: flex;
-            flex-flow: row;
-            flex-wrap: wrap;
-
-            div {
-              span {
-                span {
-                  margin-bottom: 5px;
-                  border-radius: 7px;
-                }
-              }
-            }
-          }
-
-          span {
-            width: min-content;
-            border-radius: 7px;
-          }
-
-          input {
-            width: min-content;
-            border-radius: 7px;
-          }
-        }
-      }
+    .AddTagButton {
+      background-color: $ghost;
+      width: min-content;
+      border-radius: 7px;
+      margin-bottom: 5px;
+      border-radius: 7px;
     }
   }
 }
