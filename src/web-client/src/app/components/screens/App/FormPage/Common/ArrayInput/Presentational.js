@@ -5,6 +5,7 @@ import i18n from 'i18next';
 import PropTypes from 'prop-types';
 
 import TweenOneGroup from '../TweenOneGroup/Presentational';
+import classes from './Styles.module.scss';
 
 const onTagRemove = (oldTags, removedTag) => oldTags.filter((tag) => tag !== removedTag);
 const onTagsInputConfirm = (
@@ -52,6 +53,8 @@ const Presentational = ({
 
   return (
     <Form.Item
+      className={classes.TagsWrapper}
+      colon={false}
       label={label}
     >
       <TweenOneGroup array={generateTags(array, setArray)} />
@@ -83,7 +86,6 @@ const Presentational = ({
       {!showArrayInput && (
         <Tag 
           onClick={() => setShowArrayInput(true)} 
-          className="site-tag-plus"
         >
           <PlusOutlined /> 
           {i18n.t('formPage.newItem')}

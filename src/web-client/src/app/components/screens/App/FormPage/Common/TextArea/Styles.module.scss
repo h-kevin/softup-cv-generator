@@ -4,3 +4,25 @@
   margin-top: 4px !important;
   color: $blood-burst;
 }
+
+.TextAreaWrapper {
+  div {
+    display: flex;
+
+    &:nth-child(1) {
+      flex: 1;
+
+      label {}
+    }
+
+    &:nth-child(2) {
+      flex: 6;
+
+      div {
+        div {
+          textarea {}
+        }
+      }
+    }
+  }
+}

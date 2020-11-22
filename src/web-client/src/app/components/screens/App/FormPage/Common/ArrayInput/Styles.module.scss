@@ -1,0 +1,49 @@
+.TagsWrapper {
+  div {
+    display: flex;
+
+    &:nth-child(1) {
+      flex: 2;
+
+      label {
+
+      }
+    }
+
+    &:nth-child(2) {
+      flex: 4;
+
+      div {
+        div {
+          display: flex;
+          flex-flow: column;
+
+          div {
+            display: flex;
+            flex-flow: row;
+            flex-wrap: wrap;
+
+            div {
+              span {
+                span {
+                  margin-bottom: 5px;
+                  border-radius: 7px;
+                }
+              }
+            }
+          }
+
+          span {
+            width: min-content;
+            border-radius: 7px;
+          }
+
+          input {
+            width: min-content;
+            border-radius: 7px;
+          }
+        }
+      }
+    }
+  }
+}

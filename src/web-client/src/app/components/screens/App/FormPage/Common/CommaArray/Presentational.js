@@ -21,6 +21,7 @@ const Presentational = ({
     <Form.Item
       label={label}
       required={required}
+      colon={false}
       validateStatus={error ? 'error' : ''}
       hasFeedback={hasFeedback}
       style={style}

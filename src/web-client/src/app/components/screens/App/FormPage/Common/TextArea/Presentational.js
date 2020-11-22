@@ -18,9 +18,11 @@ const Presentational = ({
   help,
 }) => (
   <Form.Item
+    className={classes.TextAreaWrapper}
     label={label}
     required={required}
     validateStatus={error ? 'error' : ''}
+    colon={false}
     help={help}
     style={style}
   >

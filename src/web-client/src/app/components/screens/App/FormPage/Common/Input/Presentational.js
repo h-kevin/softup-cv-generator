@@ -26,6 +26,7 @@ const Presentational = ({
       validateStatus={error ? 'error' : ''}
       style={style}
       help={help}
+      colon={false}
     >
       <Input 
         onChange={(e) => {

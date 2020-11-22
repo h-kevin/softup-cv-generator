@@ -5,3 +5,24 @@
   color: $blood-burst;
 }
 
+.InputWrapper {
+  div {
+    display: flex;
+
+    &:nth-child(1) {
+      flex: 1;
+
+      label {}
+    }
+
+    &:nth-child(2) {
+      flex: 6;
+
+      div {
+        div {
+          input {}
+        }
+      }
+    }
+  }
+}
