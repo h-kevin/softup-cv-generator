@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import React, { useState, useEffect } from 'react';
 import { Upload } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
@@ -8,11 +7,24 @@ import PropTypes from 'prop-types';
 
 import classes from './Styles.module.scss';
 
-const getBase64 = (img, callback) => {
-  const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result));
-  reader.readAsDataURL(img);
+// const getBase64 = (file) => {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
+//     reader.readAsDataURL(file);
+//     reader.onload = () => resolve(reader.result);
+//     reader.onerror = error => reject(error);
+//   });
+// };
+const getBlob = (file) => {
+  if (file.data) {
+    return new Blob([new Uint8Array(file.data)])
+  }
+
+  return new Blob(file);
 };
+// const handlePreview = async (file) => {
+//   return getbl
+// };
 
 const Presentational = ({ 
   image,
@@ -32,10 +44,9 @@ const Presentational = ({
     
   useEffect(() => {
     if (image) {
-      setThumbnail(image);
-      console.log(image);
+      setThumbnail(getBlob(image));
     }
-  }, [image])
+  }, [image]);
 
   return (
     <Upload 
@@ -52,12 +63,8 @@ const Presentational = ({
         }
 
         if (e.file.status === 'done') {
-          getBase64(
-            e.file.originFileObj, 
-            (image) => setThumbnail(image)
-          );
-
-          setThumbnail(image)
+          console.log(getBlob(e.file));
+          setThumbnail(e.file);
         }
 
         setFieldValue(name, e.file);
@@ -67,8 +74,8 @@ const Presentational = ({
       {
         thumbnail 
           ? <img 
-              src={`data:image/jpeg;base64, ${thumbnail}`} 
-              alt="avatar" style={{ width: '100%' }} 
+              src={URL.createObjectURL(thumbnail)}
+              alt="profileImage" style={{ width: '100%' }} 
             />
           : uploadButton
       }
@@ -77,9 +84,9 @@ const Presentational = ({
 };
 
 Presentational.propTypes = {
-  image: PropTypes.string,
+  image: PropTypes.shape({}),
   setFieldValue: PropTypes.func.isRequired, 
-  value: PropTypes.string.isRequired, 
+  value: PropTypes.shape({}).isRequired, 
   name: PropTypes.string.isRequired,
 };
 

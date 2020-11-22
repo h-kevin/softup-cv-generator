@@ -43,7 +43,6 @@ export const modifyApiResponse = (data) => {
         },
       };
     }),
-    profileImage: '',
   };
 };
 

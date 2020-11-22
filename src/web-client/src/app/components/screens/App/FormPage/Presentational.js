@@ -50,7 +50,7 @@ const initialValues = {
   spokenLanguages: [],
   projects: [],
   education: [],
-  profileImage: '',
+  profileImage: {},
 };
 let formValues = { ...initialValues };
 const validation = () => Yup.object().shape({
@@ -359,7 +359,7 @@ const Presentational = ({
             <Col className={classes.ProfileImage} span={5}>
               <UploadInput
                 name="profileImage"
-                image={cv?.profileImage?.data}
+                image={cv?.profileImage}
                 value={values.profileImage}
                 setFieldValue={setFieldValue}
               />
@@ -741,7 +741,7 @@ Presentational.propTypes = {
         PropTypes.string.isRequired,
       ),
     }).isRequired,
-    profileImage: PropTypes.string,
+    profileImage: PropTypes.shape({}),
   }),
   isReadingCv: PropTypes.bool,
   isCreatingCv: PropTypes.bool,
