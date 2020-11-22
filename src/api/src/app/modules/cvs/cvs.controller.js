@@ -27,7 +27,7 @@ export const createCv = async (req, res, next) => {
 
 export const readCvs = async (_req, res, next) => {
   try {
-    const result = await CV.find({});
+    const result = await CV.find({}, { profileImage: 0 });
     res.status(200).json(result);
   } catch (error) {
     next(new InternalError(error));

@@ -9,7 +9,6 @@ import {
 } from 'formik';
 import { 
   Button, 
-  Upload,
   PageHeader,
   Divider,
   Row,
@@ -17,10 +16,7 @@ import {
   Spin,
   notification,
 } from 'antd';
-import { 
-  MinusCircleOutlined, 
-  UploadOutlined,
-} from '@ant-design/icons';
+import { MinusCircleOutlined } from '@ant-design/icons';
 import * as Yup from 'yup';
 import i18n from 'i18next';
 
@@ -30,6 +26,7 @@ import ArrayInput from './Common/ArrayInput/Presentational';
 import DatePicker from './Common/DatePicker/Presentational';
 import CommaArray from './Common/CommaArray/Presentational';
 import AddItemButton from './Common/AddItemButton/Presentational';
+import UploadInput from './Common/UploadInput/Presentational';
 import routes from '../../../../constants/routes';
 import classes from './Styles.module.scss';
 
@@ -117,7 +114,7 @@ const onSubmit = async ({ ...args }) => {
     thirdParty: args.thirdParty,
     agile: args.agile,
     other: args.other,
-  }
+  };
 
   const requestBody = {
     firstName: args.values.firstName,
@@ -307,54 +304,67 @@ const Presentational = ({
           <PageHeader 
             title={i18n.t('formPage.generalInformationSection')}
           />
-          <Field
-            as={Input}
-            name="firstName" 
-            label={i18n.t('formPage.firstName')}
-            required
-            hasFeedback
-            setFieldTouched={setFieldTouched}
-            setFieldValue={setFieldValue}
-            value={values.firstName}
-            error={errors.firstName}
-            placeholder={i18n.t('formPage.firstNameEx')} 
-          />
-          <Field
-            as={Input}
-            name="lastName" 
-            label={i18n.t('formPage.lastName')}
-            required
-            hasFeedback
-            setFieldTouched={setFieldTouched}
-            setFieldValue={setFieldValue}
-            value={values.lastName}
-            error={errors.lastName}
-            placeholder={i18n.t('formPage.lastNameEx')} 
-          />
-          <Field
-            as={Input}
-            name="role" 
-            label={i18n.t('formPage.role')}
-            required
-            hasFeedback
-            setFieldTouched={setFieldTouched}
-            setFieldValue={setFieldValue}
-            value={values.role}
-            error={errors.role}
-            placeholder={i18n.t('formPage.roleEx')} 
-          />
-          <Field
-            as={TextArea}
-            name="summary" 
-            label={i18n.t('formPage.summary')}
-            required
-            autoSize
-            setFieldTouched={setFieldTouched}
-            setFieldValue={setFieldValue}
-            value={values.summary}
-            error={errors.summary}
-            placeholder={i18n.t('formPage.summaryEx')} 
-          />
+          <Row>
+            <Col span={18}>
+              <Field
+                as={Input}
+                name="firstName" 
+                label={i18n.t('formPage.firstName')}
+                required
+                hasFeedback
+                setFieldTouched={setFieldTouched}
+                setFieldValue={setFieldValue}
+                value={values.firstName}
+                error={errors.firstName}
+                placeholder={i18n.t('formPage.firstNameEx')} 
+              />
+              <Field
+                as={Input}
+                name="lastName" 
+                label={i18n.t('formPage.lastName')}
+                required
+                hasFeedback
+                setFieldTouched={setFieldTouched}
+                setFieldValue={setFieldValue}
+                value={values.lastName}
+                error={errors.lastName}
+                placeholder={i18n.t('formPage.lastNameEx')} 
+              />
+              <Field
+                as={Input}
+                name="role" 
+                label={i18n.t('formPage.role')}
+                required
+                hasFeedback
+                setFieldTouched={setFieldTouched}
+                setFieldValue={setFieldValue}
+                value={values.role}
+                error={errors.role}
+                placeholder={i18n.t('formPage.roleEx')} 
+              />
+              <Field
+                as={TextArea}
+                name="summary" 
+                label={i18n.t('formPage.summary')}
+                required
+                autoSize
+                setFieldTouched={setFieldTouched}
+                setFieldValue={setFieldValue}
+                value={values.summary}
+                error={errors.summary}
+                placeholder={i18n.t('formPage.summaryEx')} 
+              />
+            </Col>
+            <Col span={1} />
+            <Col className={classes.ProfileImage} span={5}>
+              <UploadInput
+                name="profileImage"
+                image={cv?.profileImage?.data}
+                value={values.profileImage}
+                setFieldValue={setFieldValue}
+              />
+            </Col>
+          </Row>
           <Divider orientation="left">{i18n.t('formPage.skillsSection')}</Divider>
           <ArrayInput
             array={languages} 
@@ -668,21 +678,6 @@ const Presentational = ({
               </Row>
             )}
           />
-          <Divider orientation="left">{i18n.t('formPage.uploadSection')}</Divider>
-          <Upload 
-            name="profileImage"
-            multiple={false}
-            accept="image/jpeg,image/jpg,image/png"
-            customRequest={({ onSuccess }) => setTimeout(() => { onSuccess('OK') }, 0)}
-            onChange={(e) => setFieldValue('profileImage', e.file)}
-            fileList={values.profileImage ? [values.profileImage] : []}
-          >
-            <Button 
-              icon={<UploadOutlined />}
-            >
-              {i18n.t('formPage.clickToUpload')}
-            </Button>
-          </Upload>
           <Row gutter={[10, 10]} justify="end">
             <Col>
               <Button 
@@ -746,6 +741,7 @@ Presentational.propTypes = {
         PropTypes.string.isRequired,
       ),
     }).isRequired,
+    profileImage: PropTypes.string,
   }),
   isReadingCv: PropTypes.bool,
   isCreatingCv: PropTypes.bool,

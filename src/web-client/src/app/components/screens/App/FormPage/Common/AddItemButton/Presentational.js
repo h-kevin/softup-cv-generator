@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import classes from './Styles.module.scss';
 
-const Presentaitonal = ({ arrayHelpers, title }) => (
+const Presentational = ({ arrayHelpers, title }) => (
   <Button
     className={classes.AddButton}
     onClick={() => arrayHelpers.push({})}
@@ -15,11 +15,11 @@ const Presentaitonal = ({ arrayHelpers, title }) => (
   </Button>
 );
 
-Presentaitonal.propTypes = {
+Presentational.propTypes = {
   arrayHelpers: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
   title: PropTypes.string.isRequired,
 };
 
-export default Presentaitonal;
+export default Presentational;
