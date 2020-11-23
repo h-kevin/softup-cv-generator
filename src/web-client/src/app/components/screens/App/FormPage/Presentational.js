@@ -358,7 +358,7 @@ const Presentational = ({
                 />
               </Col>
               <Col span={1} />
-              <Col className={classes.ProfileImage} xs={24} sm={5}>
+              <Col xs={24} sm={5}>
                 <UploadInput
                   name="profileImage"
                   image={cv?.profileImage}

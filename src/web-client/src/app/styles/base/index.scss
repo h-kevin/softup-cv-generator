@@ -23,7 +23,8 @@ body {
     @extend .no-shadow;
   }
 
-  .ant-input:focus {
+  .ant-input, 
+  .ant-picker {
     @extend .no-shadow;
   }
 
@@ -55,6 +56,11 @@ body {
         border-bottom-right-radius: 7px !important;
       }
     }
+  }
+
+  .ant-pagination-item-link,
+  .ant-pagination-item {
+    border-radius: 7px !important;
   }
 
   .ant-table-body, .ant-table-container {
