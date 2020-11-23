@@ -14,10 +14,10 @@ import {
   EditOutlined,
   FileWordOutlined,
   DeleteOutlined,
-  PlusOutlined,
 } from '@ant-design/icons'
 
 import { SearchModal, SearchIcon } from '../../../common/TableSearch/Presentational';
+import SectionTitle from '../../../common/SectionTitle/Presentational';
 import routes from '../../../../constants/routes';
 import classes from './Styles.module.scss';
 
@@ -129,45 +129,40 @@ const Presentational = ({
   }, [error, clearState]);
   
   return (
-    <Table 
-      columns={generateColumns(
-        i18n, 
-        deleteCv,
-        isDeletingCv,
-        generateDocx,
-        lastDeleted,
-        history,
-      )}
-      dataSource={generateData(cvs)}
-      title={() => (
-        <Row justify="space-between" align="middle">
-          <Col>
-            <h4 className={classes.Header}>
-              {i18n.t('management.header')}
-            </h4>
-          </Col>
-          <Col>
-            <Tooltip title={i18n.t('management.newCv')}>
-              <Button
-                className={classes.Button}
-                icon={<PlusOutlined />}
-                onClick={() => history.push(routes.APP.FORM_PAGE)}
-              />
-            </Tooltip>
-          </Col>
-        </Row>
-      )}
-      pagination={{
-        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
-        defaultPageSize: 7,
-        defaultCurrent: 1,
-      }}
-      scroll={{ x: 400 }}
-      key={(record) => record._id}
-      loading={isReadingCvs}
-      bordered
-      sticky
-    />
+    <div>
+      <SectionTitle title={i18n.t('management.header')} iconName="UnorderedListOutlined" />
+      <Table 
+        className={classes.Table}
+        columns={generateColumns(
+          i18n, 
+          deleteCv,
+          isDeletingCv,
+          generateDocx,
+          lastDeleted,
+          history,
+        )}
+        title={() => (
+          <Button
+            className={classes.AddCv}
+            type="primary"
+            onClick={() => history.push(routes.APP.FORM_PAGE)}
+          >
+            {i18n.t('management.newCv')}
+          </Button>
+        )}
+        dataSource={generateData(cvs)}
+        pagination={{
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+          defaultPageSize: 7,
+          defaultCurrent: 1,
+        }}
+        scroll={{ x: 400 }}
+        key={(record) => record._id}
+        loading={isReadingCvs}
+        bordered
+        sticky
+      />
+    </div>
   );
 };
 

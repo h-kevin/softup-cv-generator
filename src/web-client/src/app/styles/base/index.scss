@@ -26,11 +26,46 @@ body {
   .ant-input:focus {
     @extend .no-shadow;
   }
+
+  .ant-table-title {
+    border: none !important;
+    padding: 16px 0;
+  }
+  
+  .ant-table {
+    .ant-table-container {
+      border-top-right-radius: 7px !important;
+      border-top-left-radius: 7px !important;
+    }
+    
+    tr:first-child {
+      th:first-child {
+        border-top-left-radius: 7px !important;
+      }
+      th:last-child {
+        border-top-right-radius: 7px !important;
+      }
+    }
+
+    tr:last-child {
+      td:first-child {
+        border-bottom-left-radius: 7px !important;
+      }
+      td:last-child {
+        border-bottom-right-radius: 7px !important;
+      }
+    }
+  }
+
+  .ant-table-body, .ant-table-container {
+    border-bottom-left-radius: 7px !important;
+    border-bottom-right-radius: 7px !important;
+  }
 }
 
 body {
-  padding: 15px;
   height: auto;
+  background-color: $errigal-white;
 }
 
 @media only screen and (max-width: 991px) {

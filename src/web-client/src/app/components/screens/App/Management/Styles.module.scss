@@ -4,8 +4,17 @@
   border-radius: 7px !important;
 }
 
-.Header {
-  margin: 0;
-  font-family: $primary-medium;
-  font-size: 1.5rem;
+.Table {
+  background-color: $white !important;
+  padding: 20px;
+
+  th, td {
+    background-color: $white !important;
+  }
+}
+
+.AddCv {
+  @extend .Button;
+
+  
 }

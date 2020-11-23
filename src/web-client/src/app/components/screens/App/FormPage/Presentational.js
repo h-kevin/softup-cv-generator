@@ -20,6 +20,7 @@ import { MinusCircleOutlined } from '@ant-design/icons';
 import * as Yup from 'yup';
 import i18n from 'i18next';
 
+import SectionContainer from './Common/SectionContainer/Presentational';
 import Input from './Common/Input/Presentational';
 import TextArea from './Common/TextArea/Presentational';
 import ArrayInput from './Common/ArrayInput/Presentational';
@@ -302,69 +303,72 @@ const Presentational = ({
       }) => (
         <Form layout="vertical" noValidate>
           <PageHeader 
-            title={i18n.t('formPage.generalInformationSection')}
+            title="Form Page"
           />
-          <Row>
-            <Col span={18}>
-              <Field
-                as={Input}
-                name="firstName" 
-                label={i18n.t('formPage.firstName')}
-                required
-                hasFeedback
-                setFieldTouched={setFieldTouched}
-                setFieldValue={setFieldValue}
-                value={values.firstName}
-                error={errors.firstName}
-                placeholder={i18n.t('formPage.firstNameEx')} 
-              />
-              <Field
-                as={Input}
-                name="lastName" 
-                label={i18n.t('formPage.lastName')}
-                required
-                hasFeedback
-                setFieldTouched={setFieldTouched}
-                setFieldValue={setFieldValue}
-                value={values.lastName}
-                error={errors.lastName}
-                placeholder={i18n.t('formPage.lastNameEx')} 
-              />
-              <Field
-                as={Input}
-                name="role" 
-                label={i18n.t('formPage.role')}
-                required
-                hasFeedback
-                setFieldTouched={setFieldTouched}
-                setFieldValue={setFieldValue}
-                value={values.role}
-                error={errors.role}
-                placeholder={i18n.t('formPage.roleEx')} 
-              />
-              <Field
-                as={TextArea}
-                name="summary" 
-                label={i18n.t('formPage.summary')}
-                required
-                autoSize
-                setFieldTouched={setFieldTouched}
-                setFieldValue={setFieldValue}
-                value={values.summary}
-                error={errors.summary}
-                placeholder={i18n.t('formPage.summaryEx')} 
-              />
-            </Col>
-            <Col span={1} />
-            <Col className={classes.ProfileImage} span={5}>
-              <UploadInput
-                name="profileImage"
-                image={cv?.profileImage}
-                value={values.profileImage}
-                setFieldValue={setFieldValue}
-              />
-            </Col>
-          </Row>
+          <SectionContainer title={i18n.t('formPage.generalInformationSection')}>
+
+            <Row>
+              <Col span={18}>
+                <Field
+                  as={Input}
+                  name="firstName" 
+                  label={i18n.t('formPage.firstName')}
+                  required
+                  hasFeedback
+                  setFieldTouched={setFieldTouched}
+                  setFieldValue={setFieldValue}
+                  value={values.firstName}
+                  error={errors.firstName}
+                  placeholder={i18n.t('formPage.firstNameEx')} 
+                />
+                <Field
+                  as={Input}
+                  name="lastName" 
+                  label={i18n.t('formPage.lastName')}
+                  required
+                  hasFeedback
+                  setFieldTouched={setFieldTouched}
+                  setFieldValue={setFieldValue}
+                  value={values.lastName}
+                  error={errors.lastName}
+                  placeholder={i18n.t('formPage.lastNameEx')} 
+                />
+                <Field
+                  as={Input}
+                  name="role" 
+                  label={i18n.t('formPage.role')}
+                  required
+                  hasFeedback
+                  setFieldTouched={setFieldTouched}
+                  setFieldValue={setFieldValue}
+                  value={values.role}
+                  error={errors.role}
+                  placeholder={i18n.t('formPage.roleEx')} 
+                />
+                <Field
+                  as={TextArea}
+                  name="summary" 
+                  label={i18n.t('formPage.summary')}
+                  required
+                  autoSize
+                  setFieldTouched={setFieldTouched}
+                  setFieldValue={setFieldValue}
+                  value={values.summary}
+                  error={errors.summary}
+                  placeholder={i18n.t('formPage.summaryEx')} 
+                />
+              </Col>
+              <Col span={1} />
+              <Col className={classes.ProfileImage} span={5}>
+                <UploadInput
+                  name="profileImage"
+                  image={cv?.profileImage}
+                  value={values.profileImage}
+                  setFieldValue={setFieldValue}
+                />
+              </Col>
+            </Row>
+          </SectionContainer>
           <Divider orientation="left">{i18n.t('formPage.skillsSection')}</Divider>
           <ArrayInput
             array={languages} 
