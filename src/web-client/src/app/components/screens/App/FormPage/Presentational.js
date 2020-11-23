@@ -50,7 +50,7 @@ const initialValues = {
   spokenLanguages: [],
   projects: [],
   education: [],
-  profileImage: {},
+  profileImage: undefined,
 };
 let formValues = { ...initialValues };
 const validation = () => Yup.object().shape({
@@ -140,7 +140,7 @@ const onSubmit = async ({ ...args }) => {
     if (!didUpdate) return;
   }
 
-  if (args.values.profileImage !== '') {
+  if (args.values.profileImage.originFileObj) {
     const cvId = args.cv ? args.cv._id : createdCvId;
 
     const response = await args.updateProfileImage({

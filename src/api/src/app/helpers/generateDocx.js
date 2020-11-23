@@ -18,7 +18,7 @@ import {
 
 const generateSkillsTable = (skills, tableCellProperties) => {
   const children = [];
-
+  const rows = [];
   const skillNames = {
     languages: 'Languages',
     databases: 'Databases',
@@ -32,8 +32,13 @@ const generateSkillsTable = (skills, tableCellProperties) => {
     other: 'Other',
   };
 
-  const rows = Object.keys(skills).map((skill) => (
-    new TableRow({
+
+  Object.keys(skills).forEach((skill) => {
+    if (skills[skill].length === 0) {
+      return;
+    }
+
+    rows.push(new TableRow({
       children: [
         new TableCell({
           ...tableCellProperties,
@@ -64,10 +69,27 @@ const generateSkillsTable = (skills, tableCellProperties) => {
           ],
         }),
       ],
-    })
-  ));
+    }));
+  });
+
+  if (rows.length === 0) {
+    return [];
+  }
 
   children.push(
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: `skills`,
+          color: '#0098f7',
+          allCaps: true,
+          bold: true,
+        }),
+      ],
+      heading: HeadingLevel.HEADING_1,
+      thematicBreak: false,
+      style: 'headerText',
+    }),
     new Paragraph({}),
     new Table({ rows }),
   );
@@ -75,6 +97,10 @@ const generateSkillsTable = (skills, tableCellProperties) => {
   return children;
 };
 const generateLanguagesTable = (spokenLanguages, tableCellProperties) => {
+  if (spokenLanguages.length === 0) {
+    return [];
+  }
+  
   const children = [];
 
   const rows = spokenLanguages.map((obj) => (
@@ -98,6 +124,19 @@ const generateLanguagesTable = (spokenLanguages, tableCellProperties) => {
   ));
 
   children.push(
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: `languages`,
+          color: '#0098f7',
+          allCaps: true,
+          bold: true,
+        }),
+      ],
+      heading: HeadingLevel.HEADING_1,
+      thematicBreak: false,
+      style: 'headerText',
+    }),
     new Paragraph({}),
     new Table({ rows }),
   );
@@ -145,6 +184,10 @@ const generateProjectTableRow = (
   })
 );
 const generateProjectTables = (projects, tableCellProperties) => {
+  if (projects.length === 0) {
+    return [];
+  }
+
   const children = [];
 
   projects.forEach((project) => {
@@ -205,6 +248,19 @@ const generateProjectTables = (projects, tableCellProperties) => {
     }
 
     children.push(
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: `projects`,
+            color: '#0098f7',
+            allCaps: true,
+            bold: true,
+          }),
+        ],
+        heading: HeadingLevel.HEADING_1,
+        thematicBreak: false,
+        style: 'headerText',
+      }),
       new Paragraph({}), 
       new Table({ rows }),
     );
@@ -213,6 +269,10 @@ const generateProjectTables = (projects, tableCellProperties) => {
   return children;
 };
 const generateEducation = (education) => {
+  if (education.length === 0) {
+    return [];
+  }
+
   const children = [];
 
   const monthNames = [
@@ -270,6 +330,19 @@ const generateEducation = (education) => {
     );
 
     children.push(
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: `education`,
+            color: '#0098f7',
+            allCaps: true,
+            bold: true,
+          }),
+        ],
+        heading: HeadingLevel.HEADING_1,
+        thematicBreak: false,
+        style: 'headerText',
+      }),
       new Paragraph({
         children: [
           new TextRun({
@@ -488,67 +561,15 @@ const generateDocx = (data, image) => {
       }),
       new Paragraph({}),
       new Paragraph({}),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: `skills`,
-            color: '#0098f7',
-            allCaps: true,
-            bold: true,
-          }),
-        ],
-        heading: HeadingLevel.HEADING_1,
-        thematicBreak: false,
-        style: 'headerText',
-      }),
       ...generateSkillsTable(data.skills, tableCellProperties),
       new Paragraph({}),
       new Paragraph({}),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: `languages`,
-            color: '#0098f7',
-            allCaps: true,
-            bold: true,
-          }),
-        ],
-        heading: HeadingLevel.HEADING_1,
-        thematicBreak: false,
-        style: 'headerText',
-      }),
       ...generateLanguagesTable(data.spokenLanguages, tableCellProperties),
       new Paragraph({}),
       new Paragraph({}),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: `projects`,
-            color: '#0098f7',
-            allCaps: true,
-            bold: true,
-          }),
-        ],
-        heading: HeadingLevel.HEADING_1,
-        thematicBreak: false,
-        style: 'headerText',
-      }),
       ...generateProjectTables(data.projects, tableCellProperties),
       new Paragraph({}),
       new Paragraph({}),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: `education`,
-            color: '#0098f7',
-            allCaps: true,
-            bold: true,
-          }),
-        ],
-        heading: HeadingLevel.HEADING_1,
-        thematicBreak: false,
-        style: 'headerText',
-      }),
       ...generateEducation(data.education),
     ],
   });

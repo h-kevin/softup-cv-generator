@@ -21,7 +21,7 @@ export default (err, req, res, next) => {
   error.setPath(fullPath);
 
   if (res?.headersSent) {
-    next(err); // pass error to default express handler
+    next(err);
 
     return;
   }
