@@ -144,7 +144,6 @@ export const generateDocx = async (req, res, next) => {
     
     readStream.pipe(res);
   } catch (error) {
-    console.log(error);
     next(new InternalError(error));
   }
 };
