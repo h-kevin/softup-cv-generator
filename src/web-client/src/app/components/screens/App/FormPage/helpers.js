@@ -64,13 +64,17 @@ export const modifyApiRequest = (data) => {
           : null,
       },
       technologies: project?.technologies
-        ? project?.technologies?.replace(/\s{2,}/g, ' ')?.split(/\s*,\s*/)
+        ? project?.technologies
+          ?.replace(/\s{2,}/g, ' ')?.split(/\s*,\s*/)
+          ?.filter((x) => x !== null)
         : [],
     })),
     education: data.education?.map((item) => ({
       ...item,
       qualifications: item?.qualifications
-        ? item?.qualifications?.replace(/\s{2,}/g, ' ')?.split(/\s*,\s*/)
+        ? item?.qualifications
+          ?.replace(/\s{2,}/g, ' ')?.split(/\s*,\s*/)
+          ?.filter((x) => x !== null)
         : [],
       period: {
         startDate: format(item.period.startDate, 'yyyy-MM-dd'),

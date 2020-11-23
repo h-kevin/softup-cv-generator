@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Upload } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusCircleFilled } from '@ant-design/icons';
 import i18n from 'i18next';
 import PropTypes from 'prop-types';
 
 import classes from './Styles.module.scss';
+import { colors } from '../../../../../../styles/abstracts/variables';
 
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
@@ -28,12 +29,6 @@ const Presentational = ({
 }) => {
   const [thumbnail, setThumbnail] = useState();
   const [uploadedFile, setUploadedFile] = useState();
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>{i18n.t('formPage.clickToUpload')}</div>
-    </div>
-  );
     
   useEffect(() => {
     if (image) {
@@ -68,17 +63,26 @@ const Presentational = ({
         }}
         fileList={value ? [value] : []}
       >
-        {
-          thumbnail 
-            ? (
-              <img 
-                src={uploadedFile ? thumbnail : URL.createObjectURL(thumbnail)}
-                alt="profileImage" 
-                style={{ width: '100%' }} 
-              />
-            )
-            : uploadButton
-        }
+        <div
+          className={classes.UploadButton} 
+          style={
+            thumbnail 
+              ? { 
+                backgroundImage: uploadedFile 
+                  ? `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                    url(${thumbnail})`
+                  : `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                    url(${URL.createObjectURL(thumbnail)})`,
+              }
+              : { 
+                background: '',
+                color: colors.washedBlack,
+              }
+          }
+        >
+          <PlusCircleFilled className={classes.Icon} />
+          <div style={{ marginTop: 8 }}>{i18n.t('formPage.clickToUpload')}</div>
+        </div>
       </Upload>
       {
         error
