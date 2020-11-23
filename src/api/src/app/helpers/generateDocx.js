@@ -231,7 +231,7 @@ const generateProjectTables = (projects, tableCellProperties) => {
       ));
     }
 
-    if (project.technologies) {
+    if (project.technologies.length !== 0) {
       rows.push(generateProjectTableRow(
         `Technologies`, 
         project.technologies, 
@@ -316,20 +316,6 @@ const generateEducation = (education) => {
     }
 
     children.push(
-      new Paragraph({}),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: `${item.institution}`,
-            bold: true,
-          }),
-          ...qualifications,
-        ],
-        style: 'bodyText',
-      }),
-    );
-
-    children.push(
       new Paragraph({
         children: [
           new TextRun({
@@ -342,6 +328,17 @@ const generateEducation = (education) => {
         heading: HeadingLevel.HEADING_1,
         thematicBreak: false,
         style: 'headerText',
+      }),
+      new Paragraph({}),
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: `${item.institution}`,
+            bold: true,
+          }),
+          ...qualifications,
+        ],
+        style: 'bodyText',
       }),
       new Paragraph({
         children: [
@@ -462,21 +459,25 @@ const generateDocx = (data, image) => {
     },
   });
 
-  const profileImage = Media.addImage(doc, image, 125, 125, {
-    floating: {
-      horizontalPosition: {
-        relative: HorizontalPositionRelativeFrom.COLUMN,
-        align: HorizontalPositionAlign.RIGHT,
-      },
-      verticalPosition: {
-        relative: VerticalPositionRelativeFrom.PARAGRAPH,
-        align: VerticalPositionAlign.TOP,
-      },
-    },
-    wrap: {
-      type: TextWrappingType.NONE,
-    },
-  });
+  const profileImage = image 
+    ? (
+        Media.addImage(doc, image, 125, 125, {
+        floating: {
+          horizontalPosition: {
+            relative: HorizontalPositionRelativeFrom.COLUMN,
+            align: HorizontalPositionAlign.RIGHT,
+          },
+          verticalPosition: {
+            relative: VerticalPositionRelativeFrom.PARAGRAPH,
+            align: VerticalPositionAlign.TOP,
+          },
+        },
+        wrap: {
+          type: TextWrappingType.NONE,
+        },
+      })
+    )
+    : {};
 
   const tableCellProperties = {
     margins: {
