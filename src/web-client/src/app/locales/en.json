@@ -24,6 +24,7 @@
       "cancelText": "No"
     },
     "formPage": {
+      "formPage": "Form Page",
       "generalInformationSection": "General Information",
       "firstName": "First Name",
       "firstNameEx": "John",

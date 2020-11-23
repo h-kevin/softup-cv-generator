@@ -9,8 +9,6 @@ import {
 } from 'formik';
 import { 
   Button, 
-  PageHeader,
-  Divider,
   Row,
   Col,
   Spin,
@@ -20,6 +18,7 @@ import { MinusCircleOutlined } from '@ant-design/icons';
 import * as Yup from 'yup';
 import i18n from 'i18next';
 
+import SectionTitle from '../../../common/SectionTitle/Presentational';
 import SectionContainer from './Common/SectionContainer/Presentational';
 import Input from './Common/Input/Presentational';
 import TextArea from './Common/TextArea/Presentational';
@@ -302,11 +301,8 @@ const Presentational = ({
         resetForm,
       }) => (
         <Form layout="vertical" noValidate>
-          <PageHeader 
-            title="Form Page"
-          />
+          <SectionTitle title={i18n.t('Form Page')} iconName="FormOutlined" />
           <SectionContainer title={i18n.t('formPage.generalInformationSection')}>
-
             <Row>
               <Col span={18}>
                 <Field
@@ -321,6 +317,7 @@ const Presentational = ({
                   error={errors.firstName}
                   placeholder={i18n.t('formPage.firstNameEx')} 
                 />
+                <div className={classes.FormItemSeparator} />
                 <Field
                   as={Input}
                   name="lastName" 
@@ -333,6 +330,7 @@ const Presentational = ({
                   error={errors.lastName}
                   placeholder={i18n.t('formPage.lastNameEx')} 
                 />
+                <div className={classes.FormItemSeparator} />
                 <Field
                   as={Input}
                   name="role" 
@@ -345,6 +343,7 @@ const Presentational = ({
                   error={errors.role}
                   placeholder={i18n.t('formPage.roleEx')} 
                 />
+                <div className={classes.FormItemSeparator} />
                 <Field
                   as={TextArea}
                   name="summary" 
@@ -359,330 +358,341 @@ const Presentational = ({
                 />
               </Col>
               <Col span={1} />
-              <Col className={classes.ProfileImage} span={5}>
+              <Col className={classes.ProfileImage} xs={24} sm={5}>
                 <UploadInput
                   name="profileImage"
                   image={cv?.profileImage}
                   value={values.profileImage}
                   setFieldValue={setFieldValue}
+                  error={errors.profileImage?.size}
                 />
               </Col>
             </Row>
           </SectionContainer>
-          <Divider orientation="left">{i18n.t('formPage.skillsSection')}</Divider>
-          <ArrayInput
-            array={languages} 
-            setArray={setLanguages}
-            name={i18n.t('formPage.languages')}
-            label={i18n.t('formPage.languages')}
-          />
-          <ArrayInput
-            array={databases} 
-            setArray={setDatabases}
-            name={i18n.t('formPage.databases')}
-            label={i18n.t('formPage.databases')}
-          />
-          <ArrayInput
-            array={backendFrameworks} 
-            setArray={setBackendFrameworks}
-            name={i18n.t('formPage.backendFrameworks')}
-            label={i18n.t('formPage.backendFrameworks')}
-          />
-          <ArrayInput
-            array={frontendFrameworks} 
-            setArray={setFrontendFrameworks}
-            name={i18n.t('formPage.frontendFrameworks')}
-            label={i18n.t('formPage.frontendFrameworks')}
-          />
-          <ArrayInput
-            array={operationsAndInfrastructure} 
-            setArray={setOperationsAndInfrastructure}
-            name={i18n.t('formPage.operationsAndInfrastructure')}
-            label={i18n.t('formPage.operationsAndInfrastructure')}
-          />
-          <ArrayInput
-            array={integrationAndDeployment} 
-            setArray={setIntegrationAndDeployment}
-            name={i18n.t('formPage.integrationAndDeployment')}
-            label={i18n.t('formPage.integrationAndDeployment')}
-          />
-          <ArrayInput
-            array={testing} 
-            setArray={setTesting}
-            name={i18n.t('formPage.testing')}
-            label={i18n.t('formPage.testing')}
-          />
-          <ArrayInput
-            array={thirdParty} 
-            setArray={setThirdParty}
-            name={i18n.t('formPage.thirdParty')}
-            label={i18n.t('formPage.thirdParty')}
-          />
-          <ArrayInput
-            array={agile} 
-            setArray={setAgile}
-            name={i18n.t('formPage.agile')}
-            label={i18n.t('formPage.agile')}
-          />
-          <ArrayInput
-            array={other} 
-            setArray={setOther}
-            name={i18n.t('formPage.other')}
-            label={i18n.t('formPage.other')}
-          />
-          <Divider orientation="left">{i18n.t('formPage.spokenLanguagesSection')}</Divider>
-          <FieldArray
-            name="spokenLanguages"
-            render={(arrayHelpers) => (
-              <Row>
-                <Col span={24}>
-                  {values.spokenLanguages.map((language, index) => (
-                    <Row 
-                      key={`spokenLanguages-${index}`}
-                      gutter={[0, 20]}
-                      className={classes.FieldArrayContainer}
-                    >
-                      <Col span={21} className={classes.FormItemContainer}>
-                        <Field
-                          as={Input}
-                          name={`spokenLanguages[${index}].language`}
-                          label={i18n.t('formPage.language')}
-                          required
-                          hasFeedback
-                          setFieldTouched={setFieldTouched}
-                          setFieldValue={setFieldValue}
-                          value={language.language}
-                          error={errors.spokenLanguages 
-                            && errors.spokenLanguages[index]?.language}
-                          placeholder={i18n.t('global.typeSth')} 
-                        />
-                        <div className={classes.FormItemSeparator} />
-                        <Field
-                          as={Input}
-                          name={`spokenLanguages[${index}].level`}
-                          label={i18n.t('formPage.level')}
-                          required
-                          hasFeedback
-                          setFieldTouched={setFieldTouched}
-                          setFieldValue={setFieldValue}
-                          value={language?.level}
-                          error={errors.spokenLanguages && errors.spokenLanguages[index]?.level}
-                          placeholder={i18n.t('global.typeSth')} 
-                        />
-                      </Col>
-                      <Col span={2} />
-                      <Col 
-                        className={classes.RemoveButtonContainer} 
-                        span={1}
-                        onClick={() => arrayHelpers.remove(index)}
+          <SectionContainer title={i18n.t('formPage.skillsSection')}>
+            <ArrayInput
+              array={languages} 
+              setArray={setLanguages}
+              name={i18n.t('formPage.languages')}
+              label={i18n.t('formPage.languages')}
+            />
+            <ArrayInput
+              array={databases} 
+              setArray={setDatabases}
+              name={i18n.t('formPage.databases')}
+              label={i18n.t('formPage.databases')}
+            />
+            <ArrayInput
+              array={backendFrameworks} 
+              setArray={setBackendFrameworks}
+              name={i18n.t('formPage.backendFrameworks')}
+              label={i18n.t('formPage.backendFrameworks')}
+            />
+            <ArrayInput
+              array={frontendFrameworks} 
+              setArray={setFrontendFrameworks}
+              name={i18n.t('formPage.frontendFrameworks')}
+              label={i18n.t('formPage.frontendFrameworks')}
+            />
+            <ArrayInput
+              array={operationsAndInfrastructure} 
+              setArray={setOperationsAndInfrastructure}
+              name={i18n.t('formPage.operationsAndInfrastructure')}
+              label={i18n.t('formPage.operationsAndInfrastructure')}
+            />
+            <ArrayInput
+              array={integrationAndDeployment} 
+              setArray={setIntegrationAndDeployment}
+              name={i18n.t('formPage.integrationAndDeployment')}
+              label={i18n.t('formPage.integrationAndDeployment')}
+            />
+            <ArrayInput
+              array={testing} 
+              setArray={setTesting}
+              name={i18n.t('formPage.testing')}
+              label={i18n.t('formPage.testing')}
+            />
+            <ArrayInput
+              array={thirdParty} 
+              setArray={setThirdParty}
+              name={i18n.t('formPage.thirdParty')}
+              label={i18n.t('formPage.thirdParty')}
+            />
+            <ArrayInput
+              array={agile} 
+              setArray={setAgile}
+              name={i18n.t('formPage.agile')}
+              label={i18n.t('formPage.agile')}
+            />
+            <ArrayInput
+              array={other} 
+              setArray={setOther}
+              name={i18n.t('formPage.other')}
+              label={i18n.t('formPage.other')}
+            />
+          </SectionContainer>
+          <SectionContainer title={i18n.t('formPage.spokenLanguagesSection')}>
+            <FieldArray
+              name="spokenLanguages"
+              render={(arrayHelpers) => (
+                <Row>
+                  <Col span={24}>
+                    {values.spokenLanguages.map((language, index) => (
+                      <Row 
+                        key={`spokenLanguages-${index}`}
+                        gutter={[0, 20]}
+                        className={classes.FieldArrayContainer}
                       >
-                        <MinusCircleOutlined />
+                        <Col span={21} className={classes.FormItemContainer}>
+                          <Field
+                            as={Input}
+                            name={`spokenLanguages[${index}].language`}
+                            label={i18n.t('formPage.language')}
+                            required
+                            hasFeedback
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            value={language.language}
+                            error={errors.spokenLanguages 
+                              && errors.spokenLanguages[index]?.language}
+                            placeholder={i18n.t('global.typeSth')} 
+                          />
+                          <div className={classes.FormItemSeparator} />
+                          <Field
+                            as={Input}
+                            name={`spokenLanguages[${index}].level`}
+                            label={i18n.t('formPage.level')}
+                            required
+                            hasFeedback
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            value={language?.level}
+                            error={errors.spokenLanguages && errors.spokenLanguages[index]?.level}
+                            placeholder={i18n.t('global.typeSth')} 
+                          />
+                        </Col>
+                        <Col span={2} />
+                        <Col 
+                          className={classes.RemoveButtonContainer} 
+                          span={1}
+                          onClick={() => arrayHelpers.remove(index)}
+                        >
+                          <MinusCircleOutlined />
+                        </Col>
+                      </Row>
+                    ))}
+                    <Row>
+                      <Col span={24}>
+                        <AddItemButton 
+                          arrayHelpers={arrayHelpers}
+                          title={i18n.t('formPage.addNewLanguage')}
+                        />
                       </Col>
                     </Row>
-                  ))}
-                  <Row>
-                    <Col span={24}>
-                      <AddItemButton 
-                        arrayHelpers={arrayHelpers}
-                        title={i18n.t('formPage.addNewLanguage')}
-                      />
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            )}
-          />
-          <Divider orientation="left">{i18n.t('formPage.projectsSection')}</Divider>
-          <FieldArray
-            name="projects"
-            render={(arrayHelpers) => (
-              <Row>
-                <Col span={24}>
-                  {values.projects.map((project, index) => (
-                    <Row 
-                      key={`projects-${index}`}
-                      gutter={[0, 20]}
-                      className={classes.FieldArrayContainer}
-                    >
-                      <Col span={21} className={classes.FormItemContainer}>
-                        <Field
-                          as={DatePicker}
-                          label={i18n.t('formPage.startDate')}
-                          name={`projects[${index}].period.startDate`}
-                          hasFeedback
-                          setFieldTouched={setFieldTouched}
-                          setFieldValue={setFieldValue}
-                          value={project?.period?.startDate}
-                          error={errors.projects && errors.projects[index]?.period?.startDate}
-                          placeholder={i18n.t('formPage.selectDate')}
-                        />
-                        <div className={classes.FormItemSeparator} />
-                        <Field
-                          as={DatePicker}
-                          label={i18n.t('formPage.endDate')}
-                          name={`projects[${index}].period.endDate`}
-                          hasFeedback
-                          setFieldTouched={setFieldTouched}
-                          setFieldValue={setFieldValue}
-                          value={project?.period?.endDate}
-                          error={errors.projects && errors.projects[index]?.period?.endDate}
-                          placeholder={i18n.t('formPage.selectDate')}
-                        />
-                        <div className={classes.FormItemSeparator} />
-                        <Field
-                          as={Input}
-                          name={`projects[${index}].client`}
-                          label={i18n.t('formPage.client')}
-                          hasFeedback
-                          setFieldTouched={setFieldTouched}
-                          setFieldValue={setFieldValue}
-                          value={project?.client}
-                          error={errors.projects && errors.projects[index]?.client}
-                          placeholder={i18n.t('global.typeSth')} 
-                        />
-                        <div className={classes.FormItemSeparator} />
-                        <Field
-                          as={Input}
-                          name={`projects[${index}].position`}
-                          label={i18n.t('formPage.position')}
-                          hasFeedback
-                          setFieldTouched={setFieldTouched}
-                          setFieldValue={setFieldValue}
-                          value={project?.position}
-                          error={errors.projects && errors.projects[index]?.position}
-                          placeholder={i18n.t('global.typeSth')} 
-                        />
-                        <div className={classes.FormItemSeparator} />
-                        <Field
-                          as={CommaArray}
-                          name={`projects[${index}].technologies`}
-                          label={i18n.t('formPage.technologies')}
-                          hasFeedback
-                          setFieldTouched={setFieldTouched}
-                          setFieldValue={setFieldValue}
-                          value={project?.technologies}
-                          error={errors.projects && errors.projects[index]?.technologies}
-                          placeholder={i18n.t('formPage.technologiesEx')} 
-                        />
-                        <div className={classes.FormItemSeparator} />
-                        <Field
-                          as={TextArea}
-                          name={`projects[${index}].responsibilities`} 
-                          label={i18n.t('formPage.responsibilities')}
-                          setFieldTouched={setFieldTouched}
-                          setFieldValue={setFieldValue}
-                          value={project?.responsibilities}
-                          error={errors.projects && errors.projects[index]?.responsibilities}
-                          placeholder={i18n.t('formPage.responsibilitiesEx')} 
-                          autoSize
-                        />
-                      </Col>
-                      <Col span={2} />
-                      <Col 
-                        className={classes.RemoveButtonContainer} 
-                        span={1}
-                        onClick={() => arrayHelpers.remove(index)}
+                  </Col>
+                </Row>
+              )}
+            />
+          </SectionContainer>
+          <SectionContainer title={i18n.t('formPage.projectsSection')}>
+            <FieldArray
+              name="projects"
+              render={(arrayHelpers) => (
+                <Row>
+                  <Col span={24}>
+                    {values.projects.map((project, index) => (
+                      <Row 
+                        key={`projects-${index}`}
+                        gutter={[0, 20]}
+                        className={classes.FieldArrayContainer}
                       >
-                        <MinusCircleOutlined />
+                        <Col span={21} className={classes.FormItemContainer}>
+                          <Field
+                            as={DatePicker}
+                            label={i18n.t('formPage.startDate')}
+                            name={`projects[${index}].period.startDate`}
+                            required
+                            hasFeedback
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            value={project?.period?.startDate}
+                            error={errors.projects && errors.projects[index]?.period?.startDate}
+                            placeholder={i18n.t('formPage.selectDate')}
+                          />
+                          <div className={classes.FormItemSeparator} />
+                          <Field
+                            as={DatePicker}
+                            label={i18n.t('formPage.endDate')}
+                            name={`projects[${index}].period.endDate`}
+                            hasFeedback
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            value={project?.period?.endDate}
+                            error={errors.projects && errors.projects[index]?.period?.endDate}
+                            placeholder={i18n.t('formPage.selectDate')}
+                          />
+                          <div className={classes.FormItemSeparator} />
+                          <Field
+                            as={Input}
+                            name={`projects[${index}].client`}
+                            label={i18n.t('formPage.client')}
+                            hasFeedback
+                            required
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            value={project?.client}
+                            error={errors.projects && errors.projects[index]?.client}
+                            placeholder={i18n.t('global.typeSth')} 
+                          />
+                          <div className={classes.FormItemSeparator} />
+                          <Field
+                            as={Input}
+                            name={`projects[${index}].position`}
+                            label={i18n.t('formPage.position')}
+                            hasFeedback
+                            required
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            value={project?.position}
+                            error={errors.projects && errors.projects[index]?.position}
+                            placeholder={i18n.t('global.typeSth')} 
+                          />
+                          <div className={classes.FormItemSeparator} />
+                          <Field
+                            as={CommaArray}
+                            name={`projects[${index}].technologies`}
+                            label={i18n.t('formPage.technologies')}
+                            hasFeedback
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            value={project?.technologies}
+                            error={errors.projects && errors.projects[index]?.technologies}
+                            placeholder={i18n.t('formPage.technologiesEx')} 
+                          />
+                          <div className={classes.FormItemSeparator} />
+                          <Field
+                            as={TextArea}
+                            name={`projects[${index}].responsibilities`} 
+                            label={i18n.t('formPage.responsibilities')}
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            value={project?.responsibilities}
+                            error={errors.projects && errors.projects[index]?.responsibilities}
+                            placeholder={i18n.t('formPage.responsibilitiesEx')} 
+                            required
+                            autoSize
+                          />
+                        </Col>
+                        <Col span={2} />
+                        <Col 
+                          className={classes.RemoveButtonContainer} 
+                          span={1}
+                          onClick={() => arrayHelpers.remove(index)}
+                        >
+                          <MinusCircleOutlined />
+                        </Col>
+                      </Row>
+                    ))}
+                    <Row>
+                      <Col span={24}>
+                        <AddItemButton 
+                          arrayHelpers={arrayHelpers}
+                          title={i18n.t('formPage.addNewProject')}
+                        />
                       </Col>
                     </Row>
-                  ))}
-                  <Row>
-                    <Col span={24}>
-                      <AddItemButton 
-                        arrayHelpers={arrayHelpers}
-                        title={i18n.t('formPage.addNewProject')}
-                      />
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            )}
-          />
-          <Divider orientation="left">{i18n.t('formPage.educationSection')}</Divider>
-          <FieldArray
-            name="education"
-            render={(arrayHelpers) => (
-              <Row>
-                <Col span={24}>
-                  {values.education.map((item, index) => (
-                    <Row 
-                      key={`education-${index}`}
-                      gutter={[0, 20]}
-                      className={classes.FieldArrayContainer}
-                    >
-                      <Col span={21} className={classes.FormItemContainer}>
-                        <Field
-                          as={Input}
-                          name={`education[${index}].institution`}
-                          label={i18n.t('formPage.institution')}
-                          hasFeedback
-                          setFieldTouched={setFieldTouched}
-                          setFieldValue={setFieldValue}
-                          value={item?.institution}
-                          error={errors.education && errors.education[index]?.institution}
-                          placeholder={i18n.t('global.typeSth')} 
-                        />
-                        <div className={classes.FormItemSeparator} />
-                        <Field
-                          as={CommaArray}
-                          name={`education[${index}].qualifications`}
-                          label={i18n.t('formPage.qualifications')}
-                          hasFeedback
-                          setFieldTouched={setFieldTouched}
-                          setFieldValue={setFieldValue}
-                          value={item?.qualifications}
-                          error={errors.education && errors.education[index]?.qualifications}
-                          placeholder={i18n.t('formPage.qualificationsEx')} 
-                        />
-                        <div className={classes.FormItemSeparator} />
-                        <Field
-                          as={DatePicker}
-                          label={i18n.t('formPage.startDate')}
-                          name={`education[${index}].period.startDate`}
-                          hasFeedback
-                          setFieldTouched={setFieldTouched}
-                          setFieldValue={setFieldValue}
-                          value={item?.period?.startDate}
-                          error={errors.education && errors.education[index]?.period?.startDate}
-                          placeholder={i18n.t('formPage.selectDate')}
-                        />
-                        <div className={classes.FormItemSeparator} />
-                        <Field
-                          as={DatePicker}
-                          label={i18n.t('formPage.endDate')}
-                          name={`education[${index}].period.endDate`}
-                          hasFeedback
-                          setFieldTouched={setFieldTouched}
-                          setFieldValue={setFieldValue}
-                          value={item?.period?.endDate}
-                          error={errors.education && errors.education[index]?.period?.endDate}
-                          placeholder={i18n.t('formPage.selectDate')}
-                        />
-                      </Col>
-                      <Col span={2} />
-                      <Col 
-                        className={classes.RemoveButtonContainer} 
-                        span={1}
-                        onClick={() => arrayHelpers.remove(index)}
+                  </Col>
+                </Row>
+              )}
+            />
+          </SectionContainer>
+          <SectionContainer title={i18n.t('formPage.educationSection')}>
+            <FieldArray
+              name="education"
+              render={(arrayHelpers) => (
+                <Row>
+                  <Col span={24}>
+                    {values.education.map((item, index) => (
+                      <Row 
+                        key={`education-${index}`}
+                        gutter={[0, 20]}
+                        className={classes.FieldArrayContainer}
                       >
-                        <MinusCircleOutlined />
+                        <Col span={21} className={classes.FormItemContainer}>
+                          <Field
+                            as={Input}
+                            name={`education[${index}].institution`}
+                            label={i18n.t('formPage.institution')}
+                            hasFeedback
+                            required
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            value={item?.institution}
+                            error={errors.education && errors.education[index]?.institution}
+                            placeholder={i18n.t('global.typeSth')} 
+                          />
+                          <div className={classes.FormItemSeparator} />
+                          <Field
+                            as={CommaArray}
+                            name={`education[${index}].qualifications`}
+                            label={i18n.t('formPage.qualifications')}
+                            hasFeedback
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            value={item?.qualifications}
+                            error={errors.education && errors.education[index]?.qualifications}
+                            placeholder={i18n.t('formPage.qualificationsEx')} 
+                          />
+                          <div className={classes.FormItemSeparator} />
+                          <Field
+                            as={DatePicker}
+                            label={i18n.t('formPage.startDate')}
+                            name={`education[${index}].period.startDate`}
+                            hasFeedback
+                            required
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            value={item?.period?.startDate}
+                            error={errors.education && errors.education[index]?.period?.startDate}
+                            placeholder={i18n.t('formPage.selectDate')}
+                          />
+                          <div className={classes.FormItemSeparator} />
+                          <Field
+                            as={DatePicker}
+                            label={i18n.t('formPage.endDate')}
+                            name={`education[${index}].period.endDate`}
+                            hasFeedback
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            value={item?.period?.endDate}
+                            error={errors.education && errors.education[index]?.period?.endDate}
+                            placeholder={i18n.t('formPage.selectDate')}
+                          />
+                        </Col>
+                        <Col span={2} />
+                        <Col 
+                          className={classes.RemoveButtonContainer} 
+                          span={1}
+                          onClick={() => arrayHelpers.remove(index)}
+                        >
+                          <MinusCircleOutlined />
+                        </Col>
+                      </Row>
+                    ))}
+                    <Row>
+                      <Col span={24}>
+                        <AddItemButton 
+                          arrayHelpers={arrayHelpers}
+                          title={i18n.t('formPage.addNewInstitution')}
+                        />
                       </Col>
                     </Row>
-                  ))}
-                  <Row>
-                    <Col span={24}>
-                      <AddItemButton 
-                        arrayHelpers={arrayHelpers}
-                        title={i18n.t('formPage.addNewInstitution')}
-                      />
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            )}
-          />
-          <Row gutter={[10, 10]} justify="end">
+                  </Col>
+                </Row>
+              )}
+            />
+          </SectionContainer>
+          <Row className={classes.FormActions} gutter={[16, 16]} justify="end">
             <Col>
               <Button 
                 className={classes.Button} 

@@ -1,7 +1,6 @@
 @import '../../../../../../styles/abstracts/variables.scss';
 
 .Error {
-  margin-top: -20px !important;
   color: $blood-burst;
   margin-left: 200px;
 }
@@ -14,6 +13,7 @@
 
 .FormItem {
   display: flex;
+  margin-bottom: 0 !important;
 
   label {
     min-width: 200px;
