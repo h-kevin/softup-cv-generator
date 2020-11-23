@@ -140,7 +140,7 @@ const onSubmit = async ({ ...args }) => {
     if (!didUpdate) return;
   }
 
-  if (args.values.profileImage.originFileObj) {
+  if (args.values?.profileImage?.originFileObj) {
     const cvId = args.cv ? args.cv._id : createdCvId;
 
     const response = await args.updateProfileImage({
