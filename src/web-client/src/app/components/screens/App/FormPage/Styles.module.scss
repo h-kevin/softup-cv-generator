@@ -31,10 +31,12 @@
 }
 
 .FormActions {
-  padding: 0 20px 15px 0;
+  padding: 0 20px 0 0;
 
   .Button {
     padding: 7px 15px;
+    margin-left: 16px;
+    margin-bottom: 20px;
     height: auto;
   }
 }
