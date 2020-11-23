@@ -304,7 +304,7 @@ const Presentational = ({
           <SectionTitle title={i18n.t('Form Page')} iconName="FormOutlined" />
           <SectionContainer title={i18n.t('formPage.generalInformationSection')}>
             <Row>
-              <Col span={18}>
+              <Col xs={24} sm={18}>
                 <Field
                   as={Input}
                   name="firstName" 
@@ -357,7 +357,7 @@ const Presentational = ({
                   placeholder={i18n.t('formPage.summaryEx')} 
                 />
               </Col>
-              <Col span={1} />
+              <Col xs={0} sm={1} />
               <Col xs={24} sm={5}>
                 <UploadInput
                   name="profileImage"

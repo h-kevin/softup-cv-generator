@@ -11,7 +11,6 @@ const getBase64 = (img, callback) => {
   reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
 }
-
 const getBlob = (file) => {
   if (file.data) {
     return new Blob([new Uint8Array(file.data)])
@@ -29,7 +28,6 @@ const Presentational = ({
 }) => {
   const [thumbnail, setThumbnail] = useState();
   const [uploadedFile, setUploadedFile] = useState();
-
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -43,10 +41,16 @@ const Presentational = ({
     }
   }, [image]);
 
+  let thumbnailClass = classes.UploadThumbnailDefault;
+
+  if (error) {
+    thumbnailClass = classes.UploadThumbnailWithError;
+  }
+
   return (
     <>
       <Upload 
-        className={classes.UploadThumbnail}
+        className={thumbnailClass}
         name={name}
         listType="picture-card"
         showUploadList={false}

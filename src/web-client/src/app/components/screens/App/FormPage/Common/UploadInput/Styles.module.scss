@@ -1,6 +1,10 @@
 @import '../../../../../../styles/abstracts/variables.scss';
 
-.UploadThumbnail {
+.Error {
+  color: $blood-burst;
+}
+
+.UploadThumbnailDefault {
   height: 100%;
 
   div:nth-child(1) {
@@ -10,6 +14,24 @@
   }
 }
 
-.Error {
-  color: $blood-burst;
+
+.UploadThumbnailWithError {
+  @extend .UploadThumbnailDefault;
+  
+  height: 75%;
+}
+
+@media (max-width: 575px) {
+  .UploadThumbnailDefault {
+    padding: 20px 0 0 0;
+  }
+
+  .UploadThumbnailWithError {
+    height: max-content;
+    // padding: 0;
+  }
+
+  .Error {
+    width: 100%;
+  }
 }
